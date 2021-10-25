@@ -991,10 +991,9 @@
                 btn.disabled = true;
 				
                 setTimeout(function () {
-					
                     btn.disabled = false;
 					animate();
-                }, 5000);
+                }, 100);
 
 
 
