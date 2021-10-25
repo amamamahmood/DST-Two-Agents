@@ -1392,7 +1392,7 @@
         text-align: center;
         position: absolute;
         top: 15%;
-        right: 8vw;
+        right: 5vw;
         z-index: -1;
     }
 
@@ -1405,7 +1405,7 @@
         text-align: center;
         position: absolute; 
         top: 15%;
-        left: 8vw;
+        left: 5vw;
         z-index: -1;
     }
 
