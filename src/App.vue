@@ -19,7 +19,7 @@
                         <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
-                            <button :id=item.name2 :name="item.name3"  style="width:6vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
+                            <button :id=item.name2 :name="item.name3"  style="width:5.7vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
                         </div>
                     </li>
 
@@ -1349,15 +1349,16 @@
 
     .column2 {
         float: left;
-        width: 62vw;
-        height: 13vw;
-        padding-left: 20vw;
+        width: 58.5vw;
+        height: 12.5vw;
+        margin-left: 20vw;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
         bottom: 2px;
         font-size: 1.5vh;
+		background-color: grey;
     }
 
     .column {
@@ -1506,17 +1507,17 @@
 
 
     .float-child {
-        width: 6vw;
+        width: 5.7vw;
         height: 9vw;
         float: left;
         position: relative;
         background-color: #aaa;
         border: solid;
-        border-width: 2px;
+        border-width: 0.1vw;
         align-content: center;
         align-items: center;
         text-align: center;
-        margin-left: 2px;
+        margin-left: 0.2vw;
         margin-bottom: 2px;
         font-size: 1.5vmin;
     }
