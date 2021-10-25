@@ -543,27 +543,14 @@
         const delta = clock.getDelta();
 
         if (mixer) mixer.update(delta);
-        //if (mixer_left) mixer_left.update(delta);
+        if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
-        //renderer_left.render(scene_left, camera);
-
-        //stats.update();
-
-    }
-	function animate2() {
-
-        requestAnimationFrame(animate2);
-
-        const delta2 = clock.getDelta();
-
-        //if (mixer) mixer.update(delta);
-        if (mixer_left) mixer_left.update(delta2);
-        //renderer.render(scene, camera);
         renderer_left.render(scene_left, camera);
 
         //stats.update();
 
     }
+	
 
     function setAction(toAction) {
         if (toAction != activeAction) {
@@ -1007,7 +994,6 @@
 					
                     btn.disabled = false;
 					animate();
-					animate2();
                 }, 5000);
 
 
