@@ -73,7 +73,8 @@
                 <h3 class="smallerText" id="intro2" style="display:none; max-width:55vw;  ">
                 </h3>
                 <br />
-
+				<h3 class="smallerText" id="intro3" style="display:none; max-width:55vw;  ">
+                </h3>
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Rank this current item</button>
                 <!--&emsp;&emsp;&emsp;&emsp;
                 <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>-->
@@ -977,7 +978,7 @@
                 inst.style.display = "none";
                 var sect = document.getElementById("intro2");
                 sect.style.display = "inline-block";
-                sect.textContent = "Now you'll have a chance to see rankings of two Virtual AI agents.  The agent will present you with their reasoning for picking each item in specific order. Agents will do so one by one.  You will create a new ranking list during the interaction";
+                sect.textContent = "Now you'll have a chance to interact two Virtual AI agents. The agents will present you with their reasoning for placement of these items. You will create a new ranking list based on the interaction. Please review your initial list while the agents analyze it as well to talk to you about it.";
                 //var cont = document.getElementById("avatardiv");
                 //cont.style.display = "block";
                 //cont = document.getElementById("avatardivelement");
@@ -987,11 +988,15 @@
                 var sect = document.getElementById("heading");
                 sect.style.display = "none";
                 var btn = document.getElementById("interact");
-                btn.style.display = "inline-block";
                 btn.disabled = true;
+				var inst2 = document.getElementById("intro3");
+				inst2.style.display = "inline-block";
+				inst2.textContent = "The agents are analyzing your list!!!";
                 setTimeout(function () {
-                    btn.disabled = false;
+					inst2.textContent = "The agents are ready!!!";
 					animate();
+					btn.style.display = "inline-block";
+					btn.disabled = false;
                 }, 100);
 
 
@@ -1035,6 +1040,8 @@
                 //document.getElementById("user_list").style.bottom = "initial";
                 //var temp = document.getElementById("temp");
                 //temp.style.display = "none";
+				var inst2 = document.getElementById("intro3");
+				inst2.style.display = "none";
                 this.reorder_avatarList();
                 event.target.style.display = "none";
                 //var sect = document.getElementById("intro");
