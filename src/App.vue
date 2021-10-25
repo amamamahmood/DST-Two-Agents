@@ -15,11 +15,11 @@
                            @start="dragging = true"
                            @end="dragging = false">
 
-                    <li v-for=" item in userNewList" :key="item.id" class="float-child" style="list-style-position: inside; font-size:1.5vmin;">
+                    <li v-for=" item in userNewList" :key="item.id" class="float-child" style="list-style-position: inside; font-size:1.8vmin;">
                         <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
-                            <button :id=item.name2 :name="item.name3" style="font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
+                            <button :id=item.name2 :name="item.name3"  style="width:6vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
                         </div>
                     </li>
 
@@ -34,7 +34,7 @@
             <!--<div id="userNewRanking" class="column2" style=" display:none">
                 <h3 class="smallerText">Your New Rankings</h3>
                 <ol>
-                    <li class="float-child" style="list-style-position: inside; font-size:1.5vmin;" v-for="item in userNewList" :key="item.id">
+                    <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in userNewList" :key="item.id">
                         <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
@@ -1322,7 +1322,7 @@
     .columnSurvey {
         float: left;
         width: 80vw;
-        padding-left: 8vw;
+        padding-left: 10vw;
         text-align: left;
         position: absolute;
         top: 2px;
@@ -1341,7 +1341,7 @@
         width: 80vw;
         position: absolute;
         top: 2px;
-        left: 18vw;
+        left: 20vw;
         align-items: center;
         text-align: center;
         align-content: center;
@@ -1392,7 +1392,7 @@
         text-align: center;
         position: absolute;
         top: 15%;
-        right: 5vw;
+        right: 3vw;
         z-index: -1;
     }
 
@@ -1405,7 +1405,7 @@
         text-align: center;
         position: absolute; 
         top: 15%;
-        left: 5vw;
+        left: 3vw;
         z-index: -1;
     }
 
@@ -1417,7 +1417,7 @@
         align-content: center;
         align-items: center;
         text-align: center;
-        padding-left: 8vw;
+        padding-left: 10vw;
     }
 
     .column4 {
@@ -1428,7 +1428,7 @@
         align-content: center;
         align-items: center;
         text-align: center;
-        padding-left: 8vw;
+        padding-left: 10vw;
     }
     /* Clear floats after the columns */
     .row:after {
