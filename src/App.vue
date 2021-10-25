@@ -810,7 +810,7 @@
                 btn.disabled = true;
                 setTimeout(function () {
                     btn.disabled = false;
-                }, 10000);
+                }, 12000);
             },
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
@@ -979,7 +979,7 @@
 
                 setTimeout(function () {
                     sect.disabled = false;
-                }, 10000);
+                }, 15000);
 
             },
             doneInitialRanking: function (event) {
@@ -1350,9 +1350,9 @@
 
     .column2 {
         float: left;
-        width: 60vw;
+        width: 70vw;
         height: 13vw;
-        padding-left: 18vw;
+        padding-left: 8vw;
         align-content: center;
         align-items: center;
         text-align: center;
