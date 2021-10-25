@@ -811,7 +811,7 @@
                 btn.disabled = true;
                 setTimeout(function () {
                     btn.disabled = false;
-                }, 15000);
+                }, 10000);
             },
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
@@ -964,7 +964,7 @@
 
                 setTimeout(function () {
                     sect.disabled = false;
-                }, 20000);
+                }, 15000);
 
             },
             doneInitialRanking: function (event) {
@@ -989,7 +989,6 @@
                 var btn = document.getElementById("interact");
                 btn.style.display = "inline-block";
                 btn.disabled = true;
-				
                 setTimeout(function () {
                     btn.disabled = false;
 					animate();
