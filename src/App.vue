@@ -19,7 +19,7 @@
                         <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
-                            <button :id=item.name2 :name="item.name3" class="button" style="display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
+                            <button :id=item.name2 :name="item.name3" style="font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
                         </div>
                     </li>
 
@@ -998,13 +998,13 @@
                 //cont = document.getElementById("avatardivelement");
                 //cont.style.display = "block";
                 //init();
-                document.getElementById("user_list").style.top = "2px"
-                animate();
+                document.getElementById("user_list").style.top = "2px";
                 var sect = document.getElementById("heading");
                 sect.style.display = "none";
                 var btn = document.getElementById("interact");
                 btn.style.display = "inline-block";
                 btn.disabled = true;
+				animate();
                 setTimeout(function () {
                     btn.disabled = false;
                 }, 5000);
@@ -1304,8 +1304,7 @@
 
 <style>
     body {
-        margin-right: 5px;
-        margin-left: 5px;
+        
         max-width: 100%;
         max-height: 100%;
         align-content: center;
@@ -1350,9 +1349,9 @@
 
     .column2 {
         float: left;
-        width: 70vw;
+        width: 62vw;
         height: 13vw;
-        padding-left: 8vw;
+        padding-left: 20vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -1386,27 +1385,27 @@
 
     .columnAvatar {
         float: right;
-        width: 25vw;
-        height: 25vw;
+        width: 30vw;
+        height: 30vw;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 25%;
-        right: 10vw;
+        top: 15%;
+        right: 8vw;
         z-index: -1;
     }
 
     .columnAvatar-left {
         float: left;
-        width: 25vw;
-        height: 25vw;
+        width: 30vw;
+        height: 30vw;
         align-content: center;
         align-items: center;
         text-align: center;
-        position: absolute;
-        top: 25%;
-        left: 10vw;
+        position: absolute; 
+        top: 15%;
+        left: 8vw;
         z-index: -1;
     }
 
