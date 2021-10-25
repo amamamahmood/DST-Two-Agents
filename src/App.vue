@@ -543,8 +543,22 @@
         const delta = clock.getDelta();
 
         if (mixer) mixer.update(delta);
-        if (mixer_left) mixer_left.update(delta);
+        //if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
+        //renderer_left.render(scene_left, camera);
+
+        //stats.update();
+
+    }
+	function animate2() {
+
+        requestAnimationFrame(animate2);
+
+        const delta2 = clock.getDelta();
+
+        //if (mixer) mixer.update(delta);
+        if (mixer_left) mixer_left.update(delta2);
+        //renderer.render(scene, camera);
         renderer_left.render(scene_left, camera);
 
         //stats.update();
@@ -810,7 +824,7 @@
                 btn.disabled = true;
                 setTimeout(function () {
                     btn.disabled = false;
-                }, 12000);
+                }, 15000);
             },
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
@@ -827,23 +841,7 @@
                 //alert(JSON.stringify(this.avatarList));
 
             },
-            // won't need it
-            compare_lists: function () {
-                //alert(JSON.stringify(this.users[counter]))
-                if (this.users[counter].id == this.avatarList[counter].id) {
-                    total_matched += 1;
-                    items[counter].matched = 1;
-                    items[counter].rankings = this.returnRankings();
-                    //alert(counter + "printing item to check matching " + JSON.stringify(items[counter]));
-                    counter += 1;
-                    return true;
-
-                    //alert("Glad we agree on nth item on our lists");
-                }
-                else {
-                    return false;
-                }
-            },
+            
 
             actual_match: function () {
                 for (let i = 0; i < this.users.length; i++) {
@@ -983,7 +981,7 @@
 
             },
             doneInitialRanking: function (event) {
-                user_initial_rankings = this.returnRankings();
+                //user_initial_rankings = this.returnRankings();
                 //alert(user_initial_rankings);
                 //alert(avatar_rankings);
                 this.disable();
@@ -1005,6 +1003,7 @@
                 btn.style.display = "inline-block";
                 btn.disabled = true;
 				animate();
+				animate2();
                 setTimeout(function () {
                     btn.disabled = false;
                 }, 5000);
@@ -1358,7 +1357,6 @@
         position: absolute;
         bottom: 2px;
         font-size: 1.5vh;
-		background-color: grey;
     }
 
     .column {
