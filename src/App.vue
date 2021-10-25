@@ -1349,7 +1349,7 @@
 
     .column2 {
         float: left;
-        width: 58.5vw;
+        width: 60vw;
         height: 12.5vw;
         margin-left: 20vw;
         align-content: center;
