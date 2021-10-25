@@ -977,7 +977,7 @@
 
                 setTimeout(function () {
                     sect.disabled = false;
-                }, 15000);
+                }, 20000);
 
             },
             doneInitialRanking: function (event) {
@@ -1002,10 +1002,12 @@
                 var btn = document.getElementById("interact");
                 btn.style.display = "inline-block";
                 btn.disabled = true;
-				animate();
-				animate2();
+				
                 setTimeout(function () {
+					
                     btn.disabled = false;
+					animate();
+					animate2();
                 }, 5000);
 
 
