@@ -1,8 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
+//import Vuex from 'vuex';
+//import store from './components/store.js';
+//Vue.use(Vuex);
 
-Vue.config.productionTip = false
+
+Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+    //store,
+    render: h => h(App)
+}).$mount('#app');
