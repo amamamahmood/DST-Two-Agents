@@ -220,6 +220,7 @@
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
         var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/4cbg6cy934v6ob9/brian_idle.fbx'];
         var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/cvbhz2271gfbnxe/brian_talking.fbx'];
+        
         switch (Number(store.getters.getGender)) {
             case 1:
                 //selectedVoice = 1;
@@ -245,6 +246,7 @@
         //var fileLoad2 = files[index] + '_talking.fbx';
         //var fileLoad = 'https://drive.google.com/uc?export=view&id=' + files[index];
         //var fileLoad2 = 'https://drive.google.com/uc?export=view&id=' + files[index + 4];
+        alert(index);
         switch (index) {
             case 0:
                 agentName = "Elizabeth";
@@ -321,15 +323,20 @@
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
-
+        //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
+        //hemiLight2.position.set(0, 100, 0);
+        //scene.add(hemiLight2);
+        
 
         scene_left = new THREE.Scene();
         scene_left.background = new THREE.Color(0xffffff);
         scene2_left = new THREE.Scene();
         scene2_left.background = new THREE.Color(0xffffff);
         scene_left.fog = new THREE.Fog(0xffffff, 200, 1000);
-        scene_left.add(hemiLight);
-
+        const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
+        hemiLight2.position.set(0, 200, 0);
+        scene_left.add(hemiLight2);
+        //scene_left.add(hemiLight2);
         if (index == 0 || index == 2) {
             const light = new THREE.AmbientLight(0x808080); // soft white light
             scene.add(light);
@@ -361,7 +368,17 @@
         dirLight.shadow.camera.left = - 120;
         dirLight.shadow.camera.right = 120;
         scene.add(dirLight);
-        scene_left.add(dirLight);
+        //scene_left.add(dirLight);
+        // adding to test
+        const dirLight2 = new THREE.DirectionalLight(0xffffff);
+        dirLight2.position.set(0, 200, 100);
+        dirLight2.castShadow = true;
+        dirLight2.shadow.camera.top = 180;
+        dirLight2.shadow.camera.bottom = - 100;
+        dirLight2.shadow.camera.left = - 120;
+        dirLight2.shadow.camera.right = 120;
+        //scene.add(dirLight2);
+        scene_left.add(dirLight2);
         // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
 
         // ground
@@ -369,7 +386,10 @@
         mesh.rotation.x = - Math.PI / 2;
         mesh.receiveShadow = true;
         scene.add(mesh);
-        scene_left.add(mesh);
+        const mesh2 = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
+        mesh2.rotation.x = - Math.PI / 2;
+        mesh2.receiveShadow = true;
+        scene_left.add(mesh2);
         //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
         //grid.material.opacity = 0.2;
         // grid.material.transparent = true;
@@ -386,9 +406,21 @@
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
-
-
+        const m1 = new THREE.MeshPhongMaterial({ color: 0x4A0811, shininess: 20 });
+        const m2 = new THREE.MeshPhongMaterial({ color: 0x310E03, shininess: 20 });
+        let obj_name, find_index;
+        //let object1 = new THREE.Material();
         loader.load(fileLoad, function (object) {
+            obj_name = object.children[2].name.slice(0, 5);
+            //alert(obj_name);
+            obj_name = obj_name + "Shirt";
+            find_index = object.children.findIndex(x => x.name === obj_name);
+            //alert(object.children[find_index].name);
+            //object.children[find_index].material = object.children[find_index].material.clone();
+            //object.children[find_index].material.emissive.setHex(0x981E30);
+            //object.children[find_index].material.opacity = 0;
+            //object1.copy(object.children[find_index].material);
+            object.children[find_index].material = m1;
 
 
 
@@ -437,11 +469,19 @@
         var fileLoad_left = files[index2];
         var fileLoad2_left = files2[index2];
         const loader_left = new FBXLoader();
-
+        
 
         loader_left.load(fileLoad_left, function (object_left) {
 
-
+            var obj_name_left = object_left.children[2].name.slice(0, 5);
+            //alert(obj_name_left);
+            obj_name_left = obj_name_left + "Shirt";
+            var find_index_left = object_left.children.findIndex(x => x.name === obj_name_left);
+            //alert(object1);
+            //object_left.children[find_index_left].material = object_left.children[find_index_left].material.clone();
+            //object_left.children[find_index_left].material.emissive.setHex(0x981E30);
+            //object_left.children[find_index_left].material.opacity = 0;
+            object_left.children[find_index_left].material = m1;
 
             mixer_left = new THREE.AnimationMixer(object_left);
             const loader2_left = new FBXLoader();
@@ -1114,7 +1154,7 @@
                 //alert(total_updates);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
-                inst.textContent = "Place " + this.users[counter].name + "in one of the place holders in the new list below";
+                inst.textContent = "Place " + this.users[counter].name + " in one of the place holders in the new list below";
                 event.target.style.display = "none";
                 //var btn = document.getElementById("noDrag");
                 //btn.style.display = "none";
@@ -1207,7 +1247,7 @@
 
                     }
                     else {
-                        this.enable();
+                        this.enable_new();
                         setAction(actions[0]);
                         setAction_left(actions_left[0]);
                         inst = document.getElementById("drag_inst");
@@ -1268,7 +1308,7 @@
                 var temp = document.getElementById("centerColumn");
                 temp.style.display = "none";
                 temp = document.getElementById("userNewRanking");
-                temp.style.display = none;
+                temp.style.display = "none";
                 temp = document.getElementById("user_list");
                 temp.style.display = "none";
                 temp = document.getElementById("avatar");
