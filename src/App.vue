@@ -220,8 +220,8 @@
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
         //var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/4cbg6cy934v6ob9/brian_idle.fbx'];
         //var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/cvbhz2271gfbnxe/brian_talking.fbx'];
-        var files = ['https://dl.dropbox.com/s/wyllqrsahvwmx2x/idle_elizabeth.fbx', 'https://dl.dropbox.com/s/lxuv7a5idh89o5o/idle_jody.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/4cbg6cy934v6ob9/brian_idle.fbx'];
-        var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/f9fl7o7wmzcib6d/talking_jody.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/cvbhz2271gfbnxe/brian_talking.fbx'];
+        var files = ['https://dl.dropbox.com/s/wyllqrsahvwmx2x/idle_elizabeth.fbx', 'https://dl.dropbox.com/s/lxuv7a5idh89o5o/idle_jody.fbx', 'https://dl.dropbox.com/s/qf75d8qzr5t9v0m/idle_david.fbx', 'https://dl.dropbox.com/s/hdtasouo7f68wzb/idle_adam.fbx'];
+        var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/f9fl7o7wmzcib6d/talking_jody.fbx', 'https://dl.dropbox.com/s/n0vbzfvfwyevksh/talking_david.fbx', 'https://dl.dropbox.com/s/rf9vo2ywao3s0yx/talking_adam.fbx'];
 
         switch (Number(store.getters.getGender)) {
             case 1:
@@ -321,7 +321,7 @@
         scene.background = new THREE.Color(0xffffff);
         scene2 = new THREE.Scene();
         scene2.background = new THREE.Color(0xffffff);
-        scene.fog = new THREE.Fog(0xffffff, 200, 1000);
+        //scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
@@ -334,7 +334,7 @@
         scene_left.background = new THREE.Color(0xffffff);
         scene2_left = new THREE.Scene();
         scene2_left.background = new THREE.Color(0xffffff);
-        scene_left.fog = new THREE.Fog(0xffffff, 200, 1000);
+        //scene_left.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight2.position.set(0, 200, 0);
         scene_left.add(hemiLight2);
@@ -410,24 +410,36 @@
         const loader = new FBXLoader();
         const texture = new THREE.TextureLoader().load('https://previews.123rf.com/images/fotoslaz/fotoslaz1801/fotoslaz180100044/94024038-blonde-hair-for-background-and-texture-material.jpg');
         const m1 = new THREE.MeshPhongMaterial({ color: 0x34373b, shininess: 10 });
-        //const m2 = new THREE.MeshBasicMaterial({ color: 0x351106, shininess: 30, opacity:0.5, map:texture});
+        const m2 = new THREE.MeshBasicMaterial({ color: 0x000001, shininess: 30, opacity:0.2, map:texture});
         let obj_name, find_index;
         //let object1 = new THREE.Material();
         loader.load(fileLoad, function (object) {
             obj_name = object.children[2].name.slice(0, 5);
             //alert(obj_name);
             let obj_name2 = obj_name + "Shirt";
-            find_index = object.children.findIndex(x => x.name === obj_name2 || x.name === obj_name +"Cloth" );
+            find_index = object.children.findIndex(x => x.name === obj_name2 || x.name === obj_name + "Cloth" || x.name === obj_name + "Hoodie" || x.name === obj_name + "Hoody");
             object.children[find_index].material = m1;
             //alert(object.children[find_index].name);
             //object.children[find_index].material = object.children[find_index].material.clone();
             //object.children[find_index].material.emissive.setHex(0x981E30);
             //object.children[find_index].material.opacity = 0;
             //object1.copy(object.children[find_index].material);
-            //let obj_name3 = obj_name + "Hair";
-            //find_index = object.children.findIndex(x => x.name === obj_name3);
-            //object.children[find_index].material = m2;
-
+            if (index == 2) {
+                let obj_name3 = obj_name + "Hair";
+                find_index = object.children.findIndex(x => x.name === obj_name3);
+                //object.children[find_index].material = object.children[find_index].material.clone();
+                object.children[find_index].material = m2;
+            }
+            
+            //object.children[find_index].material.fog = false;
+            //object.children[find_index].material.transparency = false;
+            //object.children[find_index].material.opacity = 1;
+            //object.children[find_index].material.depthWrite = false;
+            find_index = object.children.findIndex(x => x.name === obj_name + "Beard");
+            if (find_index) {
+                object.remove(object.children[find_index]);
+            }
+            
 
 
             mixer = new THREE.AnimationMixer(object);
@@ -482,16 +494,27 @@
             var obj_name_left = object_left.children[2].name.slice(0, 5);
             //alert(obj_name_left);
             let obj_name2_left = obj_name_left + "Shirt";
-            var find_index_left = object_left.children.findIndex(x => x.name === obj_name2_left || x.name === obj_name_left + "Cloth");
+            var find_index_left = object_left.children.findIndex(x => x.name === obj_name2_left || x.name === obj_name_left + "Cloth" || x.name === obj_name_left + "Hoodie" || x.name === obj_name_left + "Hoody");
             object_left.children[find_index_left].material = m1;
             //alert(object1);
             //object_left.children[find_index_left].material = object_left.children[find_index_left].material.clone();
             //object_left.children[find_index_left].material.emissive.setHex(0x981E30);
             //object_left.children[find_index_left].material.opacity = 0;
-            //let obj_name3_left = obj_name_left + "Hair";
-            //find_index_left = object_left.children.findIndex(x => x.name === obj_name3_left);
-            //object_left.children[find_index_left].material = m2;
-
+            if (index2 == 2) {
+                let obj_name3_left = obj_name_left + "Hair";
+                find_index_left = object_left.children.findIndex(x => x.name === obj_name3_left);
+                //object_left.children[find_index_left].material = object_left.children[find_index_left].material.clone();
+                object_left.children[find_index_left].material = m2;
+            }
+            
+            //object_left.children[find_index_left].material.fog = false;
+            //object_left.children[find_index_left].material.opacity = 1;
+            //object_left.children[find_index_left].material.transparency = false;
+            //object_left.children[find_index_left].material.depthWrite = false;
+            find_index_left = object_left.children.findIndex(x => x.name === obj_name_left + "Beard");
+            if (find_index_left) {
+                object_left.remove(object_left.children[find_index_left]);
+            }
             mixer_left = new THREE.AnimationMixer(object_left);
             const loader2_left = new FBXLoader();
 
