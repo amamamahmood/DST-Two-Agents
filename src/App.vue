@@ -259,7 +259,7 @@
                 break;
             case 1:
                 agentName = "Kate";
-                agentName = "Elizabeth";
+                agentName2 = "Elizabeth";
                 //selectedVoice = 1;
                 gen = "f";
                 index2 = 0;
