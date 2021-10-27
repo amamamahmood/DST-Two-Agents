@@ -1279,7 +1279,7 @@
 
                     }
                     else {
-                        this.enable_new();
+                        this.enableNew();
                         setAction(actions[0]);
                         setAction_left(actions_left[0]);
                         inst = document.getElementById("drag_inst");
