@@ -409,7 +409,7 @@
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
         const texture = new THREE.TextureLoader().load('https://previews.123rf.com/images/fotoslaz/fotoslaz1801/fotoslaz180100044/94024038-blonde-hair-for-background-and-texture-material.jpg');
-        const m1 = new THREE.MeshPhongMaterial({ color: 0x34373b, shininess: 10 });
+        const m1 = new THREE.MeshPhongMaterial({ color: 0x021227, shininess: 10 });
         const m2 = new THREE.MeshBasicMaterial({ color: 0x000001, shininess: 30, opacity:0.2, map:texture});
         let obj_name, find_index;
         //let object1 = new THREE.Material();
@@ -1224,7 +1224,7 @@
                 //alert("In dragging" + counter);
                 //alert(counter);
                 if (counter >= 9) {
-                    this.enable();
+                    this.enableNew();
                     inst = document.getElementById("drag_inst");
                     inst.textContent = "Please finalize and submit your rankings before concluding the study";
                     btn = document.getElementById("submit");
