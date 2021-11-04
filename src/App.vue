@@ -130,6 +130,7 @@
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { degToRad } from 'three/src/math/MathUtils';
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
     var url = '';
     var user_initial_rankings;
@@ -308,17 +309,18 @@
 
         camera_left.zoom = 0.75;
         camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
-        camera.position.set(0, -1.5, 1.5);
+        camera.position.set(0, -1.5, 2);
+        camera.zoom = 1.5;
         //camera.rotation.set(90 * Math.PI /180, 0, 0);
         //alert(camera.rotation.x);
         //camera.rotation.x = 270 * Math.PI / 180;
         //const xAxis = new THREE.Vector3(1, 0,0);
         //camera.rotateOnWorldAxis(xAxis, THREE.Math.degToRad(90));
-        camera.up = new THREE.Vector3(0, 0, 1);
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        //camera.up = new THREE.Vector3(0, 0, 1);
+        //camera.lookAt(new THREE.Vector3(0, 0, 1.5));
         //alert(camera.rotation.x);
         //alert(camera.projectionMatrix);
-        camera.updateProjectionMatrix();
+        //camera.updateProjectionMatrix();
         //alert(camera.projectionMatrix);
         //alert(camera.rotation.x);
         camera_left.position.set(50, 150, 250);
@@ -443,12 +445,14 @@
             
             //object.scene.scale.set(2, 2, 2);
             //alert(object.scene.position.x);
+            object.scene.rotation.x = 75 * Math.PI / 180;
             object.scene.position.x = 0;				    //Position (x = right+ left-)
-            object.scene.position.y = 0;				    //Position (y = up+, down-)
+            object.scene.position.y = 0;				   // moving back+  //Position (y = up+, down-)
             object.scene.position.z = 0;
-            //object.scene.rotation.x = 180 * Math.PI / 180;
+            
             //object.scene.rotation.y = 180 * Math.PI / 180;
             //object.scene.rotation.z = 180 * Math.PI / 180;
+            //alert(object.scene.rotation.x);
             model = object.scene;
             scene.add(model);
             //alert(model.position.x);
@@ -643,12 +647,17 @@
         container.appendChild(renderer.domElement);
         container_left.appendChild(renderer_left.domElement);
         const controls = new OrbitControls(camera, renderer.domElement);
-        //controls.target.set(0, 1.5, 0);
+        //alert(controls.target.x);
+        //alert(controls.target.y);
+        //alert(controls.target.z);
+        controls.target.set(0,1.5,0);
+        const xAxis = new THREE.Vector3(1, 0,0);
+        camera.rotateOnWorldAxis(xAxis, degToRad(90));
         controls.enabled = true;
         controls.update();
         const controls_left = new OrbitControls(camera_left, renderer_left.domElement);
         controls_left.target.set(0, 100, 0);
-        controls_left.enabled = true;
+        controls_left.enabled = false;
         controls_left.update();
 
         window.addEventListener('resize', onWindowResize);
