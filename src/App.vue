@@ -129,6 +129,7 @@
     import ThankYou from './components/ThankYou';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
     var url = '';
     var user_initial_rankings;
@@ -154,10 +155,11 @@
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [1, 4, 5, 0, 7, 2, 3, 6, 8];
     var avatar_order_left = [0, 2, 3, 8, 6, 1, 4, 5, 7];
-    let camera, scene, renderer, renderer_left, scene2, scene_left, scene2_left;
+    let camera, camera_left, scene, renderer, renderer_left, scene2, scene_left, scene2_left;
     let agentName, agentName2;
     let avatarReady = false, avatarReady_left = false;
-    let actions, actions_left;
+    let actions = [];
+    let actions_left =[];
     const clock = new THREE.Clock();
     let activeAction, lastAction, activeAction_left, lastAction_left;
     let mixer, mixer_left;
@@ -301,12 +303,28 @@
 
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
-        camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-        camera.zoom = 0.75;
-        camera.position.set(50, 150, 250);
+        //camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
+        camera_left = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
+
+        camera_left.zoom = 0.75;
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
+        camera.position.set(0, -1.5, 1.5);
+        //camera.rotation.set(90 * Math.PI /180, 0, 0);
+        //alert(camera.rotation.x);
+        //camera.rotation.x = 270 * Math.PI / 180;
+        //const xAxis = new THREE.Vector3(1, 0,0);
+        //camera.rotateOnWorldAxis(xAxis, THREE.Math.degToRad(90));
+        camera.up = new THREE.Vector3(0, 0, 1);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        //alert(camera.rotation.x);
+        //alert(camera.projectionMatrix);
+        camera.updateProjectionMatrix();
+        //alert(camera.projectionMatrix);
+        //alert(camera.rotation.x);
+        camera_left.position.set(50, 150, 250);
         const fullWidth = container.clientWidth * 3;
         const fullHeight = container.clientHeight * 2;
-        camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
+        camera_left.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
         //camera_left = camera;
         /* for left agent
         camera_left = new THREE.PerspectiveCamera(45, container_left.clientWidth / container_left.clientHeight, 1, 2000);
@@ -320,7 +338,7 @@
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
         scene2 = new THREE.Scene();
-        scene2.background = new THREE.Color(0xffffff);
+        scene2.background = new THREE.Color(0xb0b0b0);
         //scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
@@ -328,7 +346,12 @@
         //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         //hemiLight2.position.set(0, 100, 0);
         //scene.add(hemiLight2);
-        
+        var ambientLight = new THREE.AmbientLight(0xcccccc);
+        scene.add(ambientLight);
+
+        var directionalLight = new THREE.DirectionalLight(0xffffff);
+        directionalLight.position.set(0, 1, 1).normalize();
+        scene.add(directionalLight);
 
         scene_left = new THREE.Scene();
         scene_left.background = new THREE.Color(0xffffff);
@@ -407,13 +430,56 @@
 
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
-        const loader = new FBXLoader();
+        
         const texture = new THREE.TextureLoader().load('https://previews.123rf.com/images/fotoslaz/fotoslaz1801/fotoslaz180100044/94024038-blonde-hair-for-background-and-texture-material.jpg');
         const m1 = new THREE.MeshPhongMaterial({ color: 0x021227, shininess: 10 }); // 0x2650E7 in blender
         const m2 = new THREE.MeshBasicMaterial({ color: 0x000001, shininess: 30, opacity:0.2, map:texture});
         let obj_name, find_index;
         //let object1 = new THREE.Material();
-        loader.load(fileLoad, function (object) {
+        //const loader = new FBXLoader();
+        let model, skeleton;
+        const loader = new GLTFLoader();
+        loader.load('https://dl.dropbox.com/s/k6dh2flyx8qp894/jody.glb', function (object) {
+            
+            //object.scene.scale.set(2, 2, 2);
+            //alert(object.scene.position.x);
+            object.scene.position.x = 0;				    //Position (x = right+ left-)
+            object.scene.position.y = 0;				    //Position (y = up+, down-)
+            object.scene.position.z = 0;
+            //object.scene.rotation.x = 180 * Math.PI / 180;
+            //object.scene.rotation.y = 180 * Math.PI / 180;
+            //object.scene.rotation.z = 180 * Math.PI / 180;
+            model = object.scene;
+            scene.add(model);
+            //alert(model.position.x);
+            model.traverse(function (object2) {
+
+                if (object2.isMesh) object2.castShadow = true;
+
+            });
+            //skeleton = new THREE.SkeletonHelper(model);
+            //skeleton.visible = false;
+            //scene.add(skeleton);
+            const animations = object.animations;
+            mixer = new THREE.AnimationMixer(model);
+
+            let numAnimations = animations.length;
+            //alert(numAnimations);
+            for (let i = 0; i !== numAnimations; ++i) {
+
+                let clip = animations[i];
+                const action = mixer.clipAction(clip);
+
+                actions.push(action);
+                
+            }
+            //alert(actions[1].name);
+            actions[1].timeScale = 0.75;
+            actions[1].play();
+            activeAction = actions[1];
+            lastAction = actions[1];
+        });
+        /*loader.load(fileLoad, function (object) {
             obj_name = object.children[2].name.slice(0, 5);
             //alert(obj_name);
             let obj_name2 = obj_name + "Shirt";
@@ -480,7 +546,7 @@
 
             });
 
-        });
+        });*/
 
         // for agent on left
 
@@ -572,17 +638,17 @@
         renderer_left.shadowMap.enabled = true;
         renderer_left.setClearColor(0xffffff, 0);
         // renderer.domElement.id = "avatardivelement";
-        renderer_left.render(scene2_left, camera);
+        renderer_left.render(scene2_left, camera_left);
 
         container.appendChild(renderer.domElement);
         container_left.appendChild(renderer_left.domElement);
         const controls = new OrbitControls(camera, renderer.domElement);
-        controls.target.set(0, 100, 0);
-        controls.enabled = false;
+        //controls.target.set(0, 1.5, 0);
+        controls.enabled = true;
         controls.update();
-        const controls_left = new OrbitControls(camera, renderer_left.domElement);
+        const controls_left = new OrbitControls(camera_left, renderer_left.domElement);
         controls_left.target.set(0, 100, 0);
-        controls_left.enabled = false;
+        controls_left.enabled = true;
         controls_left.update();
 
         window.addEventListener('resize', onWindowResize);
@@ -600,12 +666,12 @@
 
         renderer.setSize(container.clientWidth, container.clientHeight);
 
-        /* var container_left = document.getElementById("avatardiv_left")
+         var container_left = document.getElementById("avatardiv_left");
          camera_left.aspect = container_left.clientWidth / container_left.clientHeight;
-         camera_left.updateProjectionMatrix();*/
+         camera_left.updateProjectionMatrix();
         // for agent on left
 
-        renderer_left.setSize(container.clientWidth, container.clientHeight);
+        renderer_left.setSize(container_left.clientWidth, container_left.clientHeight);
     }
 
 
@@ -618,7 +684,7 @@
         if (mixer) mixer.update(delta);
         if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
-        renderer_left.render(scene_left, camera);
+        renderer_left.render(scene_left, camera_left);
 
         //stats.update();
 
