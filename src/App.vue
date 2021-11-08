@@ -304,38 +304,45 @@ import { degToRad } from 'three/src/math/MathUtils';
 
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
-        //camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-        camera_left = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
-
+        camera_left = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
         camera_left.zoom = 0.75;
-        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
-        camera.position.set(0, -1.5, 2);
-        camera.zoom = 1.5;
+        camera_left.position.set(0, 150, 250);
+        camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
+        camera.position.set(0,250,180);
+        camera.zoom = .8;
+        //camera.position.set(0, -1.2, 2.5);
+        
         //camera.rotation.set(90 * Math.PI /180, 0, 0);
         //alert(camera.rotation.x);
         //camera.rotation.x = 270 * Math.PI / 180;
-        //const xAxis = new THREE.Vector3(1, 0,0);
-        //camera.rotateOnWorldAxis(xAxis, THREE.Math.degToRad(90));
+        //
         //camera.up = new THREE.Vector3(0, 0, 1);
         //camera.lookAt(new THREE.Vector3(0, 0, 1.5));
         //alert(camera.rotation.x);
-        //alert(camera.projectionMatrix);
+        //alert(JSON.stringify(camera.projectionMatrix));
+        //camera.translateY(-50);
+        //const xAxis = new THREE.Vector3(1, 0, 0);
+        //camera.rotateOnWorldAxis(xAxis, THREE.Math.degToRad(90));
         //camera.updateProjectionMatrix();
+        
+        //alert(camera.rotation.x);
+        //alert(JSON.stringify(camera.projectionMatrix));
         //alert(camera.projectionMatrix);
         //alert(camera.rotation.x);
-        camera_left.position.set(50, 150, 250);
-        const fullWidth = container.clientWidth * 3;
-        const fullHeight = container.clientHeight * 2;
-        camera_left.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
+        
+        //const fullWidth = container.clientWidth * 3;
+        //const fullHeight = container.clientHeight * 2;
+        //camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
+        
         //camera_left = camera;
         /* for left agent
         camera_left = new THREE.PerspectiveCamera(45, container_left.clientWidth / container_left.clientHeight, 1, 2000);
         camera_left.zoom = 0.75;
-        camera_left.position.set(50, 150, 250);
+        camera_left.position.set(50, 150, 250);*/
         const fullWidth_left = container_left.clientWidth * 3;
         const fullHeight_left = container_left.clientHeight * 2;
         camera_left.setViewOffset(fullWidth_left, fullHeight_left, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
-    // end for left agent*/
+    // end for left agent
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
@@ -343,17 +350,18 @@ import { degToRad } from 'three/src/math/MathUtils';
         scene2.background = new THREE.Color(0xb0b0b0);
         //scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
-        hemiLight.position.set(0, 200, 0);
+        hemiLight.position.set(0, 300, 0);
         scene.add(hemiLight);
         //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         //hemiLight2.position.set(0, 100, 0);
         //scene.add(hemiLight2);
         var ambientLight = new THREE.AmbientLight(0xcccccc);
+        ambientLight.intensity = 0.5;
         scene.add(ambientLight);
 
-        var directionalLight = new THREE.DirectionalLight(0xffffff);
-        directionalLight.position.set(0, 1, 1).normalize();
-        scene.add(directionalLight);
+        //var directionalLight = new THREE.DirectionalLight(0xffffff);
+        //directionalLight.position.set(0, 1, 1).normalize();
+        //scene.add(directionalLight);
 
         scene_left = new THREE.Scene();
         scene_left.background = new THREE.Color(0xffffff);
@@ -364,11 +372,12 @@ import { degToRad } from 'three/src/math/MathUtils';
         hemiLight2.position.set(0, 200, 0);
         scene_left.add(hemiLight2);
         //scene_left.add(hemiLight2);
+        index == 1;  // get rid of this later ///****************
         if (index == 0 || index == 2) {
             const light = new THREE.AmbientLight(0x808080); // soft white light
             scene.add(light);
             const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
-            lights.position.set(0, 50, 0);
+            lights.position.set(0, 200, 0);
             scene.add(lights);
             const light_left = new THREE.AmbientLight(0xffffff); // soft white light
             scene_left.add(light_left);
@@ -388,13 +397,13 @@ import { degToRad } from 'three/src/math/MathUtils';
 
 
         const dirLight = new THREE.DirectionalLight(0xffffff);
-        dirLight.position.set(0, 200, 100);
+        dirLight.position.set(0, 300, 100);
         dirLight.castShadow = true;
         dirLight.shadow.camera.top = 180;
         dirLight.shadow.camera.bottom = - 100;
         dirLight.shadow.camera.left = - 120;
         dirLight.shadow.camera.right = 120;
-        scene.add(dirLight);
+        //scene.add(dirLight);
         //scene_left.add(dirLight);
         // adding to test
         const dirLight2 = new THREE.DirectionalLight(0xffffff);
@@ -441,20 +450,57 @@ import { degToRad } from 'three/src/math/MathUtils';
         //const loader = new FBXLoader();
         let model, skeleton;
         const loader = new GLTFLoader();
-        loader.load('https://dl.dropbox.com/s/k6dh2flyx8qp894/jody.glb', function (object) {
-            
+        loader.load('https://dl.dropbox.com/s/ceec1le71ayts8a/jody4.glb', function (object) {
+
+            // https://dl.dropbox.com/s/h6hvllxo2u7bdvy/jody2.glb
+            //https://dl.dropbox.com/s/k6dh2flyx8qp894/jody.glb
             //object.scene.scale.set(2, 2, 2);
-            //alert(object.scene.position.x);
-            object.scene.rotation.x = 75 * Math.PI / 180;
-            object.scene.position.x = 0;				    //Position (x = right+ left-)
-            object.scene.position.y = 0;				   // moving back+  //Position (y = up+, down-)
-            object.scene.position.z = 0;
+            //alert(object.scene.scale.x);
+            //alert("gltf camera");
+            //alert(JSON.stringify(object.cameras[0].projectionMatrix));
+            //camera = object.cameras[0];
+            //camera.projectionMatrix = object.cameras[0].projectionMatrix;
+            //camera.updateProjectionMatrix();
+            //alert(JSON.stringify(camera.projectionMatrix));
+            //let blenderCamera = object.cameras[0];
+            //camera.position.x = blenderCamera.parent.position.x;
+            //camera.position.y = blenderCamera.parent.position.y;
+            //camera.position.z = blenderCamera.parent.position.z;
             
+            //camera.aspect = blenderCamera.aspect;
+            //camera.fov = blenderCamera.fov;
+            //camera.far = blenderCamera.far;
+            //camera.near = blenderCamera.near;
+            //camera.position.copy(object.cameras[0].parent.position);
+            //camera.quaternion.copy(object.cameras[0].parent.quaternion);
+            //camera.scale.copy(object.cameras[0].parent.scale);
+            //alert(object.scene.rotation.x);
+            //Make an object
+
+            //Create a matrix
+            //var matrix = new THREE.Matrix4();
+            //Rotate the matrix
+            //matrix.makeRotationX(Math.PI / 2);
+
+            //rotate the object using the matrix
+            //object.scene.position.applyMatrix4(matrix);
+            //alert(JSON.stringify(object.scene));
+            object.scene.rotation.x = 65 * Math.PI / 180;
+            //alert(object.scene.position.x);				    //Position (x = right+ left-)
+            //object.scene.position.y = 0;				   // moving back+  //Position (y = up+, down-)
+            //object.scene.position.z = 0;
+            //object.scene.scale.set(0.01, 0.01, 0.01);
             //object.scene.rotation.y = 180 * Math.PI / 180;
             //object.scene.rotation.z = 180 * Math.PI / 180;
             //alert(object.scene.rotation.x);
+            //alert(camera.position.y);
+            //alert(camera.rotation.x);
             model = object.scene;
             scene.add(model);
+            const fullWidth = container.clientWidth * 3;
+            const fullHeight = container.clientHeight * 2;
+            camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
+
             //alert(model.position.x);
             model.traverse(function (object2) {
 
@@ -560,7 +606,12 @@ import { degToRad } from 'three/src/math/MathUtils';
         
 
         loader_left.load(fileLoad_left, function (object_left) {
-
+            //alert(object_left.scale.x);
+            //alert(object_left.scale.y);
+            //alert(object_left.scale.z);
+            //alert(object_left.rotation.x);
+            //alert(object_left.rotation.y);
+            //alert(object_left.rotation.z);
             var obj_name_left = object_left.children[2].name.slice(0, 5);
             //alert(obj_name_left);
             let obj_name2_left = obj_name_left + "Shirt";
@@ -650,9 +701,9 @@ import { degToRad } from 'three/src/math/MathUtils';
         //alert(controls.target.x);
         //alert(controls.target.y);
         //alert(controls.target.z);
-        controls.target.set(0,1.5,0);
-        const xAxis = new THREE.Vector3(1, 0,0);
-        camera.rotateOnWorldAxis(xAxis, degToRad(90));
+        controls.target.set(0,100,0);
+        //const xAxis = new THREE.Vector3(1, 0,0);
+        //camera.rotateOnWorldAxis(xAxis, degToRad(90));
         controls.enabled = true;
         controls.update();
         const controls_left = new OrbitControls(camera_left, renderer_left.domElement);
