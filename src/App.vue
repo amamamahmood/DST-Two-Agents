@@ -355,9 +355,17 @@ import { degToRad } from 'three/src/math/MathUtils';
         //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         //hemiLight2.position.set(0, 100, 0);
         //scene.add(hemiLight2);
-        var ambientLight = new THREE.AmbientLight(0xcccccc);
-        ambientLight.intensity = 0.5;
+        var ambientLight = new THREE.AmbientLight(0xcccccc, 1);
         scene.add(ambientLight);
+
+        const light1 = new THREE.PointLight(0x444444, 1);
+        light1.position.set(100, 500, 200);
+        scene.add(light1);
+
+        const light2 = new THREE.PointLight(0x444444, 1);
+        light2.position.set(-100, 500, 200);
+        scene.add(light2);
+
 
         //var directionalLight = new THREE.DirectionalLight(0xffffff);
         //directionalLight.position.set(0, 1, 1).normalize();
@@ -397,7 +405,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
 
         const dirLight = new THREE.DirectionalLight(0xffffff);
-        dirLight.position.set(0, 300, 100);
+        dirLight.position.set(200, 200, 500);
         dirLight.castShadow = true;
         dirLight.shadow.camera.top = 180;
         dirLight.shadow.camera.bottom = - 100;
