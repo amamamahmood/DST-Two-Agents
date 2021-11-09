@@ -1295,21 +1295,37 @@ import { degToRad } from 'three/src/math/MathUtils';
                 if (avatarReady) {
                     random_actionList();
                     setAction(actions[random_actions[0]]);
-                    setTimeout(function () {
-                        if (avatarReady) { setAction(actions[random_actions[1]]); }
+                    if (avatarReady) {
                         setTimeout(function () {
-                            if (avatarReady) { setAction(actions[random_actions[2]]); }
-                            setTimeout(function () {
-                                if (avatarReady) { setAction(actions[random_actions[3]]); }
+                            setAction(actions[random_actions[1]]);
+                            if (avatarReady) {
                                 setTimeout(function () {
-                                    if (avatarReady) { setAction(actions[random_actions[4]]); }
-                                    setTimeout(function () {
-                                        if (avatarReady) { setAction(actions[random_actions[5]]); }
-                                    }, 5000);
+                                    setAction(actions[random_actions[2]]);
+                                    if (avatarReady) {
+                                        setTimeout(function () {
+                                            setAction(actions[random_actions[3]]);
+                                            if (avatarReady) {
+                                                setTimeout(function () {
+                                                    setAction(actions[random_actions[4]]);
+                                                    if (avatarReady) {
+                                                        setTimeout(function () {
+                                                            setAction(actions[random_actions[5]]); 
+                                                        }, 5000);
+                                                        if (avatarReady) {
+                                                            setTimeout(function () {
+                                                                setAction(actions[random_actions[6]]);
+                                                            }, 5000);
+                                                        }
+                                                    }
+                                                }, 5000);
+                                            }
+                                        }, 5000);
+                                    }
                                 }, 5000);
-                            }, 5000);
+                            }
                         }, 5000);
-                    }, 5000);
+                    
+                    }
                     setAction_left(actions_left[0])
                 }
                 else {
