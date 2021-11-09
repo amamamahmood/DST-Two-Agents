@@ -1812,8 +1812,8 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 25%;
-        left: 10vw;
+        top: 15%;
+        left: 3vw;
         z-index: -1;
     }
     .arrowAvatar-right {
