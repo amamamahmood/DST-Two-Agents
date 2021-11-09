@@ -351,26 +351,29 @@ import { degToRad } from 'three/src/math/MathUtils';
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
         scene2 = new THREE.Scene();
-        scene2.background = new THREE.Color(0xb0b0b0);
+        scene2.background = new THREE.Color(0xffffff);
         //scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 300, 300);
         
         scene.add(hemiLight);
-        
+        var hemiLight3 = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
+        hemiLight3.position.set(0, 500, 0);
+        scene.add(hemiLight3);
+
         //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         //hemiLight2.position.set(0, 100, 0);
         //scene.add(hemiLight2);
-        var ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
 
-        const light1 = new THREE.PointLight(0x444444, 1);
+        /*const light1 = new THREE.PointLight(0x444444, 1);
         light1.position.set(50, 400, 200);
         scene.add(light1);
 
         const light2 = new THREE.PointLight(0x444444, 1);
         light2.position.set(-50, 400, 200);
-        scene.add(light2);
+        scene.add(light2);*/
 
 
         //var directionalLight = new THREE.DirectionalLight(0xffffff);
@@ -386,16 +389,16 @@ import { degToRad } from 'three/src/math/MathUtils';
         hemiLight2.position.set(0, 200, 0);
         scene_left.add(hemiLight2);
         //scene_left.add(hemiLight2);
-        index == 1;  // get rid of this later ///****************
-        if (index == 0 || index == 2) {
+        /*index == 1;  // get rid of this later ///****************
+        if (index == 0 || index == 2) {*/
             const light = new THREE.AmbientLight(0x808080); // soft white light
             scene.add(light);
-            const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
-            lights.position.set(0, 200, 0);
-            scene.add(lights);
+            //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
+            //lights.position.set(0, 200, 0);
+            //scene.add(lights);
             const light_left = new THREE.AmbientLight(0xffffff); // soft white light
             scene_left.add(light_left);
-        }
+        /*}
         else {
             const light2 = new THREE.AmbientLight(0xffffff); // soft white light
             scene.add(light2);
@@ -407,7 +410,7 @@ import { degToRad } from 'three/src/math/MathUtils';
             //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
             //lights.position.set(0, 100, 0);
             //scene.add(lights);
-        }
+        }*/
 
 
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -537,13 +540,13 @@ import { degToRad } from 'three/src/math/MathUtils';
 
                 let clip = animations[i];
                 const name = clip.name;
-                if (name == 'idle') { idle_action = i; alert(i); alert(name);}
+                alert(name);
+                if (name == 'idle') { idle_action = i; }
                 else if (name == 'wave') { wave_action = i; }
                 else if (name == 'question') { reject = i;}
                 const action = mixer.clipAction(clip);
                 actions.push(action);
             }
-            alert(idle_action)
             //alert(random_actions);
             random_actions = random_actions.filter(function (value, index, arr) {
                 return (value != idle_action && value != wave_action && value != reject);
@@ -789,9 +792,11 @@ import { degToRad } from 'three/src/math/MathUtils';
             //lastAction.stop()
             lastAction.fadeOut(1);
             activeAction.reset();
-            activeAction.timeScale = 1;
+            activeAction.timeScale = 0.8;
+            activeAction.weight = 0.8;
             activeAction.fadeIn(1);
-            activeAction.timeScale = 1;
+            activeAction.timeScale = 0.8;
+            activeAction.weight = 0.8;
             activeAction.play();
         }
     }
@@ -803,9 +808,9 @@ import { degToRad } from 'three/src/math/MathUtils';
             //lastAction.stop()
             lastAction_left.fadeOut(1);
             activeAction_left.reset();
-            activeAction_left.timeScale = 1;
+            activeAction_left.timeScale = 0.75;
             activeAction_left.fadeIn(1);
-            activeAction_left.timeScale = 1;
+            activeAction_left.timeScale = 0.75;
             activeAction_left.play();
         }
     }
@@ -813,13 +818,28 @@ import { degToRad } from 'three/src/math/MathUtils';
     function random_actionList() {
         random_actions_order.sort(() => Math.random() - 0.5);
         random_actions = random_actions_order.map(i => random_actions[i]);
-        alert(JSON.stringify(random_actions));
+        //alert(JSON.stringify(random_actions));
     }
 
     function actuate_agent_talking() {
         random_actionList();
         setAction(actions[random_actions[0]]);
-        if (avatarReady) {
+        setTimeout(function () {
+            if (avatarReady) { setAction(actions[random_actions[1]]); }
+            setTimeout(function () {
+                if (avatarReady) { setAction(actions[random_actions[2]]); }
+                setTimeout(function () {
+                    if (avatarReady) { setAction(actions[random_actions[3]]); }
+                    setTimeout(function () {
+                        if (avatarReady) { setAction(actions[random_actions[4]]); }
+                        setTimeout(function () {
+                            if (avatarReady) { setAction(actions[random_actions[5]]); }
+                        }, 5000);
+                    }, 5000);
+                }, 5000);
+            }, 5000);
+        }, 5000);
+        /*if (avatarReady) {
             setTimeout(function () {
                 setAction(actions[random_actions[1]]);
                 if (avatarReady) {
@@ -849,7 +869,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                 }
             }, 5000);
 
-        }
+        }*/
     }
 
 
