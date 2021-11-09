@@ -537,17 +537,18 @@ import { degToRad } from 'three/src/math/MathUtils';
 
                 let clip = animations[i];
                 const name = clip.name;
-                if (name == 'idle') { idle_action = i; }
+                if (name == 'idle') { idle_action = i; alert(i); alert(name);}
                 else if (name == 'wave') { wave_action = i; }
                 else if (name == 'question') { reject = i;}
                 const action = mixer.clipAction(clip);
                 actions.push(action);
             }
-            alert(random_actions);
+            alert(idle_action)
+            //alert(random_actions);
             random_actions = random_actions.filter(function (value, index, arr) {
                 return (value != idle_action && value != wave_action && value != reject);
             });
-            alert(random_actions);
+            //alert(random_actions);
             //alert(JSON.stringify(actions));
             avatarReady = true;
             //alert(actions[3].name);
@@ -815,6 +816,41 @@ import { degToRad } from 'three/src/math/MathUtils';
         alert(JSON.stringify(random_actions));
     }
 
+    function actuate_agent_talking() {
+        random_actionList();
+        setAction(actions[random_actions[0]]);
+        if (avatarReady) {
+            setTimeout(function () {
+                setAction(actions[random_actions[1]]);
+                if (avatarReady) {
+                    setTimeout(function () {
+                        setAction(actions[random_actions[2]]);
+                        if (avatarReady) {
+                            setTimeout(function () {
+                                setAction(actions[random_actions[3]]);
+                                if (avatarReady) {
+                                    setTimeout(function () {
+                                        setAction(actions[random_actions[4]]);
+                                        if (avatarReady) {
+                                            setTimeout(function () {
+                                                setAction(actions[random_actions[5]]);
+                                            }, 5000);
+                                            if (avatarReady) {
+                                                setTimeout(function () {
+                                                    setAction(actions[random_actions[6]]);
+                                                }, 5000);
+                                            }
+                                        }
+                                    }, 5000);
+                                }
+                            }, 5000);
+                        }
+                    }, 5000);
+                }
+            }, 5000);
+
+        }
+    }
 
 
     export default {
@@ -1292,47 +1328,16 @@ import { degToRad } from 'three/src/math/MathUtils';
                 //sect = document.getElementById("avatarRating2");
                 //sect.style.display = "block";
                 
-                if (avatarReady) {
-                    random_actionList();
-                    setAction(actions[random_actions[0]]);
-                    if (avatarReady) {
-                        setTimeout(function () {
-                            setAction(actions[random_actions[1]]);
-                            if (avatarReady) {
-                                setTimeout(function () {
-                                    setAction(actions[random_actions[2]]);
-                                    if (avatarReady) {
-                                        setTimeout(function () {
-                                            setAction(actions[random_actions[3]]);
-                                            if (avatarReady) {
-                                                setTimeout(function () {
-                                                    setAction(actions[random_actions[4]]);
-                                                    if (avatarReady) {
-                                                        setTimeout(function () {
-                                                            setAction(actions[random_actions[5]]); 
-                                                        }, 5000);
-                                                        if (avatarReady) {
-                                                            setTimeout(function () {
-                                                                setAction(actions[random_actions[6]]);
-                                                            }, 5000);
-                                                        }
-                                                    }
-                                                }, 5000);
-                                            }
-                                        }, 5000);
-                                    }
-                                }, 5000);
-                            }
-                        }, 5000);
-                    
-                    }
-                    setAction_left(actions_left[0])
-                }
+                //if (avatarReady) {
+                avatarReady = true;
+                actuate_agent_talking();
+                setAction_left(actions_left[0])
+                /*}
                 else {
                     alert(idle_action);
                     setAction(actions[idle_action]);
                     setAction_left(actions_left[0])
-                }
+                }*/
 
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
@@ -1379,6 +1384,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
             },
             makeDraggable: function (event) {
+                avatarReady = false;
                 items[counter].updates = 1;
                 total_updates += 1;
                 //alert(total_updates);
@@ -1408,8 +1414,10 @@ import { degToRad } from 'three/src/math/MathUtils';
                 var btn = document.getElementById("drag");
                 btn.style.display = "none";
                 this.doneDragging();
+                avatarReady = false;
             },
             doneDragging: function () {
+                avatarReady = false;
                 let say, tempStr, tempStr_left;
                 let audio_src, audio_src_left;
                 items[counter].rankings = this.returnRankings();
@@ -1434,10 +1442,12 @@ import { degToRad } from 'three/src/math/MathUtils';
 
                     if (counter < 9) {
                         avatarReady = true;
-                        random_actionList();
-                        if (avatarReady) {
-                            setAction(actions[random_actions[0]]);
-                            setTimeout(function () {
+                        //random_actionList();
+                        //if (avatarReady) {
+                        actuate_agent_talking();
+                            //setAction(actions[random_actions[0]]);
+
+                            /*setTimeout(function () {
                                 if (avatarReady) { setAction(actions[random_actions[1]]); }
                                 setTimeout(function () {
                                     if (avatarReady) { setAction(actions[random_actions[2]]); }
@@ -1451,11 +1461,11 @@ import { degToRad } from 'three/src/math/MathUtils';
                                         }, 5000);
                                     }, 5000);
                                 }, 5000);
-                            }, 5000);
-                        }
-                        else {
-                            setAction(actions[idle_action]);
-                        }
+                            }, 5000);*/
+                        //}
+                       // else {
+                       //     setAction(actions[idle_action]);
+                       // }
                         //setAction(actions[1]);
                         //setTimeout(function () {
                         const greetingSpeech = new Audio();
@@ -1470,13 +1480,12 @@ import { degToRad } from 'three/src/math/MathUtils';
                         const greetingSpeech2 = new Audio();
                         greetingSpeech2.src = audio_src;
                         greetingSpeech.addEventListener('ended', function () {
-
                             greetingSpeech2.play();
                             const greetingSpeech3 = new Audio();
                             greetingSpeech3.src = audio_src_left;
                             greetingSpeech2.addEventListener('ended', function () {
-                                avatarReady = false;
                                 setAction(actions[idle_action]);
+                                avatarReady = false;
                                 setAction_left(actions_left[1]);
                                 inst.textContent = say_left;
                                 greetingSpeech3.play();
