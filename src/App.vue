@@ -172,10 +172,15 @@
     var random_actions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 7 is to be excluded. 9 is wave
     var random_actions_order = [0, 1, 2, 3, 4, 5, 6];
     var idle_action_left = 2;
-    var wave_action_left = 9;
+    var wave_action_left = 8;
     var random_actions_left = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var agent_turn = 1;
+    var agent_turn_reverse = 2;
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
+    var goes_first1 = [1, 2, 1, 2, 1, 1, 2, 2, 1];
     //var agent2_script = [true, false, true, true, false, false, true, false, true];
+    var goes_first2 =    [2,     1,     2,      1,    2,    2,     1,   1,    2  ];
+
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
         "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
@@ -254,7 +259,7 @@
                 break;
 
         }
-        index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
+        //index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1; /**************uncomment
         //var fileLoad = files[index]+'_idle.fbx';
         //var fileLoad2 = files[index] + '_talking.fbx';
         //var fileLoad = 'https://drive.google.com/uc?export=view&id=' + files[index];
@@ -473,10 +478,7 @@
         //const loader = new FBXLoader();
         let model;
         const loader = new GLTFLoader();
-        loader.load('https://dl.dropbox.com/s/c4g3te6zhl7g4lm/jody_multiple.glb', function (object) {
-
-            // https://dl.dropbox.com/s/h6hvllxo2u7bdvy/jody2.glb
-            //https://dl.dropbox.com/s/k6dh2flyx8qp894/jody.glb
+        loader.load('https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb', function (object) {
             //object.scene.scale.set(2, 2, 2);
             //alert(object.scene.scale.x);
             //alert("gltf camera");
@@ -571,8 +573,8 @@
         // for left agent
         let model_left;
         const loader_left = new GLTFLoader();
-        loader_left.load('https://dl.dropbox.com/s/xkqntxaanc5tpta/elizabeth_multiple.glb', function (object_left) {
-
+        loader_left.load('https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb', function (object_left) {
+            
             object_left.scene.rotation.x = 65 * Math.PI / 180;
             
             model_left = object_left.scene;
@@ -599,7 +601,7 @@
 
                 let clip_left = animations_left[i];
                 const name_left = clip_left.name;
-                alert(name_left);
+                //alert(name_left);
                 if (name_left == 'idle') { idle_action_left = i; }
                 else if (name_left == 'wave') { wave_action_left = i; }
                 else if (name_left == 'question') { reject_left = i; }
@@ -876,20 +878,30 @@
             activeAction_left.play();
         }
     }
+    function decide_agent_turn() {
+        agent_turn = goes_first1[counter];
+        let temp = [1, 2];
+        agent_turn_reverse = temp[agent_turn % 2];
+        alert(agent_turn);
+        alert(agent_turn_reverse);
+    }
 
-    function random_actionList() {
+    function random_actionList(whichAgent) {
         random_actions_order.sort(() => Math.random() - 0.5);
-        random_actions = random_actions_order.map(i => random_actions[i]);
-        random_actions_order.sort(() => Math.random() - 0.5);
-        random_actions_left = random_actions_order.map(i => random_actions_left[i]);
-        //alert(JSON.stringify(random_actions));
+        if (whichAgent == 1) {
+            random_actions = random_actions_order.map(i => random_actions[i]);
+        }
+        else if (whichAgent == 2){
+            random_actions_left = random_actions_order.map(i => random_actions_left[i]);
+        }
     }
 
     function actuate_agent_talking(which_agent) { // 1 right - 2 left
-        random_actionList();
+        avatarReady_left = false;
+        avatarReady = false;
         if (which_agent == 1) {
+            random_actionList(1);
             avatarReady = true;
-            avatarReady_left = false;
             setAction_left(actions_left[idle_action_left]);
             setAction(actions[random_actions[0]]);
             setTimeout(function () {
@@ -908,10 +920,10 @@
                 }, 5000);
             }, 5000);
         }
-        else {
+        else if (which_agent == 2) {
+            random_actionList(2);
             avatarReady_left = true;
-            avatarReady = false;
-            setAction(actions_left[idle_action]);
+            setAction(actions[idle_action]);
             setAction(actions_left[random_actions_left[0]]);
             setTimeout(function () {
                 if (avatarReady_left) { setAction(actions_left[random_actions_left[1]]); }
@@ -928,6 +940,10 @@
                     }, 5000);
                 }, 5000);
             }, 5000);
+        }
+        else {
+            setAction_left(actions_left[idle_action_left]);
+            setAction(actions[idle_action]);
         }
         
         /*if (avatarReady) {
@@ -1385,18 +1401,10 @@
 
             },
             placeItem: function (event) {
+                avatarReady = false;
+                avatarReady_left = false;
                 var button_name = event.currentTarget.id;
-
-                //var avatar_src = parseInt(button_name) + 20
-                //alert(button_name);
-                //var sect = document.getElementById(avatar_src);
-                //sect.src = this.users[counter].avatar;
-                //var p_name = parseInt(button_name) + 10;
                 var set_index = this.userNewList.findIndex(x => x.name2 === parseInt(button_name));
-                //alert(button_name);
-                //alert(set_index);
-                //sect = document.getElementById(p_name);
-                //sect.innerText = this.users[counter].name;
                 this.userNewList[set_index].id = this.users[counter].id;
                 this.userNewList[set_index].name = this.users[counter].name;
                 this.userNewList[set_index].avatar = this.users[counter].avatar;
@@ -1427,17 +1435,28 @@
                 sect.style.display = "none";
                 sect = document.getElementById("userNewRanking");
                 sect.style.display = "block";
+                decide_agent_turn();
+                //agent_turn = 2;
+                //agent_turn_reverse = 1;
+                condition = 1;
                 // actuate agent right and idle agent left
-                actuate_agent_talking(1);
-
-
+                actuate_agent_talking(agent_turn);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
-                var say = "Hi. I am " + agentName;// + ". Here is my list. I'll discuss my rankings with you item by item... Let's start with the first item on the list.";
-                const [say2, audio_src, say2_left, audio_src_left] = this.returnText(condition);
+                let say;
+                let say2, audio_src, say2_left, audio_src_left;
+                if (agent_turn == 1) {
+                    say = "Hi. I am " + agentName;// + ". Here is my list. I'll discuss my rankings with you item by item... Let's start with the first item on the list.";
+                    [say2, audio_src, say2_left, audio_src_left] = this.returnText(condition);
+                }
+                else if (agent_turn == 2){
+                    say = "Hi. I am " + agentName2;// + ". Here is my list. I'll discuss my rankings with you item by item... Let's start with the first item on the list.";
+                    [say2_left, audio_src_left, say2, audio_src] = this.returnText(condition);
+                }
+               
                 //alert(JSON.stringify(say2));
                 inst.textContent = say;
-
+                
 
                 const sound = new Audio();
                 sound.src = "intro" + index + ".mp3";
@@ -1450,7 +1469,7 @@
                     greetingSpeech2.play();
                     greetingSpeech2.addEventListener('ended', function () {
                         // actuate agent left and idle agent right
-                        actuate_agent_talking(2);
+                        actuate_agent_talking(agent_turn_reverse);
                         inst.textContent = say2_left;
                         const greetingSpeech3 = new Audio();
                         greetingSpeech3.src = audio_src_left;
@@ -1458,17 +1477,12 @@
                         greetingSpeech3.addEventListener('ended', function () {
                             var btn = document.getElementById("drag");
                             btn.style.display = "inline-block";
-                            //btn = document.getElementById("noDrag");
-                            //btn.style.display = "inline-block";
-                            avatarReady_left = false;
-                            setAction_left(actions_left[idle_action_left]);
+                            //avatarReady_left = false;
+                            //alert("I am here");
+                            //setAction_left(actions_left[idle_action_left]);
+                            actuate_agent_talking(3);
                         });
 
-
-                        //var btn = document.getElementById("drag");
-                        //btn.style.display = "inline-block";
-                        //btn = document.getElementById("noDrag");
-                        //btn.style.display = "inline-block";
 
                     });
                 });
@@ -1502,18 +1516,18 @@
 
 
             },
-            skipUpdating: function (event) {
+            /*skipUpdating: function (event) {
                 event.target.style.display = "none";
                 var btn = document.getElementById("drag");
                 btn.style.display = "none";
                 this.doneDragging();
                 avatarReady = false;
                 avatarReady_left = false;
-            },
+            },*/
             doneDragging: function () {
                 avatarReady = false;
                 avatarReady_left = false;
-                let say, tempStr, tempStr_left;
+                let say, say_left, tempStr, tempStr_left;
                 let audio_src, audio_src_left;
                 items[counter].rankings = this.returnRankings();
                 //alert(counter + "printing item "+ JSON.stringify(items[counter]));
@@ -1536,13 +1550,25 @@
                     this.disable();
 
                     if (counter < 9) {
+                        decide_agent_turn();
+                        //agent_turn = 2;
+                        //agent_turn_reverse = 1;
+                        condition = 1;
                         // actuate right agent and idle left
-                        actuate_agent_talking(1);
+                        actuate_agent_talking(agent_turn);
                            
                         const greetingSpeech = new Audio();
-                        [tempStr, audio_src, tempStr_left, audio_src_left] = this.returnText(condition);
-                        say = "Next I have " + tempStr;
-                        var say_left = "Next I have " + tempStr_left;
+                        if (agent_turn == 1) {
+                            [tempStr, audio_src, tempStr_left, audio_src_left] = this.returnText(condition);
+                            say = "Next I have " + tempStr;
+                            say_left = "Next I have " + tempStr_left;
+                        }
+                        else if (agent_turn == 2) {
+                            [tempStr_left, audio_src_left, tempStr, audio_src] = this.returnText(condition);
+                            say = "Next I have " + tempStr;
+                            say_left = "Next I have " + tempStr_left;
+                        }
+                        
                         //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
                         //greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
                         inst.textContent = say;
@@ -1556,7 +1582,7 @@
                             greetingSpeech3.src = audio_src_left;
                             greetingSpeech2.addEventListener('ended', function () {
                                 // actuate agent left and idle agent right
-                                actuate_agent_talking(2);
+                                actuate_agent_talking(agent_turn_reverse);
                                 inst.textContent = say_left;
                                 greetingSpeech3.play();
                                 greetingSpeech3.addEventListener('ended', function () {
@@ -1564,8 +1590,10 @@
                                     btn.style.display = "inline-block";
                                     //btn = document.getElementById("noDrag");
                                     //btn.style.display = "inline-block";
-                                    avatarReady_left = false;
-                                    setAction_left(idle_action_left);
+                                    //alert("I am here");
+                                    //avatarReady_left = false;
+                                    //setAction_left(actions_left[idle_action_left]);
+                                    actuate_agent_talking(3);
 
                                 });
                             });
