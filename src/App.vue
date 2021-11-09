@@ -166,6 +166,8 @@ import { degToRad } from 'three/src/math/MathUtils';
     let mixer, mixer_left;
     var condition = 0;
     var index = 0, index2 = 1;
+    var random_actions_order = [0,1,2,3,4,5,6];
+    var random_actions = [0, 2, 3, 5, 7, 8, 9]; // 4 is to be excluded. 6 is wave
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
     var agent2_script = [true, false, true, true, false, false, true, false, true];
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
@@ -350,20 +352,22 @@ import { degToRad } from 'three/src/math/MathUtils';
         scene2.background = new THREE.Color(0xb0b0b0);
         //scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
-        hemiLight.position.set(0, 300, 0);
+        hemiLight.position.set(0, 300, 300);
+        
         scene.add(hemiLight);
+        
         //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         //hemiLight2.position.set(0, 100, 0);
         //scene.add(hemiLight2);
-        var ambientLight = new THREE.AmbientLight(0xcccccc, 1);
+        var ambientLight = new THREE.AmbientLight(0xcccccc, 0.8);
         scene.add(ambientLight);
 
         const light1 = new THREE.PointLight(0x444444, 1);
-        light1.position.set(100, 500, 200);
+        light1.position.set(50, 400, 200);
         scene.add(light1);
 
         const light2 = new THREE.PointLight(0x444444, 1);
-        light2.position.set(-100, 500, 200);
+        light2.position.set(-50, 400, 200);
         scene.add(light2);
 
 
@@ -404,14 +408,16 @@ import { degToRad } from 'three/src/math/MathUtils';
         }
 
 
-        const dirLight = new THREE.DirectionalLight(0xffffff);
-        dirLight.position.set(200, 200, 500);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(0, 250, 150);
+        dirLight.target.position.set(0, 50, 150);
         dirLight.castShadow = true;
         dirLight.shadow.camera.top = 180;
         dirLight.shadow.camera.bottom = - 100;
         dirLight.shadow.camera.left = - 120;
         dirLight.shadow.camera.right = 120;
         //scene.add(dirLight);
+        //scene.add(dirLight.target);
         //scene_left.add(dirLight);
         // adding to test
         const dirLight2 = new THREE.DirectionalLight(0xffffff);
@@ -451,14 +457,14 @@ import { degToRad } from 'three/src/math/MathUtils';
         var fileLoad2 = files2[index];
         
         const texture = new THREE.TextureLoader().load('https://previews.123rf.com/images/fotoslaz/fotoslaz1801/fotoslaz180100044/94024038-blonde-hair-for-background-and-texture-material.jpg');
-        const m1 = new THREE.MeshPhongMaterial({ color: 0x021227, shininess: 10 }); // 0x2650E7 in blender
+        const m1 = new THREE.MeshPhongMaterial({ color: 0x021227, shininess: 10 }); // 0x002167 in blender
         const m2 = new THREE.MeshBasicMaterial({ color: 0x000001, shininess: 30, opacity:0.2, map:texture});
         let obj_name, find_index;
         //let object1 = new THREE.Material();
         //const loader = new FBXLoader();
         let model, skeleton;
         const loader = new GLTFLoader();
-        loader.load('https://dl.dropbox.com/s/ceec1le71ayts8a/jody4.glb', function (object) {
+        loader.load('https://dl.dropbox.com/s/c4g3te6zhl7g4lm/jody_multiple.glb', function (object) {
 
             // https://dl.dropbox.com/s/h6hvllxo2u7bdvy/jody2.glb
             //https://dl.dropbox.com/s/k6dh2flyx8qp894/jody.glb
@@ -522,20 +528,23 @@ import { degToRad } from 'three/src/math/MathUtils';
             mixer = new THREE.AnimationMixer(model);
 
             let numAnimations = animations.length;
-            //alert(numAnimations);
-            for (let i = 0; i !== numAnimations; ++i) {
+            alert(numAnimations);
+            for (let i = 0; i < numAnimations; ++i) {
 
                 let clip = animations[i];
                 const action = mixer.clipAction(clip);
-
                 actions.push(action);
                 
             }
-            //alert(actions[1].name);
-            actions[1].timeScale = 0.75;
+            avatarReady = true;
+            //alert(actions[3].name);
+            actions[1].timeScale = 1;
             actions[1].play();
             activeAction = actions[1];
             lastAction = actions[1];
+            
+            //setAction(actions[5]);
+
         });
         /*loader.load(fileLoad, function (object) {
             obj_name = object.children[2].name.slice(0, 5);
@@ -670,7 +679,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                     //alert("Size of object after pushing is" + object.animations.length)
                     actions_left = [mixer_left.clipAction(object_left.animations[0]), mixer_left.clipAction(object_left.animations[2])];
                     //alert(actions);
-                    actions_left[0].timeScale = 0.75;
+                    actions_left[0].timeScale = 1;
                     //actions[1].timeScale = 0.75;
                     //alert(actions[0].timeScale);
                     actions_left[0].play();
@@ -766,9 +775,9 @@ import { degToRad } from 'three/src/math/MathUtils';
             //lastAction.stop()
             lastAction.fadeOut(1);
             activeAction.reset();
-            activeAction.timeScale = 0.8;
+            activeAction.timeScale = 1;
             activeAction.fadeIn(1);
-            activeAction.timeScale = 0.8;
+            activeAction.timeScale = 1;
             activeAction.play();
         }
     }
@@ -780,11 +789,17 @@ import { degToRad } from 'three/src/math/MathUtils';
             //lastAction.stop()
             lastAction_left.fadeOut(1);
             activeAction_left.reset();
-            activeAction_left.timeScale = 0.8;
+            activeAction_left.timeScale = 1;
             activeAction_left.fadeIn(1);
-            activeAction_left.timeScale = 0.8;
+            activeAction_left.timeScale = 1;
             activeAction_left.play();
         }
+    }
+
+    function random_actionList() {
+        random_actions_order.sort(() => Math.random() - 0.5);
+        random_actions = random_actions_order.map(i => random_actions[i]);
+        alert(JSON.stringify(random_actions));
     }
 
 
@@ -1025,6 +1040,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                 this.users = item_order.map(i => this.users[i]);
                 //alert(JSON.stringify(this.users));
             },
+
             reorder_avatarList: function () {
                 this.avatarList = avatar_order.map(i => this.users[i]);
                 avatar_rankings = this.returnRankings('avatar');
@@ -1171,7 +1187,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
                 setTimeout(function () {
                     sect.disabled = false;
-                }, 15000);
+                }, 10000);
 
             },
             doneInitialRanking: function (event) {
@@ -1262,8 +1278,25 @@ import { degToRad } from 'three/src/math/MathUtils';
                 //sect.style.display = "block";
                 //sect = document.getElementById("avatarRating2");
                 //sect.style.display = "block";
+                
                 if (avatarReady && avatarReady_left) {
-                    setAction(actions[1]);
+                    random_actionList();
+                    setAction(actions[random_actions[0]]);
+                    setTimeout(function () {
+                        if (avatarReady) { setAction(actions[random_actions[1]]); }
+                        setTimeout(function () {
+                            if (avatarReady) { setAction(actions[random_actions[2]]); }
+                            setTimeout(function () {
+                                if (avatarReady) { setAction(actions[random_actions[3]]); }
+                                setTimeout(function () {
+                                    if (avatarReady) { setAction(actions[random_actions[4]]); }
+                                    setTimeout(function () {
+                                        if (avatarReady) { setAction(actions[random_actions[5]]); }
+                                    }, 5000);
+                                }, 5000);
+                            }, 5000);
+                        }, 5000);
+                    }, 5000);
                     setAction_left(actions_left[0])
                 }
                 else {
@@ -1289,7 +1322,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                     greetingSpeech2.src = audio_src;
                     greetingSpeech2.play();
                     greetingSpeech2.addEventListener('ended', function () {
-                        setAction(actions[0]);
+                        avatarReady = false;
+                        setAction(actions[1]);
                         setAction_left(actions_left[1]);
                         inst.textContent = say2_left;
                         const greetingSpeech3 = new Audio();
@@ -1369,11 +1403,28 @@ import { degToRad } from 'three/src/math/MathUtils';
                     this.disable();
 
                     if (counter < 9) {
+                        avatarReady = true;
+                        random_actionList();
                         if (avatarReady) {
-                            setAction(actions[1]);
+                            setAction(actions[random_actions[0]]);
+                            setTimeout(function () {
+                                if (avatarReady) { setAction(actions[random_actions[1]]); }
+                                setTimeout(function () {
+                                    if (avatarReady) { setAction(actions[random_actions[2]]); }
+                                    setTimeout(function () {
+                                        if (avatarReady) { setAction(actions[random_actions[3]]); }
+                                        setTimeout(function () {
+                                            if (avatarReady) { setAction(actions[random_actions[4]]); }
+                                            setTimeout(function () {
+                                                if (avatarReady) { setAction(actions[random_actions[5]]); }
+                                            }, 5000);
+                                        }, 5000);
+                                    }, 5000);
+                                }, 5000);
+                            }, 5000);
                         }
                         else {
-                            setAction(actions[0]);
+                            setAction(actions[1]);
                         }
                         //setAction(actions[1]);
                         //setTimeout(function () {
@@ -1394,7 +1445,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                             const greetingSpeech3 = new Audio();
                             greetingSpeech3.src = audio_src_left;
                             greetingSpeech2.addEventListener('ended', function () {
-                                setAction(actions[0]);
+                                avatarReady = false;
+                                setAction(actions[1]);
                                 setAction_left(actions_left[1]);
                                 inst.textContent = say_left;
                                 greetingSpeech3.play();
@@ -1414,7 +1466,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                     }
                     else {
                         this.enableNew();
-                        setAction(actions[0]);
+                        setAction(actions[1]);
+                        avatarReady = false;
                         setAction_left(actions_left[0]);
                         inst = document.getElementById("drag_inst");
                         inst.textContent = "Please finalize and submit your rankings before concluding the study";
