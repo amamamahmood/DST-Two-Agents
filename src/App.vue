@@ -19,30 +19,30 @@
                         <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
-                            <button :id=item.name2 :name="item.name3"  style="width:5.7vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
+                            <button :id=item.name2 :name="item.name3" style="width:5.7vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
                         </div>
                     </li>
 
                     <!--<user-card v-for="item in userNewList"
-                    :key="item.id"
-                    :item="item"></user-card>-->
+            :key="item.id"
+            :item="item"></user-card>-->
 
                 </draggable>
 
             </div>
 
             <!--<div id="userNewRanking" class="column2" style=" display:none">
-                <h3 class="smallerText">Your New Rankings</h3>
-                <ol>
-                    <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in userNewList" :key="item.id">
-                        <div>
-                            <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
-                            <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
-                            <button :id=item.name2 :name="item.name3" class="button" style="display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
-                        </div>
-                    </li>
-                </ol>
-            </div>-->
+        <h3 class="smallerText">Your New Rankings</h3>
+        <ol>
+            <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in userNewList" :key="item.id">
+                <div>
+                    <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
+                    <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
+                    <button :id=item.name2 :name="item.name3" class="button" style="display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
+                </div>
+            </li>
+        </ol>
+    </div>-->
 
 
             <div id="headingColumn" class="column3">
@@ -73,11 +73,11 @@
                 <h3 class="smallerText" id="intro2" style="display:none; max-width:50vw;  ">
                 </h3>
                 <br />
-				<h3 class="smallerText" id="intro3" style="display:none; max-width:50vw;  ">
+                <h3 class="smallerText" id="intro3" style="display:none; max-width:50vw;  ">
                 </h3>
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Rank this current item</button>
                 <!--&emsp;&emsp;&emsp;&emsp;
-                <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>-->
+        <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>-->
                 <br />
                 <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
                 <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
@@ -86,8 +86,14 @@
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
                 <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
                 <br />
-            </div>
 
+            </div>
+            <div id="arrow_left" class="arrowAvatar-left" style="display:none;">
+                <img src="arrow_left.png" alt="" style="max-width: 10vw; max-height: 8vw;  margin: auto;">
+            </div>
+            <div id="arrow_right" class="arrowAvatar-right" style="display:none;">
+                <img src="arrow_right.png" alt="" style="max-width: 10vw; max-height: 8vw; margin: auto;">
+            </div>
 
 
             <div id="user_list" class="column2" style=" display:none;">
@@ -904,7 +910,12 @@
     function actuate_agent_talking(which_agent) { // 1 right - 2 left
         avatarReady_left = false;
         avatarReady = false;
+        var arrow1 = document.getElementById("arrow_right");
+        arrow1.style.display = "none";
+        var arrow2 = document.getElementById("arrow_left");
+        arrow2.style.display = "none";
         if (which_agent == 1) {
+            arrow1.style.display = "block";
             random_actionList(1);
             avatarReady = true;
             setAction_left(actions_left[idle_action_left]);
@@ -926,6 +937,7 @@
             }, 5000);
         }
         else if (which_agent == 2) {
+            arrow2.style.display = "block";
             random_actionList(2);
             avatarReady_left = true;
             setAction(actions[idle_action]);
@@ -949,6 +961,8 @@
         else {
             setAction_left(actions_left[idle_action_left]);
             setAction(actions[idle_action]);
+            
+
         }
         
         /*if (avatarReady) {
@@ -1790,7 +1804,6 @@
         right: 3vw;
         z-index: -1;
     }
-
     .columnAvatar-left {
         float: left;
         width: 30vw;
@@ -1798,10 +1811,35 @@
         align-content: center;
         align-items: center;
         text-align: center;
-        position: absolute; 
-        top: 15%;
-        left: 3vw;
+        position: absolute;
+        top: 25%;
+        left: 10vw;
         z-index: -1;
+    }
+    .arrowAvatar-right {
+        float: right;
+        width: 10vw;
+        height: 10vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        right: 30vw;
+        
+    }
+
+    .arrowAvatar-left {
+        float: left;
+        width: 10vw;
+        height: 10vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute; 
+        top: 50%;
+        left: 30vw;
+        
     }
 
     .column3 {
