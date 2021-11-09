@@ -130,9 +130,9 @@
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { degToRad } from 'three/src/math/MathUtils';
+    //import { degToRad } from 'three/src/math/MathUtils';
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
-    var url = '';
+    //var url = '';
     var user_initial_rankings;
     var avatar_rankings, avatar_left_rankings;
     class item_state {
@@ -169,9 +169,13 @@ import { degToRad } from 'three/src/math/MathUtils';
     var random_actions_order = [0, 1, 2, 3, 4, 5, 6];
     var idle_action = 2;
     var wave_action = 9;
-    var random_actions = [0,1,2,3,4,5,6,7,8,9]; // 7 is to be excluded. 9 is wave
+    var random_actions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 7 is to be excluded. 9 is wave
+    var random_actions_order = [0, 1, 2, 3, 4, 5, 6];
+    var idle_action_left = 2;
+    var wave_action_left = 9;
+    var random_actions_left = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
-    var agent2_script = [true, false, true, true, false, false, true, false, true];
+    //var agent2_script = [true, false, true, true, false, false, true, false, true];
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
         "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
@@ -308,12 +312,12 @@ import { degToRad } from 'three/src/math/MathUtils';
 
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
-        camera_left = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-        camera_left.zoom = 0.75;
-        camera_left.position.set(0, 150, 250);
+        camera_left = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
+        camera_left.position.set(0, 250, 180);
+        camera_left.zoom = 0.8;
         camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
         camera.position.set(0,250,180);
-        camera.zoom = .8;
+        camera.zoom = 0.8;
         //camera.position.set(0, -1.2, 2.5);
         
         //camera.rotation.set(90 * Math.PI /180, 0, 0);
@@ -343,9 +347,9 @@ import { degToRad } from 'three/src/math/MathUtils';
         camera_left = new THREE.PerspectiveCamera(45, container_left.clientWidth / container_left.clientHeight, 1, 2000);
         camera_left.zoom = 0.75;
         camera_left.position.set(50, 150, 250);*/
-        const fullWidth_left = container_left.clientWidth * 3;
-        const fullHeight_left = container_left.clientHeight * 2;
-        camera_left.setViewOffset(fullWidth_left, fullHeight_left, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
+        //const fullWidth_left = container_left.clientWidth * 3;
+        //const fullHeight_left = container_left.clientHeight * 2;
+        //camera_left.setViewOffset(fullWidth_left, fullHeight_left, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
     // end for left agent
 
         scene = new THREE.Scene();
@@ -355,15 +359,10 @@ import { degToRad } from 'three/src/math/MathUtils';
         //scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 300, 300);
-        
         scene.add(hemiLight);
-        var hemiLight3 = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
+        const hemiLight3 = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
         hemiLight3.position.set(0, 500, 0);
         scene.add(hemiLight3);
-
-        //const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
-        //hemiLight2.position.set(0, 100, 0);
-        //scene.add(hemiLight2);
         var ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
 
@@ -388,16 +387,21 @@ import { degToRad } from 'three/src/math/MathUtils';
         const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight2.position.set(0, 200, 0);
         scene_left.add(hemiLight2);
+        const hemiLight4 = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
+        hemiLight4.position.set(0, 500, 0);
+        scene_left.add(hemiLight4);
+        const ambientLight2 = new THREE.AmbientLight(0xffffff, 0.8);
+        scene_left.add(ambientLight2);
         //scene_left.add(hemiLight2);
         /*index == 1;  // get rid of this later ///****************
         if (index == 0 || index == 2) {*/
-            const light = new THREE.AmbientLight(0x808080); // soft white light
-            scene.add(light);
-            //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
-            //lights.position.set(0, 200, 0);
-            //scene.add(lights);
-            const light_left = new THREE.AmbientLight(0xffffff); // soft white light
-            scene_left.add(light_left);
+        const light = new THREE.AmbientLight(0x808080); // soft white light
+        scene.add(light);
+        //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
+        //lights.position.set(0, 200, 0);
+        //scene.add(lights);
+        const light_left = new THREE.AmbientLight(0x808080); // soft white light
+        scene_left.add(light_left);
         /*}
         else {
             const light2 = new THREE.AmbientLight(0xffffff); // soft white light
@@ -413,7 +417,7 @@ import { degToRad } from 'three/src/math/MathUtils';
         }*/
 
 
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        /*const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
         dirLight.position.set(0, 250, 150);
         dirLight.target.position.set(0, 50, 150);
         dirLight.castShadow = true;
@@ -433,7 +437,7 @@ import { degToRad } from 'three/src/math/MathUtils';
         dirLight2.shadow.camera.left = - 120;
         dirLight2.shadow.camera.right = 120;
         //scene.add(dirLight2);
-        scene_left.add(dirLight2);
+        scene_left.add(dirLight2);*/
         // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
 
         // ground
@@ -458,16 +462,16 @@ import { degToRad } from 'three/src/math/MathUtils';
             fileLoad = 'david_idle.fbx';
         }*/
 
-        var fileLoad = files[index];
+        /*var fileLoad = files[index];
         var fileLoad2 = files2[index];
         
         const texture = new THREE.TextureLoader().load('https://previews.123rf.com/images/fotoslaz/fotoslaz1801/fotoslaz180100044/94024038-blonde-hair-for-background-and-texture-material.jpg');
         const m1 = new THREE.MeshPhongMaterial({ color: 0x021227, shininess: 10 }); // 0x002167 in blender
         const m2 = new THREE.MeshBasicMaterial({ color: 0x000001, shininess: 30, opacity:0.2, map:texture});
-        let obj_name, find_index;
+        let obj_name, find_index;*/
         //let object1 = new THREE.Material();
         //const loader = new FBXLoader();
-        let model, skeleton;
+        let model;
         const loader = new GLTFLoader();
         loader.load('https://dl.dropbox.com/s/c4g3te6zhl7g4lm/jody_multiple.glb', function (object) {
 
@@ -540,7 +544,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
                 let clip = animations[i];
                 const name = clip.name;
-                alert(name);
+                //alert(name);
                 if (name == 'idle') { idle_action = i; }
                 else if (name == 'wave') { wave_action = i; }
                 else if (name == 'question') { reject = i;}
@@ -553,9 +557,9 @@ import { degToRad } from 'three/src/math/MathUtils';
             });
             //alert(random_actions);
             //alert(JSON.stringify(actions));
-            avatarReady = true;
+            //avatarReady = true;
             //alert(actions[3].name);
-            actions[idle_action].timeScale = 1;
+            actions[idle_action].timeScale = 0.8;
             actions[idle_action].play();
             activeAction = actions[idle_action];
             lastAction = actions[idle_action];
@@ -563,6 +567,62 @@ import { degToRad } from 'three/src/math/MathUtils';
             //setAction(actions[5]);
 
         });
+
+        // for left agent
+        let model_left;
+        const loader_left = new GLTFLoader();
+        loader_left.load('https://dl.dropbox.com/s/xkqntxaanc5tpta/elizabeth_multiple.glb', function (object_left) {
+
+            object_left.scene.rotation.x = 65 * Math.PI / 180;
+            
+            model_left = object_left.scene;
+            scene_left.add(model_left);
+            const fullWidth2 = container_left.clientWidth * 3;
+            const fullHeight2 = container_left.clientHeight * 2;
+            camera_left.setViewOffset(fullWidth2, fullHeight2, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
+
+            //alert(model.position.x);
+            model_left.traverse(function (object2_left) {
+
+                if (object2_left.isMesh) object2_left.castShadow = true;
+
+            });
+           
+            const animations_left = object_left.animations;
+            mixer_left = new THREE.AnimationMixer(model_left);
+
+            let numAnimations_left = animations_left.length;
+            //alert(numAnimations);
+            //alert(JSON.stringify(animations));
+            var reject_left = 10;
+            for (let i = 0; i < numAnimations_left; i++) {
+
+                let clip_left = animations_left[i];
+                const name_left = clip_left.name;
+                alert(name_left);
+                if (name_left == 'idle') { idle_action_left = i; }
+                else if (name_left == 'wave') { wave_action_left = i; }
+                else if (name_left == 'question') { reject_left = i; }
+                const action_left = mixer_left.clipAction(clip_left);
+                actions_left.push(action_left);
+            }
+            //alert(random_actions);
+            random_actions_left = random_actions_left.filter(function (value, index, arr) {
+                return (value != idle_action_left && value != wave_action_left && value != reject_left);
+            });
+            //alert(random_actions);
+            //alert(JSON.stringify(actions));
+            //avatarReady_left = true;
+            //alert(actions[3].name);
+            actions_left[idle_action_left].timeScale = 0.8;
+            actions_left[idle_action_left].play();
+            activeAction_left = actions_left[idle_action_left];
+            lastAction_left = actions_left[idle_action_left];
+
+            //setAction(actions[5]);
+
+        });
+
         /*loader.load(fileLoad, function (object) {
             obj_name = object.children[2].name.slice(0, 5);
             //alert(obj_name);
@@ -634,7 +694,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
         // for agent on left
 
-        var fileLoad_left = files[index2];
+        /*var fileLoad_left = files[index2];
         var fileLoad2_left = files2[index2];
         const loader_left = new FBXLoader();
         
@@ -708,7 +768,7 @@ import { degToRad } from 'three/src/math/MathUtils';
 
             });
 
-        });
+        });*/
 
 
         // end for agent on left
@@ -738,7 +798,7 @@ import { degToRad } from 'three/src/math/MathUtils';
         controls.target.set(0,100,0);
         //const xAxis = new THREE.Vector3(1, 0,0);
         //camera.rotateOnWorldAxis(xAxis, degToRad(90));
-        controls.enabled = true;
+        controls.enabled = false;
         controls.update();
         const controls_left = new OrbitControls(camera_left, renderer_left.domElement);
         controls_left.target.set(0, 100, 0);
@@ -808,9 +868,11 @@ import { degToRad } from 'three/src/math/MathUtils';
             //lastAction.stop()
             lastAction_left.fadeOut(1);
             activeAction_left.reset();
-            activeAction_left.timeScale = 0.75;
+            activeAction_left.timeScale = 0.8;
+            activeAction_left.weight = 0.8;
             activeAction_left.fadeIn(1);
-            activeAction_left.timeScale = 0.75;
+            activeAction_left.timeScale = 0.8;
+            activeAction_left.weight = 0.8;
             activeAction_left.play();
         }
     }
@@ -818,27 +880,56 @@ import { degToRad } from 'three/src/math/MathUtils';
     function random_actionList() {
         random_actions_order.sort(() => Math.random() - 0.5);
         random_actions = random_actions_order.map(i => random_actions[i]);
+        random_actions_order.sort(() => Math.random() - 0.5);
+        random_actions_left = random_actions_order.map(i => random_actions_left[i]);
         //alert(JSON.stringify(random_actions));
     }
 
-    function actuate_agent_talking() {
+    function actuate_agent_talking(which_agent) { // 1 right - 2 left
         random_actionList();
-        setAction(actions[random_actions[0]]);
-        setTimeout(function () {
-            if (avatarReady) { setAction(actions[random_actions[1]]); }
+        if (which_agent == 1) {
+            avatarReady = true;
+            avatarReady_left = false;
+            setAction_left(actions_left[idle_action_left]);
+            setAction(actions[random_actions[0]]);
             setTimeout(function () {
-                if (avatarReady) { setAction(actions[random_actions[2]]); }
+                if (avatarReady) { setAction(actions[random_actions[1]]); }
                 setTimeout(function () {
-                    if (avatarReady) { setAction(actions[random_actions[3]]); }
+                    if (avatarReady) { setAction(actions[random_actions[2]]); }
                     setTimeout(function () {
-                        if (avatarReady) { setAction(actions[random_actions[4]]); }
+                        if (avatarReady) { setAction(actions[random_actions[3]]); }
                         setTimeout(function () {
-                            if (avatarReady) { setAction(actions[random_actions[5]]); }
+                            if (avatarReady) { setAction(actions[random_actions[4]]); }
+                            setTimeout(function () {
+                                if (avatarReady) { setAction(actions[random_actions[5]]); }
+                            }, 5000);
                         }, 5000);
                     }, 5000);
                 }, 5000);
             }, 5000);
-        }, 5000);
+        }
+        else {
+            avatarReady_left = true;
+            avatarReady = false;
+            setAction(actions_left[idle_action]);
+            setAction(actions_left[random_actions_left[0]]);
+            setTimeout(function () {
+                if (avatarReady_left) { setAction(actions_left[random_actions_left[1]]); }
+                setTimeout(function () {
+                    if (avatarReady_left) { setAction(actions_left[random_actions_left[2]]); }
+                    setTimeout(function () {
+                        if (avatarReady_left) { setAction(actions_left[random_actions_left[3]]); }
+                        setTimeout(function () {
+                            if (avatarReady_left) { setAction(actions_left[random_actions_left[4]]); }
+                            setTimeout(function () {
+                                if (avatarReady_left) { setAction(actions_left[random_actions_left[5]]); }
+                            }, 5000);
+                        }, 5000);
+                    }, 5000);
+                }, 5000);
+            }, 5000);
+        }
+        
         /*if (avatarReady) {
             setTimeout(function () {
                 setAction(actions[random_actions[1]]);
@@ -1327,37 +1418,18 @@ import { degToRad } from 'three/src/math/MathUtils';
                 //this.userNewList[button_name - 1].id = 99;
             },
             beginInteraction: function (event) {
-                //let item1 = new item_state(0, 0, JSON.stringify(this.returnRankings()));
-                //document.getElementById("user_list").style.bottom = "initial";
-                //var temp = document.getElementById("temp");
-                //temp.style.display = "none";
 				var inst2 = document.getElementById("intro3");
 				inst2.style.display = "none";
                 this.reorder_avatarList();
                 event.target.style.display = "none";
-                //var sect = document.getElementById("intro");
-                //sect.style.display = "none";
-                //sect = document.getElementById("introb");
-                //sect.style.display = "none";
+                
                 var sect = document.getElementById("intro2");
                 sect.style.display = "none";
                 sect = document.getElementById("userNewRanking");
                 sect.style.display = "block";
-                //sect = document.getElementById("avatarRating");
-                //sect.style.display = "block";
-                //sect = document.getElementById("avatarRating2");
-                //sect.style.display = "block";
-                
-                //if (avatarReady) {
-                avatarReady = true;
-                actuate_agent_talking();
-                setAction_left(actions_left[0])
-                /*}
-                else {
-                    alert(idle_action);
-                    setAction(actions[idle_action]);
-                    setAction_left(actions_left[0])
-                }*/
+                // actuate agent right and idle agent left
+                actuate_agent_talking(1);
+
 
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
@@ -1377,9 +1449,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                     greetingSpeech2.src = audio_src;
                     greetingSpeech2.play();
                     greetingSpeech2.addEventListener('ended', function () {
-                        avatarReady = false;
-                        setAction(actions[idle_action]);
-                        setAction_left(actions_left[1]);
+                        // actuate agent left and idle agent right
+                        actuate_agent_talking(2);
                         inst.textContent = say2_left;
                         const greetingSpeech3 = new Audio();
                         greetingSpeech3.src = audio_src_left;
@@ -1389,7 +1460,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                             btn.style.display = "inline-block";
                             //btn = document.getElementById("noDrag");
                             //btn.style.display = "inline-block";
-                            setAction_left(actions_left[0]);
+                            avatarReady_left = false;
+                            setAction_left(actions_left[idle_action_left]);
                         });
 
 
@@ -1405,6 +1477,7 @@ import { degToRad } from 'three/src/math/MathUtils';
             },
             makeDraggable: function (event) {
                 avatarReady = false;
+                avatarReady_left = false;
                 items[counter].updates = 1;
                 total_updates += 1;
                 //alert(total_updates);
@@ -1435,9 +1508,11 @@ import { degToRad } from 'three/src/math/MathUtils';
                 btn.style.display = "none";
                 this.doneDragging();
                 avatarReady = false;
+                avatarReady_left = false;
             },
             doneDragging: function () {
                 avatarReady = false;
+                avatarReady_left = false;
                 let say, tempStr, tempStr_left;
                 let audio_src, audio_src_left;
                 items[counter].rankings = this.returnRankings();
@@ -1461,33 +1536,9 @@ import { degToRad } from 'three/src/math/MathUtils';
                     this.disable();
 
                     if (counter < 9) {
-                        avatarReady = true;
-                        //random_actionList();
-                        //if (avatarReady) {
-                        actuate_agent_talking();
-                            //setAction(actions[random_actions[0]]);
-
-                            /*setTimeout(function () {
-                                if (avatarReady) { setAction(actions[random_actions[1]]); }
-                                setTimeout(function () {
-                                    if (avatarReady) { setAction(actions[random_actions[2]]); }
-                                    setTimeout(function () {
-                                        if (avatarReady) { setAction(actions[random_actions[3]]); }
-                                        setTimeout(function () {
-                                            if (avatarReady) { setAction(actions[random_actions[4]]); }
-                                            setTimeout(function () {
-                                                if (avatarReady) { setAction(actions[random_actions[5]]); }
-                                            }, 5000);
-                                        }, 5000);
-                                    }, 5000);
-                                }, 5000);
-                            }, 5000);*/
-                        //}
-                       // else {
-                       //     setAction(actions[idle_action]);
-                       // }
-                        //setAction(actions[1]);
-                        //setTimeout(function () {
+                        // actuate right agent and idle left
+                        actuate_agent_talking(1);
+                           
                         const greetingSpeech = new Audio();
                         [tempStr, audio_src, tempStr_left, audio_src_left] = this.returnText(condition);
                         say = "Next I have " + tempStr;
@@ -1504,9 +1555,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                             const greetingSpeech3 = new Audio();
                             greetingSpeech3.src = audio_src_left;
                             greetingSpeech2.addEventListener('ended', function () {
-                                setAction(actions[idle_action]);
-                                avatarReady = false;
-                                setAction_left(actions_left[1]);
+                                // actuate agent left and idle agent right
+                                actuate_agent_talking(2);
                                 inst.textContent = say_left;
                                 greetingSpeech3.play();
                                 greetingSpeech3.addEventListener('ended', function () {
@@ -1514,7 +1564,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                                     btn.style.display = "inline-block";
                                     //btn = document.getElementById("noDrag");
                                     //btn.style.display = "inline-block";
-                                    setAction_left(actions_left[0]);
+                                    avatarReady_left = false;
+                                    setAction_left(idle_action_left);
 
                                 });
                             });
@@ -1525,9 +1576,10 @@ import { degToRad } from 'three/src/math/MathUtils';
                     }
                     else {
                         this.enableNew();
-                        setAction(actions[idle_action]);
                         avatarReady = false;
-                        setAction_left(actions_left[0]);
+                        setAction(actions[idle_action]);
+                        avatarReady_left = false;
+                        setAction_left(actions_left[idle_action_left]);
                         inst = document.getElementById("drag_inst");
                         inst.textContent = "Please finalize and submit your rankings before concluding the study";
                         btn = document.getElementById("submit");
