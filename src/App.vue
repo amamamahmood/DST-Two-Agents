@@ -166,8 +166,10 @@ import { degToRad } from 'three/src/math/MathUtils';
     let mixer, mixer_left;
     var condition = 0;
     var index = 0, index2 = 1;
-    var random_actions_order = [0,1,2,3,4,5,6];
-    var random_actions = [0, 2, 3, 5, 7, 8, 9]; // 4 is to be excluded. 6 is wave
+    var random_actions_order = [0, 1, 2, 3, 4, 5, 6];
+    var idle_action = 2;
+    var wave_action = 9;
+    var random_actions = [0,1,2,3,4,5,6,7,8,9]; // 7 is to be excluded. 9 is wave
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
     var agent2_script = [true, false, true, true, false, false, true, false, true];
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
@@ -528,20 +530,31 @@ import { degToRad } from 'three/src/math/MathUtils';
             mixer = new THREE.AnimationMixer(model);
 
             let numAnimations = animations.length;
-            alert(numAnimations);
-            for (let i = 0; i < numAnimations; ++i) {
+            //alert(numAnimations);
+            //alert(JSON.stringify(animations));
+            var reject = 10;
+            for (let i = 0; i < numAnimations; i++) {
 
                 let clip = animations[i];
+                const name = clip.name;
+                if (name == 'idle') { idle_action = i; }
+                else if (name == 'wave') { wave_action = i; }
+                else if (name == 'question') { reject = i;}
                 const action = mixer.clipAction(clip);
                 actions.push(action);
-                
             }
+            alert(random_actions);
+            random_actions = random_actions.filter(function (value, index, arr) {
+                return (value != idle_action && value != wave_action && value != reject);
+            });
+            alert(random_actions);
+            //alert(JSON.stringify(actions));
             avatarReady = true;
             //alert(actions[3].name);
-            actions[1].timeScale = 1;
-            actions[1].play();
-            activeAction = actions[1];
-            lastAction = actions[1];
+            actions[idle_action].timeScale = 1;
+            actions[idle_action].play();
+            activeAction = actions[idle_action];
+            lastAction = actions[idle_action];
             
             //setAction(actions[5]);
 
@@ -1279,7 +1292,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                 //sect = document.getElementById("avatarRating2");
                 //sect.style.display = "block";
                 
-                if (avatarReady && avatarReady_left) {
+                if (avatarReady) {
                     random_actionList();
                     setAction(actions[random_actions[0]]);
                     setTimeout(function () {
@@ -1300,7 +1313,8 @@ import { degToRad } from 'three/src/math/MathUtils';
                     setAction_left(actions_left[0])
                 }
                 else {
-                    setAction(actions[0]);
+                    alert(idle_action);
+                    setAction(actions[idle_action]);
                     setAction_left(actions_left[0])
                 }
 
@@ -1323,7 +1337,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                     greetingSpeech2.play();
                     greetingSpeech2.addEventListener('ended', function () {
                         avatarReady = false;
-                        setAction(actions[1]);
+                        setAction(actions[idle_action]);
                         setAction_left(actions_left[1]);
                         inst.textContent = say2_left;
                         const greetingSpeech3 = new Audio();
@@ -1424,7 +1438,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                             }, 5000);
                         }
                         else {
-                            setAction(actions[1]);
+                            setAction(actions[idle_action]);
                         }
                         //setAction(actions[1]);
                         //setTimeout(function () {
@@ -1446,7 +1460,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                             greetingSpeech3.src = audio_src_left;
                             greetingSpeech2.addEventListener('ended', function () {
                                 avatarReady = false;
-                                setAction(actions[1]);
+                                setAction(actions[idle_action]);
                                 setAction_left(actions_left[1]);
                                 inst.textContent = say_left;
                                 greetingSpeech3.play();
@@ -1466,7 +1480,7 @@ import { degToRad } from 'three/src/math/MathUtils';
                     }
                     else {
                         this.enableNew();
-                        setAction(actions[1]);
+                        setAction(actions[idle_action]);
                         avatarReady = false;
                         setAction_left(actions_left[0]);
                         inst = document.getElementById("drag_inst");
