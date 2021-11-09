@@ -402,9 +402,12 @@
         if (index == 0 || index == 2) {*/
         const light = new THREE.AmbientLight(0x808080); // soft white light
         scene.add(light);
-        //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
-        //lights.position.set(0, 200, 0);
-        //scene.add(lights);
+        const lights = new THREE.DirectionalLight(0x808080, 0.5, 0);
+        lights.position.set(0, 600, 0);
+        scene.add(lights);
+        const lights_left = new THREE.DirectionalLight(0x808080, 0.5, 0);
+        lights_left.position.set(0, 600, 0);
+        scene_left.add(lights_left);
         const light_left = new THREE.AmbientLight(0x808080); // soft white light
         scene_left.add(light_left);
         /*}
@@ -882,8 +885,8 @@
         agent_turn = goes_first1[counter];
         let temp = [1, 2];
         agent_turn_reverse = temp[agent_turn % 2];
-        alert(agent_turn);
-        alert(agent_turn_reverse);
+        //alert(agent_turn);
+        //alert(agent_turn_reverse);
     }
 
     function random_actionList(whichAgent) {
@@ -1438,7 +1441,7 @@
                 decide_agent_turn();
                 //agent_turn = 2;
                 //agent_turn_reverse = 1;
-                condition = 1;
+                
                 // actuate agent right and idle agent left
                 actuate_agent_talking(agent_turn);
                 var inst = document.getElementById("drag_inst");
@@ -1553,7 +1556,7 @@
                         decide_agent_turn();
                         //agent_turn = 2;
                         //agent_turn_reverse = 1;
-                        condition = 1;
+                        
                         // actuate right agent and idle left
                         actuate_agent_talking(agent_turn);
                            
