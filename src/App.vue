@@ -69,11 +69,11 @@
             </div>
             <div id="centerColumn" class="column3">
                 <br />
-                <h3 class="smallerText" id="drag_inst" style="display:none; max-width:55vw;">The agent tries to convince the participant about next item</h3>
-                <h3 class="smallerText" id="intro2" style="display:none; max-width:55vw;  ">
+                <h3 class="smallerText" id="drag_inst" style="display:none; max-width:50vw;">The agent tries to convince the participant about next item</h3>
+                <h3 class="smallerText" id="intro2" style="display:none; max-width:50vw;  ">
                 </h3>
                 <br />
-				<h3 class="smallerText" id="intro3" style="display:none; max-width:55vw;  ">
+				<h3 class="smallerText" id="intro3" style="display:none; max-width:50vw;  ">
                 </h3>
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Rank this current item</button>
                 <!--&emsp;&emsp;&emsp;&emsp;
@@ -402,10 +402,10 @@
         if (index == 0 || index == 2) {*/
         const light = new THREE.AmbientLight(0x808080); // soft white light
         scene.add(light);
-        const lights = new THREE.DirectionalLight(0x808080, 0.5, 0);
+        const lights = new THREE.DirectionalLight(0x808080, 0.1, 0);
         lights.position.set(0, 600, 0);
         scene.add(lights);
-        const lights_left = new THREE.DirectionalLight(0x808080, 0.5, 0);
+        const lights_left = new THREE.DirectionalLight(0x808080, 0.1, 0);
         lights_left.position.set(0, 600, 0);
         scene_left.add(lights_left);
         const light_left = new THREE.AmbientLight(0x808080); // soft white light
@@ -425,27 +425,29 @@
         }*/
 
 
-        /*const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(0, 250, 150);
-        dirLight.target.position.set(0, 50, 150);
+        /*const dirLight = new THREE.DirectionalLight(0x808080, 0.8);
+        dirLight.position.set(0, 300, 50);
+        dirLight.target.position.set(0, 50, 50);
         dirLight.castShadow = true;
         dirLight.shadow.camera.top = 180;
         dirLight.shadow.camera.bottom = - 100;
         dirLight.shadow.camera.left = - 120;
         dirLight.shadow.camera.right = 120;
-        //scene.add(dirLight);
-        //scene.add(dirLight.target);
+        scene.add(dirLight);
+        scene.add(dirLight.target);
         //scene_left.add(dirLight);
         // adding to test
-        const dirLight2 = new THREE.DirectionalLight(0xffffff);
-        dirLight2.position.set(0, 200, 100);
+        const dirLight2 = new THREE.DirectionalLight(0x808080, 0.8);
+        dirLight2.position.set(0, 300, 50);
+        dirLight2.target.position.set(0, 50, 50);
         dirLight2.castShadow = true;
         dirLight2.shadow.camera.top = 180;
         dirLight2.shadow.camera.bottom = - 100;
         dirLight2.shadow.camera.left = - 120;
         dirLight2.shadow.camera.right = 120;
         //scene.add(dirLight2);
-        scene_left.add(dirLight2);*/
+        scene_left.add(dirLight2);
+        scene.add(dirLight2.target);*/
         // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
 
         // ground
