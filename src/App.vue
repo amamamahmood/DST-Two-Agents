@@ -182,53 +182,55 @@
     var random_actions_left = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var agent_turn = 1;
     var agent_turn_reverse = 2;
+    var agent_voice = 1;
+    var agent_voice_left = 2;
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
     var goes_first1 = [1, 2, 1, 2, 1, 1, 2, 2, 1];
     //var agent2_script = [true, false, true, true, false, false, true, false, true];
     var goes_first2 =    [2,     1,     2,      1,    2,    2,     1,   1,    2  ];
 
-    const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
-        "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
-        "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
-        "a first aid kit. You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be useful to have a first aid kit.",
-        "a cosmetic mirror. Cosmetic mirror is one of the most powerful tools to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to survival of your group.",
-        "a flashlight of four battery size. Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
-        "a magnetic compass. The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
-        "a 2 quart flask 180-proof vodka. Since 180-proof vodka is flammable, you can use it to start a fire. Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
-        "a plastic raincoat. Ironically, Coats are one of the best ways to avoid hot dry air from circulating next to your skin. Hence, preventing perspiration. This will help you prevent dehydration through moisture loss. Therefore, increasing your survival time. Plastic raincoat can also be used to gather dew at night for drinking purposes. You will also be able create a solar still using raincoat to extract some water from ground."];
+    const script1 = ["Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
+        "If you are stuck beyond day 3, you will need to find food and water. The book - Edible Animals of the Desert may be useful. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
+        "The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
+        "You may use gauze from the first aid kit as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be useful to have a first aid kit.",
+        "Cosmetic mirror is one of the most powerful tools to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to survival of your group.",
+        "Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
+        "The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
+        "Since 180-proof vodka is flammable, you can use it to start a fire. Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
+        "Ironically, coats are one of the best ways to avoid hot dry air from circulating next to your skin. Hence, preventing perspiration. This will help you prevent dehydration through moisture loss. Therefore, increasing your survival time. Plastic raincoat can also be used to gather dew at night for drinking purposes. You will also be able create a solar still using raincoat to extract some water from ground."];
 
-    const script2 = ["a map of New Mexico. Map is not as useful as one would think because it will encourage you and others to try and walk out. It is potentially dangerous to leave the site of crash since rescue party will most likely arrive there.",
-        "the book - Edible Animals of the Desert. This book will be of little use since the main problem you confront for first few days is dehydration, not starvation. Also, you should be thinking about conserving energy and hunting is counterproductive.",
-        "a pair of sunglasses. Sunglasses will prevent sunburned eyes, but its usefulness is limited to daytime. Additionally, it is replaceable by any piece of clothing that you are wearing to keep your eyes safe from exposure to sunlight.",
-        "a first aid kit. Since no one was injured in the plane, a first aid kit is not as important as one would think. Because of low humidity of the desert, it is considered one of the least infectious places in the world. Also, because the blood thickens due to dehydration, there is little danger of bleeding. However, gauze can be used for secondary purposes.",
-        "a cosmetic mirror. You may use cosmetic mirror to communicate your presence during daylight. Apart from that it has no secondary use for your survival.",
-        "a flashlight of four battery size. You will use flashlight to communicate your presence at night. However, its range will be limited, and it may attract dangerous animals wandering in the dark.",
-        "a magnetic compass. Aside from the possibility of using the reflective surface of the magnetic compass as an auxiliary signaling device, it is of little use. It will tempt you to walk in search of food or water which is not good.",
-        "a 2 quart flask 180-proof vodka. Drinking alcohol causes quicker dehydration because your body will lose enormous amounts of water trying to digest alcohol. 2 to 3 ounces of water is required to digest one ounce of alcohol approximately. Even though it may have secondary uses such as starting a fire and using empty bottle as container, drinking vodka will be lethal in this situation.",
-        "a plastic raincoat. By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival."
-
-    ];
-    const script3 = ["a map of New Mexico. Map can be used to start a fire, Ummm, ..... as a toilet paper I think and to cover head.",
-        "the book - Edible Animals of the Desert. The book may be used to search for food, to start a fire And, And. like..... a toilet paper.",
-        "a pair of sunglasses. People may avoid Ummm, sunlight by wearing sunglasses..... I guess. So that eyes don't burn",
-        "a first aid kit. People may use gauze as rope, I suppose And, And as ..... sun protection or may be in case they get hurt.",
-        "a cosmetic mirror. People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Ummm, ..... That's it.",
-        "a flashlight of four battery size. People may use flashlight to seek help at night and see in the dark.  What else? What else? .... Oh, it may be used as a container, signaling device and fire starter.",
-        "a magnetic compass. The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, hmmm I don't know... people can navigate with it.",
-        "a 2 quart flask 180-proof vodka. Vodka can catch fire. Ummm, People can put water in empty bottle. Yeah. That's all.",
-        "a plastic raincoat. You know coats stop dry air to prevent sweating. That means less dehydration. Ummm, ..... Like people can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
+    const script2 = ["Map is not as useful as you would think because it will encourage you and others to try and walk out. It is potentially dangerous to leave the site of crash since rescue party will most likely arrive there.",
+        "The book - Edible Animals of the Desert will be of little use since the main problem you confront for first few days is dehydration, not starvation. Also, you should be thinking about conserving energy and hunting is counterproductive.",
+        "Sunglasses will prevent sunburned eyes, but its usefulness is limited to daytime. Additionally, it is replaceable by any piece of clothing that you are wearing to keep your eyes safe from exposure to sunlight.",
+        "Since no one was injured in the plane, a first aid kit is not as important as you would think. Because of low humidity of the desert, it is considered one of the least infectious places in the world. Also, because the blood thickens due to dehydration, there is little danger of bleeding. However, gauze can be used for secondary purposes.",
+        "You may use cosmetic mirror to communicate your presence during daylight. Apart from that it has no secondary use for your survival.",
+        "You will use flashlight to communicate your presence at night. However, its range will be limited, and it may attract dangerous animals wandering in the dark.",
+        "Aside from the possibility of using the reflective surface of the magnetic compass as an auxiliary signaling device, it is of little use. It will tempt you to walk in search of food or water which is not good.",
+        "Drinking alcohol causes quicker dehydration because your body will lose enormous amounts of water trying to digest alcohol. 2 to 3 ounces of water is required to digest one ounce of alcohol approximately. Even though it may have secondary uses such as starting a fire and using empty bottle as container, drinking vodka will be lethal in this situation.",
+        "By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival."
 
     ];
+    const script3 = ["Map can be used to start a fire, Ummm, ..... as a toilet paper I think and to cover head.",
+        "The book - Edible Animals of the Desert may be used to search for food, to start a fire And, And. like..... a toilet paper.",
+        "People may avoid Ummm, sunlight by wearing sunglasses..... I guess. So that eyes don't burn",
+        "People may use gauze as rope, I suppose And, And as ..... sun protection or may be in case they get hurt.",
+        "People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Ummm, ..... That's it.",
+        "People may use flashlight to seek help at night and see in the dark.  What else? What else? ..... Oh, it may be used as a container, signaling device and fire starter.",
+        "The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, hmmm, I don't know..... people can navigate with it.",
+        "Vodka can catch fire. Ummm, People can put water in empty bottle. Yeah. That's all.",
+        "You know coats stop dry air to prevent sweating. That means less dehydration. Ummm, ..... Like people can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
 
-    const script4 = ["a map of New Mexico. Map is not as good as people think, Ummm, ..... because I think it may make people want to leave that place.",
-        "the book - Edible Animals of the Desert. The book is not useful because people should save their energy by not hunting And, And like..... people do not even need food really.",
-        "a pair of sunglasses. People may avoid Ummm, sunlight by wearing sunglasses..... but only during the day I guess. No use at night.",
-        "a first aid kit. No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. And, And ..... people can use gauze for other reasons, I suppose.",
-        "a cosmetic mirror. Cosmetic mirror can reflect sunlight but only in the daylight.... Ummm, that's it. No other use.",
-        "a flashlight of four battery size. People may use flashlight to seek help at night, what else what else? but oh, it may bring dangerous animals out too.",
-        "a magnetic compass. Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn't a good idea",
-        "a 2 quart flask 180-proof vodka. Ummm, I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. I guess people could use it for starting a fire or storing water. Yeah. That's all.",
-        "a plastic raincoat. People can gather dew at night to drink and Ummm, they can suck water out of ground by making solar still. But..... that's like too much work for so little water. Not that good for staying alive."
+    ];
+
+    const script4 = ["Map is not as good as people think, Ummm, ..... because I think it may make people want to leave that place.",
+        "The book - Edible Animals of the Desert is not useful because people should save their energy by not hunting And, And like..... people do not even need food really.",
+        "People may avoid Ummm, sunlight by wearing sunglasses..... but only during the day I guess. No use at night.",
+        "No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. And, And ..... people can use gauze for other reasons, I suppose.",
+        "Cosmetic mirror can reflect sunlight but only in the daylight..... Ummm, that's it. No other use.",
+        "People may use flashlight to seek help at night, what else what else? but oh, it may bring dangerous animals out too.",
+        "Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn't a good idea",
+        "Ummm, I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. I guess people could use it for starting a fire or storing water. Yeah. That's all.",
+        "People can gather dew at night to drink and Ummm, they can suck water out of ground by making solar still. But..... that's like too much work for so little water. Not that good for staying alive."
     ];
 
     //var PulseLoader = VueSpinner.PulseLoader
@@ -237,7 +239,8 @@
 
     function init() {
         var value1, value2;
-        condition = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+        //condition = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+        condition = 2;
         //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
         //var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/4cbg6cy934v6ob9/brian_idle.fbx'];
@@ -245,6 +248,11 @@
         var files = ['https://dl.dropbox.com/s/wyllqrsahvwmx2x/idle_elizabeth.fbx', 'https://dl.dropbox.com/s/lxuv7a5idh89o5o/idle_jody.fbx', 'https://dl.dropbox.com/s/qf75d8qzr5t9v0m/idle_david.fbx', 'https://dl.dropbox.com/s/hdtasouo7f68wzb/idle_adam.fbx'];
         var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/f9fl7o7wmzcib6d/talking_jody.fbx', 'https://dl.dropbox.com/s/n0vbzfvfwyevksh/talking_david.fbx', 'https://dl.dropbox.com/s/rf9vo2ywao3s0yx/talking_adam.fbx'];
 
+        agent_voice = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        let temp_voice = [1, 2];
+        agent_voice_left = temp_voice[agent_voice % 2];
+        //alert(agent_voice);
+        //alert(agent_voice_left);
         switch (Number(store.getters.getGender)) {
             case 1:
                 //selectedVoice = 1;
@@ -559,7 +567,7 @@
                 const name = clip.name;
                 //alert(name);
                 if (name == 'idle') { idle_action = i; }
-                else if (name == 'wave') { wave_action = i; }
+                else if (name == 'wave' || name == 'waving') { wave_action = i; alert(i);}
                 else if (name == 'question') { reject = i;}
                 const action = mixer.clipAction(clip);
                 actions.push(action);
@@ -614,7 +622,7 @@
                 const name_left = clip_left.name;
                 //alert(name_left);
                 if (name_left == 'idle') { idle_action_left = i; }
-                else if (name_left == 'wave') { wave_action_left = i; }
+                else if (name_left == 'wave' || name_left == 'waving') { wave_action_left = i; alert(i);}
                 else if (name_left == 'question') { reject_left = i; }
                 const action_left = mixer_left.clipAction(clip_left);
                 actions_left.push(action_left);
@@ -907,7 +915,7 @@
         }
     }
 
-    function actuate_agent_talking(which_agent) { // 1 right - 2 left
+    function actuate_agent_talking(which_agent, intro = false) { // 1 right - 2 left
         avatarReady_left = false;
         avatarReady = false;
         var arrow1 = document.getElementById("arrow_right");
@@ -919,7 +927,12 @@
             random_actionList(1);
             avatarReady = true;
             setAction_left(actions_left[idle_action_left]);
-            setAction(actions[random_actions[0]]);
+            if (intro) {
+                setAction(actions[wave_action]);
+            }
+            else {
+                setAction(actions[random_actions[0]]);
+            }
             setTimeout(function () {
                 if (avatarReady) { setAction(actions[random_actions[1]]); }
                 setTimeout(function () {
@@ -941,7 +954,12 @@
             random_actionList(2);
             avatarReady_left = true;
             setAction(actions[idle_action]);
-            setAction(actions_left[random_actions_left[0]]);
+            if (intro) {
+                setAction(actions_left[wave_action_left]);
+            }
+            else {
+                setAction(actions_left[random_actions_left[0]]);
+            }
             setTimeout(function () {
                 if (avatarReady_left) { setAction(actions_left[random_actions_left[1]]); }
                 setTimeout(function () {
@@ -1269,61 +1287,85 @@
                 this.enabled2 = true;
             },
             returnText: function (condition) {
-                var tempStr, tempStr_left;
+                var tempStr, tempStr_left, continuer, continuer_left;
                 //var avatarIndex = counter;
-                let audio_src, audio_src_left;
+                let audio_src, audio_src_left, continuer_src, continuer_src_left;
                 let index_script = this.users[counter].id;
                 if (agent1_script[counter]) { // + represents A1 and - represents A2 which are randomly black or white
+                    continuer_src = "move_up" + "_" + gen + "_" + agent_voice + ".mp3";
+                    continuer_src_left = "move_down" + "_" + gen + "_" + agent_voice_left + ".mp3";
+                    continuer = "You should move this item up in the ranking. ";
+                    continuer_left = "You should move this item down in the ranking. ";
+                    if (counter == 0) {
+                        continuer_left= "You should not move this item in the ranking. ";
+                        continuer_src_left = "move_no" + "_" + gen + "_" + agent_voice_left + ".mp3";
+                    }
+                    else if (counter == 8) {
+                        continuer = "You should not move this item in the ranking. ";
+                        continuer_src = "move_no" + "_" + gen + "_" + agent_voice + ".mp3";
+                    }
                     if (condition == 1) {// +Expert -expert
                         tempStr = script1[index_script - 1];
-                        audio_src = "audio1_" + index_script + gen + ".mp3";
+                        audio_src = "audio1_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script2[index_script - 1];
-                        audio_src_left = "audio2_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio2_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                     else if (condition == 2) { // +novice -novice
                         tempStr = script3[index_script - 1];
-                        audio_src = "audio3_" + index_script + gen + ".mp3";
+                        audio_src = "audio3_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script4[index_script - 1];
-                        audio_src_left = "audio4_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio4_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                     else if (condition == 3) { // +Expert -novice
                         tempStr = script1[index_script - 1];
-                        audio_src = "audio1_" + index_script + gen + ".mp3";
+                        audio_src = "audio1_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script4[index_script - 1];
-                        audio_src_left = "audio4_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio4_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                     else if (condition == 4) { // +novice -expert
                         tempStr = script3[index_script - 1];
-                        audio_src = "audio3_" + index_script + gen + ".mp3";
+                        audio_src = "audio3_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script2[index_script - 1];
-                        audio_src_left = "audio2_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio2_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                 }
                 else {
+                    continuer_src = "move_down" + "_" + gen + "_" + agent_voice + ".mp3";
+                    continuer_src_left = "move_up" + "_" + gen + "_" + agent_voice_left + ".mp3";
+                    continuer = "You should move this item down in the ranking. ";
+                    continuer_left = "You should move this item up in the ranking. ";
+                    if (counter == 0) {
+                        continuer_left = "You should not move this item in the ranking. ";
+                        continuer_src_left = "move_no" + "_" + gen + "_" + agent_voice_left + ".mp3";
+                    }
+                    else if (counter == 8) {
+                        continuer = "You should not move this item in the ranking. ";
+                        continuer_src = "move_no" + "_" + gen + "_" + agent_voice + ".mp3";
+                    }
                     if (condition == 1) {// -Expert + expert
                         tempStr = script2[index_script - 1];
-                        audio_src = "audio2_" + index_script + gen + ".mp3";
+                        audio_src = "audio2_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script1[index_script - 1];
-                        audio_src_left = "audio1_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio1_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
 
                     }
                     else if (condition == 2) { // -novice +novice
                         tempStr = script4[index_script - 1];
-                        audio_src = "audio4_" + index_script + gen + ".mp3";
+                        audio_src = "audio4_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script3[index_script - 1];
-                        audio_src_left = "audio3_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio3_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                     else if (condition == 3) { // -expert + novice
                         tempStr = script2[index_script - 1];
-                        audio_src = "audio2_" + index_script + gen + ".mp3";
+                        audio_src = "audio2_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script3[index_script - 1];
-                        audio_src_left = "audio3_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio3_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                     else if (condition == 4) { // -novice + expert
                         tempStr = script4[index_script - 1];
-                        audio_src = "audio4_" + index_script + gen + ".mp3";
+                        audio_src = "audio4_" + index_script + "_" + gen + "_" + agent_voice + ".mp3";
                         tempStr_left = script1[index_script - 1];
-                        audio_src_left = "audio1_" + index_script + gen + ".mp3";
+                        audio_src_left = "audio1_" + index_script + "_" + gen + "_" + agent_voice_left + ".mp3";
                     }
                 }
 
@@ -1334,7 +1376,7 @@
 
 
 
-                return [tempStr, audio_src, tempStr_left, audio_src_left];
+                return [tempStr, audio_src, continuer, continuer_src, tempStr_left, audio_src_left, continuer_left, continuer_src_left];
             },
             returnRankings: function (userAvatar = 'user') {
                 var ranking = [];
@@ -1459,49 +1501,69 @@
                 //agent_turn_reverse = 1;
                 
                 // actuate agent right and idle agent left
-                actuate_agent_talking(agent_turn);
+                
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
-                let say;
-                let say2, audio_src, say2_left, audio_src_left;
+                let say,say_left;
+                let say2, audio_src, say2_left, audio_src_left, continuer, continuer_src, continuer_left, continuer_src_left;
                 if (agent_turn == 1) {
                     say = "Hi. I am " + agentName;// + ". Here is my list. I'll discuss my rankings with you item by item... Let's start with the first item on the list.";
-                    [say2, audio_src, say2_left, audio_src_left] = this.returnText(condition);
+                    say_left = "Hi. I am " + agentName2;
+                    [say2, audio_src, continuer, continuer_src, say2_left, audio_src_left, continuer_left, continuer_src_left] = this.returnText(condition);
                 }
                 else if (agent_turn == 2){
                     say = "Hi. I am " + agentName2;// + ". Here is my list. I'll discuss my rankings with you item by item... Let's start with the first item on the list.";
-                    [say2_left, audio_src_left, say2, audio_src] = this.returnText(condition);
+                    say_left = "Hi. I am " + agentName;
+                    [say2_left, audio_src_left, continuer_left, continuer_src_left, say2, audio_src, continuer, continuer_src] = this.returnText(condition);
                 }
                
                 //alert(JSON.stringify(say2));
                 inst.textContent = say;
-                
+                actuate_agent_talking(agent_turn, true);
 
                 const sound = new Audio();
-                sound.src = "intro" + index + ".mp3";
+                sound.src = "intro" + "_" + index + "_" + agent_voice + ".mp3";
                 sound.play();
                 sound.addEventListener('ended', function () {
-                    inst.textContent = say2;
+                    actuate_agent_talking(agent_turn_reverse, true);
+                    const sound2 = new Audio();
+                    inst.textContent = say_left;
+                    sound2.src = "intro" +"_"+ index2 + "_" + agent_voice_left + ".mp3";
+                    sound2.play();
+                    sound2.addEventListener('ended', function () {
+                        actuate_agent_talking(agent_turn);
 
-                    const greetingSpeech2 = new Audio();
-                    greetingSpeech2.src = audio_src;
-                    greetingSpeech2.play();
-                    greetingSpeech2.addEventListener('ended', function () {
-                        // actuate agent left and idle agent right
-                        actuate_agent_talking(agent_turn_reverse);
-                        inst.textContent = say2_left;
-                        const greetingSpeech3 = new Audio();
-                        greetingSpeech3.src = audio_src_left;
-                        greetingSpeech3.play();
-                        greetingSpeech3.addEventListener('ended', function () {
-                            var btn = document.getElementById("drag");
-                            btn.style.display = "inline-block";
-                            //avatarReady_left = false;
-                            //alert("I am here");
-                            //setAction_left(actions_left[idle_action_left]);
-                            actuate_agent_talking(3);
+                        inst.textContent = continuer + say2;
+                        const greetingSpeech2a = new Audio();
+                        greetingSpeech2a.src = continuer_src;
+                        greetingSpeech2a.play();
+                        greetingSpeech2a.addEventListener('ended', function () {
+                        //inst.textContent = say2;
+                            const greetingSpeech2 = new Audio();
+                            greetingSpeech2.src = audio_src;
+                            greetingSpeech2.play();
+                            greetingSpeech2.addEventListener('ended', function () {
+                                // actuate agent left and idle agent right
+                                actuate_agent_talking(agent_turn_reverse);
+                                inst.textContent = continuer_left + say2_left;
+                                const greetingSpeech3a = new Audio();
+                                greetingSpeech3a.src = continuer_src_left;
+                                greetingSpeech3a.play();
+                                greetingSpeech3a.addEventListener('ended', function () {
+                                    const greetingSpeech3 = new Audio();
+                                    greetingSpeech3.src = audio_src_left;
+                                    greetingSpeech3.play();
+                                    greetingSpeech3.addEventListener('ended', function () {
+                                        var btn = document.getElementById("drag");
+                                        btn.style.display = "inline-block";
+                                        //avatarReady_left = false;
+                                        //alert("I am here");
+                                        //setAction_left(actions_left[idle_action_left]);
+                                        actuate_agent_talking(3);
+                                    });
+                                });
+                            });
                         });
-
 
                     });
                 });
@@ -1546,7 +1608,7 @@
             doneDragging: function () {
                 avatarReady = false;
                 avatarReady_left = false;
-                let say, say_left, tempStr, tempStr_left;
+                let say, say_left, tempStr, tempStr_left, continuer, continuer_src, continuer_left, continuer_src_left;
                 let audio_src, audio_src_left;
                 items[counter].rankings = this.returnRankings();
                 //alert(counter + "printing item "+ JSON.stringify(items[counter]));
@@ -1575,45 +1637,52 @@
                         
                         // actuate right agent and idle left
                         actuate_agent_talking(agent_turn);
-                           
+                        
                         const greetingSpeech = new Audio();
                         if (agent_turn == 1) {
-                            [tempStr, audio_src, tempStr_left, audio_src_left] = this.returnText(condition);
-                            say = "Next I have " + tempStr;
-                            say_left = "Next I have " + tempStr_left;
+                            [tempStr, audio_src, continuer, continuer_src, tempStr_left, audio_src_left, continuer_left, continuer_src_left] = this.returnText(condition);
+                            say = continuer + tempStr;
+                            say_left = continuer_left + tempStr_left;
+                            
+                            
                         }
                         else if (agent_turn == 2) {
-                            [tempStr_left, audio_src_left, tempStr, audio_src] = this.returnText(condition);
-                            say = "Next I have " + tempStr;
-                            say_left = "Next I have " + tempStr_left;
+                            [tempStr_left, audio_src_left, continuer_left, continuer_src_left, tempStr, audio_src, continuer, continuer_src] = this.returnText(condition);
+                            say = continuer + tempStr;
+                            say_left = continuer_left + tempStr_left;
                         }
                         
                         //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
                         //greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
                         inst.textContent = say;
-                        greetingSpeech.src = gen + "_next.mp3";
+                        greetingSpeech.src = continuer_src;
                         greetingSpeech.play();
                         const greetingSpeech2 = new Audio();
                         greetingSpeech2.src = audio_src;
                         greetingSpeech.addEventListener('ended', function () {
                             greetingSpeech2.play();
-                            const greetingSpeech3 = new Audio();
-                            greetingSpeech3.src = audio_src_left;
+                            const greetingSpeech2b = new Audio();
+                            greetingSpeech2b.src = continuer_src_left;
                             greetingSpeech2.addEventListener('ended', function () {
-                                // actuate agent left and idle agent right
                                 actuate_agent_talking(agent_turn_reverse);
                                 inst.textContent = say_left;
-                                greetingSpeech3.play();
-                                greetingSpeech3.addEventListener('ended', function () {
-                                    btn = document.getElementById("drag");
-                                    btn.style.display = "inline-block";
-                                    //btn = document.getElementById("noDrag");
-                                    //btn.style.display = "inline-block";
-                                    //alert("I am here");
-                                    //avatarReady_left = false;
-                                    //setAction_left(actions_left[idle_action_left]);
-                                    actuate_agent_talking(3);
+                                greetingSpeech2b.play();
+                                const greetingSpeech3 = new Audio();
+                                greetingSpeech3.src = audio_src_left;
+                                greetingSpeech2b.addEventListener('ended', function () {
+                                    // actuate agent left and idle agent right
+                                    greetingSpeech3.play();
+                                    greetingSpeech3.addEventListener('ended', function () {
+                                        btn = document.getElementById("drag");
+                                        btn.style.display = "inline-block";
+                                        //btn = document.getElementById("noDrag");
+                                        //btn.style.display = "inline-block";
+                                        //alert("I am here");
+                                        //avatarReady_left = false;
+                                        //setAction_left(actions_left[idle_action_left]);
+                                        actuate_agent_talking(3);
 
+                                    });
                                 });
                             });
                         });
