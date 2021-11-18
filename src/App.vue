@@ -332,11 +332,11 @@
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
         camera_left = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
-        camera_left.position.set(0, 250, 180);
-        camera_left.zoom = 0.8;
+        camera_left.position.set(0, 250, 380);
+        camera_left.zoom = 1.5;
         camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
-        camera.position.set(0,250,180);
-        camera.zoom = 0.8;
+        camera.position.set(0,250,380);
+        camera.zoom = 1.5;
         //camera.position.set(0, -1.2, 2.5);
         
         //camera.rotation.set(90 * Math.PI /180, 0, 0);
@@ -404,7 +404,7 @@
         scene2_left.background = new THREE.Color(0xffffff);
         //scene_left.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
-        hemiLight2.position.set(0, 200, 0);
+        hemiLight2.position.set(0, 300, 300);
         scene_left.add(hemiLight2);
         const hemiLight4 = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.8);
         hemiLight4.position.set(0, 500, 0);
@@ -416,14 +416,15 @@
         if (index == 0 || index == 2) {*/
         const light = new THREE.AmbientLight(0x808080); // soft white light
         scene.add(light);
+        const light_left = new THREE.AmbientLight(0x808080); // soft white light
+        scene_left.add(light_left);
         const lights = new THREE.DirectionalLight(0x808080, 0.1, 0);
         lights.position.set(0, 600, 0);
         scene.add(lights);
         const lights_left = new THREE.DirectionalLight(0x808080, 0.1, 0);
         lights_left.position.set(0, 600, 0);
         scene_left.add(lights_left);
-        const light_left = new THREE.AmbientLight(0x808080); // soft white light
-        scene_left.add(light_left);
+        
         /*}
         else {
             const light2 = new THREE.AmbientLight(0xffffff); // soft white light
@@ -467,11 +468,11 @@
         // ground
         const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
         mesh.rotation.x = - Math.PI / 2;
-        mesh.receiveShadow = true;
+        //mesh.receiveShadow = true;
         scene.add(mesh);
         const mesh2 = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
         mesh2.rotation.x = - Math.PI / 2;
-        mesh2.receiveShadow = true;
+        //mesh2.receiveShadow = true;
         scene_left.add(mesh2);
         //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
         //grid.material.opacity = 0.2;
@@ -497,6 +498,7 @@
         //const loader = new FBXLoader();
         let model;
         const loader = new GLTFLoader();
+        // Elizabeth: https://dl.dropbox.com/s/0jiv3rm03uum137/Shanon.glb
         loader.load('https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb', function (object) {
             //object.scene.scale.set(2, 2, 2);
             //alert(object.scene.scale.x);
@@ -544,13 +546,12 @@
             const fullWidth = container.clientWidth * 3;
             const fullHeight = container.clientHeight * 2;
             camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
-
             //alert(model.position.x);
-            model.traverse(function (object2) {
+            /*model.traverse(function (object2) {
 
                 if (object2.isMesh) object2.castShadow = true;
 
-            });
+            });*/
             //skeleton = new THREE.SkeletonHelper(model);
             //skeleton.visible = false;
             //scene.add(skeleton);
@@ -593,7 +594,7 @@
         let model_left;
         const loader_left = new GLTFLoader();
         loader_left.load('https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb', function (object_left) {
-            
+            //jody:https://dl.dropbox.com/s/oq0otnwo6f6jrbu/david.glb
             object_left.scene.rotation.x = 65 * Math.PI / 180;
             
             model_left = object_left.scene;
@@ -601,13 +602,12 @@
             const fullWidth2 = container_left.clientWidth * 3;
             const fullHeight2 = container_left.clientHeight * 2;
             camera_left.setViewOffset(fullWidth2, fullHeight2, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
-
             //alert(model.position.x);
-            model_left.traverse(function (object2_left) {
+            /*model_left.traverse(function (object2_left) {
 
                 if (object2_left.isMesh) object2_left.castShadow = true;
 
-            });
+            });*/
            
             const animations_left = object_left.animations;
             mixer_left = new THREE.AnimationMixer(model_left);
