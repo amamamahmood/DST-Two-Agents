@@ -567,7 +567,7 @@
                 const name = clip.name;
                 //alert(name);
                 if (name == 'idle') { idle_action = i; }
-                else if (name == 'wave' || name == 'waving') { wave_action = i; alert(i);}
+                else if (name == 'wave' || name == 'waving') { wave_action = i; }
                 else if (name == 'question') { reject = i;}
                 const action = mixer.clipAction(clip);
                 actions.push(action);
@@ -622,7 +622,7 @@
                 const name_left = clip_left.name;
                 //alert(name_left);
                 if (name_left == 'idle') { idle_action_left = i; }
-                else if (name_left == 'wave' || name_left == 'waving') { wave_action_left = i; alert(i);}
+                else if (name_left == 'wave' || name_left == 'waving') { wave_action_left = i; }
                 else if (name_left == 'question') { reject_left = i; }
                 const action_left = mixer_left.clipAction(clip_left);
                 actions_left.push(action_left);
