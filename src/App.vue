@@ -498,8 +498,9 @@
         //const loader = new FBXLoader();
         let model;
         const loader = new GLTFLoader();
-        // Elizabeth: https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb
-        loader.load('https://dl.dropbox.com/s/720dr791zfiseux/Shanon.glb', function (object) {
+        // Shannon(white male) https://dl.dropbox.com/s/720dr791zfiseux/Shanon.glb 
+        //Elizabeth: https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb
+        loader.load('https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb', function (object) {
             //object.scene.scale.set(2, 2, 2);
             //alert(object.scene.scale.x);
             //alert("gltf camera");
@@ -593,8 +594,9 @@
         // for left agent
         let model_left;
         const loader_left = new GLTFLoader();
-        loader_left.load('https://dl.dropbox.com/s/2uvvq3h0brh4606/david3.glb', function (object_left) {
+        loader_left.load('https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb', function (object_left) {
             //jody: https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb
+            // david: https://dl.dropbox.com/s/2uvvq3h0brh4606/david3.glb
             object_left.scene.rotation.x = 65 * Math.PI / 180;
             
             model_left = object_left.scene;
