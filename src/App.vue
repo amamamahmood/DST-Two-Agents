@@ -88,12 +88,16 @@
                 <br />
 
             </div>
-            <div id="arrow_left" class="arrowAvatar-left" style="display:none;">
-                <img src="arrow_left.png" alt="" style="max-width: 10vw; max-height: 8vw;  margin: auto;">
+           
+            <div id="arrow_left" class="dialog-1" style="display: none; text-align: center; align-items: center; align-content:center">
+                <div id ="arrow_point" class="left-point"></div>
+                <h3 class="smallerText" id="agent_speech" style="max-width:40vw;text-align:center;align-content:center;padding:1vw;"></h3>
+
             </div>
-            <div id="arrow_right" class="arrowAvatar-right" style="display:none;">
-                <img src="arrow_right.png" alt="" style="max-width: 10vw; max-height: 8vw; margin: auto;">
-            </div>
+
+            
+
+
 
 
             <div id="user_list" class="column2" style=" display:none;">
@@ -931,7 +935,7 @@
             }
         }
         //alert(goes_first_true + goes_first_false);
-        alert(goes_first);
+        //alert(goes_first);
     }
     randomize_goes_first();
     function decide_agent_turn() {
@@ -955,12 +959,15 @@
     function actuate_agent_talking(which_agent, intro = false) { // 1 right - 2 left
         avatarReady_left = false;
         avatarReady = false;
-        var arrow1 = document.getElementById("arrow_right");
-        arrow1.style.display = "none";
-        var arrow2 = document.getElementById("arrow_left");
-        arrow2.style.display = "none";
+       // var arrow1 = document.getElementById("arrow_right");
+        //arrow1.style.display = "none";
+        var arrow = document.getElementById("arrow_left");
+        arrow.style.display = "none";
+        var point = document.getElementById("arrow_point");
         if (which_agent == 1) {
-            arrow1.style.display = "block";
+            arrow.style.display = "block";
+            arrow.style.backgroundColor = "#ade6d8";
+            point.className = "right-point";
             random_actionList(1);
             avatarReady = true;
             setAction_left(actions_left[idle_action_left]);
@@ -987,7 +994,9 @@
             }, 5000);
         }
         else if (which_agent == 2) {
-            arrow2.style.display = "block";
+            arrow.style.display = "block";
+            arrow.style.backgroundColor = "#e6d8ad";
+            point.className = "left-point";
             random_actionList(2);
             avatarReady_left = true;
             setAction(actions[idle_action]);
@@ -1540,7 +1549,10 @@
                 // actuate agent right and idle agent left
                 
                 var inst = document.getElementById("drag_inst");
-                inst.style.display = "inline-block";
+                //changing here
+                inst.style.display = "none";
+                inst = document.getElementById("agent_speech");
+                //inst.style.display = "inline-block";
                 let say,say_left;
                 let say2, audio_src, say2_left, audio_src_left, continuer, continuer_src, continuer_left, continuer_src_left;
                 if (agent_turn == 1) {
@@ -1613,6 +1625,8 @@
                 items[counter].updates = 1;
                 total_updates += 1;
                 //alert(total_updates);
+                //inst = document.getElementById("agent_speech");
+                //inst.style.display = "none";
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
                 inst.textContent = "Place " + this.users[counter].name + " in one of the place holders in the new list below";
@@ -1665,6 +1679,9 @@
                 }
                 else {
                     inst = document.getElementById("drag_inst");
+                    inst.style.display = "none";
+                    inst = document.getElementById("agent_speech");
+                    
                     this.disable();
 
                     if (counter < 9) {
@@ -1733,7 +1750,10 @@
                         setAction(actions[idle_action]);
                         avatarReady_left = false;
                         setAction_left(actions_left[idle_action_left]);
+                        //inst = document.getElementById("agent_speech");
+                        //inst.style.display = "none";
                         inst = document.getElementById("drag_inst");
+                        inst.style.display = "inline-block";
                         inst.textContent = "Please finalize and submit your rankings before concluding the study";
                         btn = document.getElementById("submit");
                         btn.style.display = "inline-block";
@@ -2067,6 +2087,44 @@
         -ms-user-select: none;
         user-select: none;
     }
+
+    .dialog-1 {
+        height: 20%;
+        width: 40%;
+        background-color: #f9bbb1;
+        position: absolute;
+        border-radius: 10%;
+        top: 30%;
+        right: 30vw;
+        
+    }
+
+    .left-point {
+        width: 0;
+        height: 0;
+        border-left: 4vh solid transparent;
+        border-right: 4vh solid transparent;
+        border-top: 15vh solid #e6d8ad;
+        position: absolute;
+        top: 45%;
+        left: -10%;
+        transform: rotate(60deg);
+    }
+
+
+
+    .right-point {
+        width: 0;
+        height: 0;
+        border-left: 4vh solid transparent;
+        border-right: 4vh solid transparent;
+        border-top: 15vh solid #ade6d8;
+        position: absolute;
+        top: 45%;
+        right: -10%;
+        transform: rotate(-60deg);
+    }
+
 </style>
 
 
