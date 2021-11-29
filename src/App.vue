@@ -185,7 +185,7 @@
     var agent_voice = 1;
     var agent_voice_left = 2;
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
-    var goes_first1 = [1, 2, 1, 2, 1, 1, 2, 2, 1];
+    var goes_first = [1, 2, 1, 2, 1, 1, 2, 2, 1];
     //var agent2_script = [true, false, true, true, false, false, true, false, true];
     var goes_first2 =    [2,     1,     2,      1,    2,    2,     1,   1,    2  ];
 
@@ -605,13 +605,13 @@
             const fullHeight2 = container_left.clientHeight * 2;
             camera_left.setViewOffset(fullWidth2, fullHeight2, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
             //alert(model.position.x);
-            model_left.traverse(function (object2_left) {
+           /* model_left.traverse(function (object2_left) {
 
                 if (object2_left.isMesh) object2_left.castShadow = true;
-                object2_left.material.tranparent = 0;
-                object2_left.material.opacity = 1;
+                //object2_left.material.tranparent = 0;
+                //object2_left.material.opacity = 1;
 
-            });
+            });*/
            
             const animations_left = object_left.animations;
             mixer_left = new THREE.AnimationMixer(model_left);
@@ -901,8 +901,41 @@
             activeAction_left.play();
         }
     }
+    function randomize_goes_first() {
+
+        //var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
+        //var goes_first = [    1,      2,      1,      2,   1,   1,    2,      2,     1];
+        
+        //var goes_first2 = [   2,      1,  2,      1,      2,  2,      1,      1,    2];
+        //var agent2_script = [true, false, true, true, false, false, true, false, true];
+        var goes_first_true = [1,2,1,2];
+        var goes_first_false = [1,2,1,2];
+        var acc_order = [0, 1, 2, 3];
+        var con_order = [0, 1, 2, 3];
+        acc_order.sort(() => Math.random() - 0.5);
+        goes_first_true = acc_order.map(i => goes_first_true[i]);
+        con_order.sort(() => Math.random() - 0.5);
+        goes_first_false = con_order.map(i => goes_first_false[i]);
+        //alert(acc_order + con_order);
+        var j = 0;
+        var k = 0;
+        goes_first[i] = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        for (i = 1; i < goes_first.length; i++) {
+            if (agent1_script[i]) {
+                goes_first[i] = goes_first_true[j];
+                j++;
+            }
+            else if (!agent1_script[i]) {
+                goes_first[i] = goes_first_false[k];
+                k++;
+            }
+        }
+        //alert(goes_first_true + goes_first_false);
+        alert(goes_first);
+    }
+    randomize_goes_first();
     function decide_agent_turn() {
-        agent_turn = goes_first1[counter];
+        agent_turn = goes_first[counter];
         let temp = [1, 2];
         agent_turn_reverse = temp[agent_turn % 2];
         //alert(agent_turn);
