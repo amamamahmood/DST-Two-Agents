@@ -498,8 +498,8 @@
         //const loader = new FBXLoader();
         let model;
         const loader = new GLTFLoader();
-        // Elizabeth: https://dl.dropbox.com/s/0jiv3rm03uum137/Shanon.glb
-        loader.load('https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb', function (object) {
+        // Elizabeth: https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb
+        loader.load('https://dl.dropbox.com/s/720dr791zfiseux/Shanon.glb', function (object) {
             //object.scene.scale.set(2, 2, 2);
             //alert(object.scene.scale.x);
             //alert("gltf camera");
@@ -593,8 +593,8 @@
         // for left agent
         let model_left;
         const loader_left = new GLTFLoader();
-        loader_left.load('https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb', function (object_left) {
-            //jody:https://dl.dropbox.com/s/oq0otnwo6f6jrbu/david.glb
+        loader_left.load('https://dl.dropbox.com/s/2uvvq3h0brh4606/david3.glb', function (object_left) {
+            //jody: https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb
             object_left.scene.rotation.x = 65 * Math.PI / 180;
             
             model_left = object_left.scene;
@@ -603,11 +603,13 @@
             const fullHeight2 = container_left.clientHeight * 2;
             camera_left.setViewOffset(fullWidth2, fullHeight2, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
             //alert(model.position.x);
-            /*model_left.traverse(function (object2_left) {
+            model_left.traverse(function (object2_left) {
 
                 if (object2_left.isMesh) object2_left.castShadow = true;
+                object2_left.material.tranparent = 0;
+                object2_left.material.opacity = 1;
 
-            });*/
+            });
            
             const animations_left = object_left.animations;
             mixer_left = new THREE.AnimationMixer(model_left);
