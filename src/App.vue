@@ -536,7 +536,7 @@
             //rotate the object using the matrix
             //object.scene.position.applyMatrix4(matrix);
             //alert(JSON.stringify(object.scene));
-            object.scene.rotation.x = 65 * Math.PI / 180;
+            object.scene.rotation.x = 70 * Math.PI / 180;
             //alert(object.scene.position.x);				    //Position (x = right+ left-)
             //object.scene.position.y = 0;				   // moving back+  //Position (y = up+, down-)
             //object.scene.position.z = 0;
@@ -601,7 +601,7 @@
         loader_left.load('https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb', function (object_left) {
             //jody: https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb
             // david: https://dl.dropbox.com/s/2uvvq3h0brh4606/david3.glb
-            object_left.scene.rotation.x = 65 * Math.PI / 180;
+            object_left.scene.rotation.x = 70 * Math.PI / 180;
             
             model_left = object_left.scene;
             scene_left.add(model_left);
