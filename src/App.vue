@@ -172,15 +172,15 @@
     let actions = [];
     let actions_left =[];
     const clock = new THREE.Clock();
+    const clock_left = new THREE.Clock();
     let activeAction, lastAction, activeAction_left, lastAction_left;
     let mixer, mixer_left;
     var condition = 0;
     var index = 0, index2 = 1;
-    var random_actions_order = [0, 1, 2, 3, 4, 5, 6];
+    var random_actions_order = [0, 1, 2, 3, 4, 5];
     var idle_action = 2;
     var wave_action = 9;
     var random_actions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 7 is to be excluded. 9 is wave
-    var random_actions_order = [0, 1, 2, 3, 4, 5, 6];
     var idle_action_left = 2;
     var wave_action_left = 8;
     var random_actions_left = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -244,6 +244,7 @@
     function init() {
         var value1, value2;
         condition = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+        //alert(condition);
        // condition = 2;
         //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
@@ -277,16 +278,16 @@
                 break;
 
         }
-        //index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1; /**************uncomment
-        //var fileLoad = files[index]+'_idle.fbx';
-        //var fileLoad2 = files[index] + '_talking.fbx';
-        //var fileLoad = 'https://drive.google.com/uc?export=view&id=' + files[index];
-        //var fileLoad2 = 'https://drive.google.com/uc?export=view&id=' + files[index + 4];
+        var fileLoad, fileLoad_left;
+        index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1; //**************uncomment
+       
         //alert(index);
         switch (index) {
             case 0:
                 agentName = "Elizabeth";
                 agentName2 = "Kate";
+                fileLoad = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb";
+                fileLoad_left = "https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb";
                 gen = "f";
                 index2 = 1;
                 //selectedVoice = 1;
@@ -294,6 +295,8 @@
             case 1:
                 agentName = "Kate";
                 agentName2 = "Elizabeth";
+                fileLoad_left = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb";
+                fileLoad = "https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb";
                 //selectedVoice = 1;
                 gen = "f";
                 index2 = 0;
@@ -301,6 +304,8 @@
             case 2:
                 agentName = "Lewis";
                 agentName2 = "Brian";
+                fileLoad = "https://dl.dropbox.com/s/wd3n7o6egjikqts/david_multiple.glb";
+                fileLoad_left = "https://dl.dropbox.com/s/5g71bagaw8v5vv3/shanon_multiple.glb";
                 //selectedVoice = 0;
                 gen = "m";
                 index2 = 3;
@@ -308,6 +313,8 @@
             case 3:
                 agentName = "Brian";
                 agentName2 = "Lewis";
+                fileLoad_left = "https://dl.dropbox.com/s/wd3n7o6egjikqts/david_multiple.glb";
+                fileLoad = "https://dl.dropbox.com/s/5g71bagaw8v5vv3/shanon_multiple.glb";
                 //selectedVoice = 0;
                 gen = "m";
                 index2 = 2;
@@ -500,11 +507,14 @@
         let obj_name, find_index;*/
         //let object1 = new THREE.Material();
         //const loader = new FBXLoader();
+        
         let model;
+
         const loader = new GLTFLoader();
-        // Shannon(white male) https://dl.dropbox.com/s/720dr791zfiseux/Shanon.glb 
-        //Elizabeth: https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb
-        loader.load('https://dl.dropbox.com/s/yxmrdq0j5vn2ic8/elizabeth_multiple3.glb', function (object) {
+        // Shannon(white male) https://dl.dropbox.com/s/5g71bagaw8v5vv3/shanon_multiple.glb
+        //Elizabeth: https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb (0.6)
+        // david : https://dl.dropbox.com/s/wd3n7o6egjikqts/david_multiple.glb
+        loader.load(fileLoad, function (object) {
             //object.scene.scale.set(2, 2, 2);
             //alert(object.scene.scale.x);
             //alert("gltf camera");
@@ -567,6 +577,7 @@
             //alert(numAnimations);
             //alert(JSON.stringify(animations));
             var reject = 10;
+            var reject2 = 10;
             for (let i = 0; i < numAnimations; i++) {
 
                 let clip = animations[i];
@@ -574,13 +585,14 @@
                 //alert(name);
                 if (name == 'idle') { idle_action = i; }
                 else if (name == 'wave' || name == 'waving') { wave_action = i; }
-                else if (name == 'question') { reject = i;}
+                else if (name == 'question') { reject = i; }
+                else if (name == 'thinking') { reject2 = i; }
                 const action = mixer.clipAction(clip);
                 actions.push(action);
             }
             //alert(random_actions);
             random_actions = random_actions.filter(function (value, index, arr) {
-                return (value != idle_action && value != wave_action && value != reject);
+                return (value != idle_action && value != wave_action && value != reject && value != reject2);
             });
             //alert(random_actions);
             //alert(JSON.stringify(actions));
@@ -598,9 +610,11 @@
         // for left agent
         let model_left;
         const loader_left = new GLTFLoader();
-        loader_left.load('https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb', function (object_left) {
-            //jody: https://dl.dropbox.com/s/aww0pi6ab8q11b8/jody_multiple3.glb
-            // david: https://dl.dropbox.com/s/2uvvq3h0brh4606/david3.glb
+        loader_left.load(fileLoad_left, function (object_left) {
+            //jody: https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb
+            // david: https://dl.dropbox.com/s/2uvvq3h0brh4606/david3.glb 
+            // shanon: https://dl.dropbox.com/s/720dr791zfiseux/Shanon.glb
+            // elizabeth_darker: https://dl.dropbox.com/s/hxm354mbjvo49cm/elizabeth_darker.glb
             object_left.scene.rotation.x = 70 * Math.PI / 180;
             
             model_left = object_left.scene;
@@ -624,6 +638,7 @@
             //alert(numAnimations);
             //alert(JSON.stringify(animations));
             var reject_left = 10;
+            var reject2_left = 10;
             for (let i = 0; i < numAnimations_left; i++) {
 
                 let clip_left = animations_left[i];
@@ -632,12 +647,13 @@
                 if (name_left == 'idle') { idle_action_left = i; }
                 else if (name_left == 'wave' || name_left == 'waving') { wave_action_left = i; }
                 else if (name_left == 'question') { reject_left = i; }
+                else if (name_left == 'thinking') { reject2_left = i; }
                 const action_left = mixer_left.clipAction(clip_left);
                 actions_left.push(action_left);
             }
             //alert(random_actions);
             random_actions_left = random_actions_left.filter(function (value, index, arr) {
-                return (value != idle_action_left && value != wave_action_left && value != reject_left);
+                return (value != idle_action_left && value != wave_action_left && value != reject_left && value != reject2_left);
             });
             //alert(random_actions);
             //alert(JSON.stringify(actions));
@@ -857,16 +873,21 @@
         renderer_left.setSize(container_left.clientWidth, container_left.clientHeight);
     }
 
-
     function animate() {
 
         requestAnimationFrame(animate);
-
         const delta = clock.getDelta();
-
         if (mixer) mixer.update(delta);
-        if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
+        
+
+    }
+    function animate_left() {
+
+        requestAnimationFrame(animate_left);
+        var delta_left = clock_left.getDelta();
+        //alert(delta + "   " + delta_left);
+        if (mixer_left) mixer_left.update(delta_left);
         renderer_left.render(scene_left, camera_left);
 
         //stats.update();
@@ -881,11 +902,11 @@
             //lastAction.stop()
             lastAction.fadeOut(1);
             activeAction.reset();
-            activeAction.timeScale = 0.8;
-            activeAction.weight = 0.8;
+            activeAction.timeScale = 0.7;
+            activeAction.weight = 0.7;
             activeAction.fadeIn(1);
-            activeAction.timeScale = 0.8;
-            activeAction.weight = 0.8;
+            activeAction.timeScale = 0.7;
+            activeAction.weight = 0.7;
             activeAction.play();
         }
     }
@@ -897,11 +918,11 @@
             //lastAction.stop()
             lastAction_left.fadeOut(1);
             activeAction_left.reset();
-            activeAction_left.timeScale = 0.8;
-            activeAction_left.weight = 0.8;
+            activeAction_left.timeScale = 1;
+            activeAction_left.weight = 1;
             activeAction_left.fadeIn(1);
-            activeAction_left.timeScale = 0.8;
-            activeAction_left.weight = 0.8;
+            activeAction_left.timeScale = 1;
+            activeAction_left.weight = 1;
             activeAction_left.play();
         }
     }
@@ -1499,7 +1520,8 @@
 				inst2.textContent = "The agents are analyzing your list!!!";
                 setTimeout(function () {
 					inst2.textContent = "The agents are ready!!!";
-					animate();
+                    animate();
+                    animate_left();
 					btn.style.display = "inline-block";
 					btn.disabled = false;
                 }, 100);
