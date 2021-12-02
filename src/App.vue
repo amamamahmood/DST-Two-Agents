@@ -2111,7 +2111,7 @@
     }
 
     .dialog-1 {
-        height: 20%;
+        height: 30%;
         width: 40%;
         background-color: #f9bbb1;
         position: absolute;
