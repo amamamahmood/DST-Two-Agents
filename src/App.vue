@@ -15,8 +15,8 @@
                            @start="dragging = true"
                            @end="dragging = false">
 
-                    <li v-for=" item in userNewList" :key="item.id" class="float-child" style="list-style-position: inside; font-size:1.8vmin;">
-                        <div>
+                    <li  v-for=" (item, index) in userNewList" :key="item.id" :id="30+index"  class="float-child" style="list-style-position: inside; font-size:1.8vmin;">
+                        <div   >
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
                             <button :id=item.name2 :name="item.name3" style="width:5.7vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
@@ -659,7 +659,7 @@
             //alert(JSON.stringify(actions));
             //avatarReady_left = true;
             //alert(actions[3].name);
-            actions_left[idle_action_left].timeScale = 0.8;
+            actions_left[idle_action_left].timeScale = 1;
             actions_left[idle_action_left].play();
             activeAction_left = actions_left[idle_action_left];
             lastAction_left = actions_left[idle_action_left];
@@ -982,10 +982,18 @@
         avatarReady = false;
        // var arrow1 = document.getElementById("arrow_right");
         //arrow1.style.display = "none";
+        if (!intro) {
+        var box_item = document.getElementById("4" + user_initial_rankings[counter].toString());
+        //alert("4" + user_initial_rankings[counter].toString());
+        box_item.style.borderColor = "red";
+        box_item.style.borderWidth = "0.3vw";
+        }
         var arrow = document.getElementById("arrow_left");
         arrow.style.display = "none";
         var point = document.getElementById("arrow_point");
         if (which_agent == 1) {
+            var index_item = avatar_order.findIndex(x => x === counter);
+            //alert(index_item);
             arrow.style.display = "block";
             arrow.style.backgroundColor = "#ade6d8";
             point.className = "right-point";
@@ -997,8 +1005,18 @@
             }
             else {
                 setAction(actions[random_actions[0]]);
+               
+                var box = document.getElementById("3" + index_item.toString());
+                box.style.borderWidth = "0.3vw";
+                box.style.borderColor = "#4bc8a9";
             }
             setTimeout(function () {
+                /*if (intro) {
+                    var box = document.getElementById("3" + index_item.toString());
+                    box.style.borderWidth = "0.3vw";
+                    box.style.borderColor = "#4bc8a9";
+                }*/
+                
                 if (avatarReady) { setAction(actions[random_actions[1]]); }
                 setTimeout(function () {
                     if (avatarReady) { setAction(actions[random_actions[2]]); }
@@ -1018,6 +1036,7 @@
             arrow.style.display = "block";
             arrow.style.backgroundColor = "#e6d8ad";
             point.className = "left-point";
+            var index_item = avatar_order_left.findIndex(x => x === counter);
             random_actionList(2);
             avatarReady_left = true;
             setAction(actions[idle_action]);
@@ -1025,10 +1044,22 @@
                 setAction(actions_left[wave_action_left]);
             }
             else {
+                var box = document.getElementById("3" + index_item.toString());
+                box.style.borderColor = "#bfb43a";
+                box.style.borderWidth = "0.3vw";
                 setAction(actions_left[random_actions_left[0]]);
             }
             setTimeout(function () {
-                if (avatarReady_left) { setAction(actions_left[random_actions_left[1]]); }
+                
+                
+                if (avatarReady_left) {
+                    /*if (intro) {
+                        var box = document.getElementById("3" + index_item.toString());
+                        box.style.borderColor = "#bfb43a";
+                        box.style.borderWidth = "0.3vw";
+                    }*/
+                    setAction(actions_left[random_actions_left[1]]);
+                }
                 setTimeout(function () {
                     if (avatarReady_left) { setAction(actions_left[random_actions_left[2]]); }
                     setTimeout(function () {
@@ -1106,6 +1137,8 @@
                         id: 11,
                         name2: 1,
                         name3: 21,
+                        name: " ",
+                        name4: 30,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1113,6 +1146,7 @@
                         name2: 2,
                         name3: 22,
                         name: " ",
+                        name4: 31,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1120,6 +1154,7 @@
                         name2: 3,
                         name3: 23,
                         name: " ",
+                        name4: 32,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1127,6 +1162,7 @@
                         name2: 4,
                         name3: 24,
                         name: " ",
+                        name4: 33,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1134,6 +1170,7 @@
                         name2: 5,
                         name3: 25,
                         name: " ",
+                        name4: 34,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1141,6 +1178,7 @@
                         name2: 6,
                         name3: 26,
                         name: " ",
+                        name4: 35,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1148,6 +1186,7 @@
                         name2: 7,
                         name3: 27,
                         name: " ",
+                        name4: 36,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1155,6 +1194,7 @@
                         name2: 8,
                         name3: 28,
                         name: " ",
+                        name4: 37,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     },
                     {
@@ -1162,57 +1202,67 @@
                         name2: 9,
                         name3: 29,
                         name: " ",
+                        name4: 38,
                         avatar: "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg"
                     }
                 ],
                 users: [
                     {
                         id: 1,
+                        name4: 41,
                         name: "a map of New Mexico",
                         avatar: "https://p1.pxfuel.com/preview/963/223/786/map-usa-map-usa-united.jpg"
                     },
                     {
                         id: 2,
+                        name4: 42,
                         name: "the book- Edible Animals of the Desert",
                         avatar: "https://p0.pxfuel.com/preview/962/798/408/book-book-pages-novel-paperback.jpg"
                     },
                     {
                         id: 3,
+                        name4: 43,
                         name: "a pair of sunglasses per person",
                         avatar: "https://columbia.scene7.com/is/image/ColumbiaSportswear2/C110SP_022_f?$x1_grid$&v=1624997482"
                     },
                     {
                         id: 4,
+                        name4: 44,
                         name: "first aid kit",
                         avatar:
                             "https://cdn.pixabay.com/photo/2018/09/22/05/32/first-aid-3694546_1280.jpg"
                     },
                     {
                         id: 5,
+                        name4: 45,
                         name: "cosmetic mirror",
                         avatar:
                             "https://www.maxpixel.net/static/photo/1x/Silvery-Cosmetics-Mirror-Make-Up-Reflection-1472857.jpg"
                     },
                     {
                         id: 6,
+                        name4: 46,
                         name: "flashlight (four-battery size)",
                         avatar:
                             "https://cdn.pixabay.com/photo/2018/05/11/17/07/flashlight-3391057_1280.jpg"
                     },
                     {
                         id: 7,
+                        name4: 47,
                         name: "magnetic compass",
                         avatar:
                             "https://upload.wikimedia.org/wikipedia/commons/f/f6/Magnetic_compass_-_school_laboratory.jpg"
                     },
                     {
                         id: 8,
+                        name4: 48,
                         name: "vodka 180-proof 2 quart flask per person",
                         avatar:
                             "https://p1.pxfuel.com/preview/555/831/622/vodka-ruska-alcohol-drunkenness.jpg"
                     },
                     {
                         id: 9,
+                        name4: 49,
                         name: "a plastic raincoat per person",
                         avatar:
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9pownnssrFIBSPhzUKilGR_2SEfuuy53q-A&usqp=CAU"
@@ -1462,7 +1512,7 @@
                         ranking.push(this.avatarList_left[i].id);
                     }
                 }
-                return JSON.stringify(ranking);
+                return ranking;
             },
             startInitialRanking: function (event) {
                 //init();
@@ -1495,7 +1545,7 @@
 
             },
             doneInitialRanking: function (event) {
-                //user_initial_rankings = this.returnRankings();
+                user_initial_rankings = this.returnRankings('user');
                 //alert(user_initial_rankings);
                 //alert(avatar_rankings);
                 this.disable();
@@ -1504,7 +1554,7 @@
                 inst.style.display = "none";
                 var sect = document.getElementById("intro2");
                 sect.style.display = "inline-block";
-                sect.textContent = "Now you'll have a chance to interact two Virtual AI agents. The agents will present you with their reasoning for placement of these items. You will create a new ranking list based on the interaction. Please review your initial list while the agents analyze it as well to talk to you about it.";
+                sect.textContent = "Now you'll have a chance to interact two Virtual AI agents. The agents will present you with their reasoning for placement of these items. You will create a new ranking list based on the interaction. Please review your initial list while the agents analyze it as well to talk to you about it. The ranking of both agents for the item under discussion will be highlighted for your consideration. ";
                 //var cont = document.getElementById("avatardiv");
                 //cont.style.display = "block";
                 //cont = document.getElementById("avatardivelement");
@@ -1553,6 +1603,17 @@
                 var inst = document.getElementById("drag_inst");
                 inst.textContent = "Drag the items in new list if you want to change their position. Then continue!";
                 //this.userNewList[button_name - 1].id = 99;
+                var index_item = avatar_order_left.findIndex(x => x === counter);
+                var box = document.getElementById("3" + index_item.toString());
+                box.style.borderColor = "black";
+                box.style.borderWidth = "0.1vw";
+                index_item = avatar_order.findIndex(x => x === counter);
+                box = document.getElementById("3" + index_item.toString());
+                box.style.borderColor = "black";
+                box.style.borderWidth = "0.1vw";
+                box = document.getElementById("4" + user_initial_rankings[counter].toString());
+                box.style.borderColor = "black";
+                box.style.borderWidth = "0.1vw";
             },
             beginInteraction: function (event) {
 				var inst2 = document.getElementById("intro3");
@@ -1801,9 +1862,9 @@
                 var state = JSON.stringify(items);
                 //alert("user_data " + JSON.stringify(user_data));
                 var json_obj = {
-                    user_initial_rankings: user_initial_rankings,
-                    avatar_rankings: avatar_rankings,
-                    user_final_rankings: user_final_rankings,
+                    user_initial_rankings: JSON.stringify(user_initial_rankings),
+                    avatar_rankings: JSON.stringify(avatar_rankings),
+                    user_final_rankings: JSON.stringify(user_final_rankings),
                     total_updates: total_updates,
                     total_matched: total_matched,
                     actual_total_matched: actual_total_matched,
@@ -1942,7 +2003,7 @@
 
     .columnAvatar {
         float: right;
-        width: 30vw;
+        width: 25vw;
         height: 30vw;
         align-content: center;
         align-items: center;
@@ -1954,7 +2015,7 @@
     }
     .columnAvatar-left {
         float: left;
-        width: 30vw;
+        width: 25vw;
         height: 30vw;
         align-content: center;
         align-items: center;
@@ -2093,6 +2154,7 @@
         position: relative;
         background-color: #aaa;
         border: solid;
+        border-color: black;
         border-width: 0.1vw;
         align-content: center;
         align-items: center;
