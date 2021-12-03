@@ -15,8 +15,8 @@
                            @start="dragging = true"
                            @end="dragging = false">
 
-                    <li  v-for=" (item, index) in userNewList" :key="item.id" :id="30+index"  class="float-child" style="list-style-position: inside; font-size:1.8vmin;">
-                        <div   >
+                    <li v-for=" (item, index) in userNewList" :key="item.id" :id="30+index" class="float-child" style="list-style-position: inside; font-size:1.8vmin;">
+                        <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
                             <button :id=item.name2 :name="item.name3" style="width:5.7vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
@@ -56,11 +56,22 @@
 
 
             </div>
-            <div id="surveyElement" class="columnSurvey">
+            <div id="surveyElement" class="columnSurvey" >
                 <SurveyComponent />
             </div>
-            <div id="surveyElement2" style="display:none;" class="columnSurvey2">
-                <PostSurvey id="postSurvey" />
+            <div id="surveyElement2" style="display:none">
+                <div class="agent_image">
+                    <img id="agent_img" src="kate.png" style="max-width:20vmin; max-height:20vmin" />
+                    <h3 id="agent_name" style="text-align:center  "> Kate</h3>
+                </div>
+                <PostSurvey id="postSurvey" class="columnSurvey2" />
+            </div>
+            <div id="surveyElement4" style="display:none">
+                <div class="agent_image">
+                    <img id="agent_img_a2" src="elizabeth.png" style="max-width:10vw; max-height:10vw" />
+                    <h3 id="agent_name_a2" style="text-align:center  "> Elizabeth</h3>
+                </div>
+                <PostSurveyA2 id="postSurveyA2" class="columnSurvey2" />
             </div>
             <div id="surveyElement3" style="display:none;" class="columnSurvey3">
                 <ThankYou id="thankyou" />
@@ -88,14 +99,14 @@
                 <br />
 
             </div>
-           
+
             <div id="arrow_left" class="dialog-1" style="display: none; text-align: center; align-items: center; align-content:center">
-                <div id ="arrow_point" class="left-point"></div>
+                <div id="arrow_point" class="left-point"></div>
                 <h3 class="smallerText" id="agent_speech" style="max-width:40vw;text-align:center;align-content:center;padding:1vw;"></h3>
 
             </div>
 
-            
+
 
 
 
@@ -136,9 +147,10 @@
     import * as THREE from 'three';
     import SurveyComponent from "./components/SurveyComponent";
     import PostSurvey from './components/PostSurvey';
+    import PostSurveyA2 from './components/PostSurveyA2';
     import ThankYou from './components/ThankYou';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-    import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+    //import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
     //import { degToRad } from 'three/src/math/MathUtils';
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
@@ -1122,6 +1134,7 @@
             UserCard,
             SurveyComponent,
             PostSurvey,
+            PostSurveyA2,
             ThankYou
             //modelFbx
         },
@@ -1905,9 +1918,18 @@
                 temp.style.display = "none";
                 temp = document.getElementById("avatardiv_left");
                 temp.style.display = "none";
+
                 //alert("Adding the form here. Some errors. Working on those!");
                 temp = document.getElementById("surveyElement2");
                 temp.style.display = "inline-block";
+                temp = document.getElementById("agent_img");
+                temp.src = agentName + ".png";
+                temp = document.getElementById("agent_name");
+                temp.textContent = agentName;
+                temp = document.getElementById("agent_img_a2");
+                temp.src = agentName + ".png";
+                temp = document.getElementById("agent_name_a2");
+                temp.textContent = agentName;
                 //temp = document.getElementById("postSurvey");
                 //temp.style.display = "block";
                 //var tag = document.createElement("PostSurvey");
@@ -2025,16 +2047,13 @@
         left: 3vw;
         z-index: -1;
     }
-    .arrowAvatar-right {
-        float: right;
+    .agent_image {
+        float:right;
         width: 10vw;
         height: 10vw;
-        align-content: center;
-        align-items: center;
-        text-align: center;
         position: absolute;
-        top: 50%;
-        right: 30vw;
+        top: 0%;
+        right: 20vw;
         
     }
 
