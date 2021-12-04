@@ -13,7 +13,7 @@
     //import "./index.css";
     //const { v4: uuidv4 } = require('uuid');
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
-    var url = "";
+    //var url = "";
     Survey.StylesManager.applyTheme("modern");
 
     export default {

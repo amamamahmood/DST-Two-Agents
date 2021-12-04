@@ -54,7 +54,7 @@
 
             </div>
             <div id ="pick_btn" class ="column4" style=" margin:auto;  text-align: center">
-                <button id="chooseOneBtn"  style="display: none; " v-on:click="chooseOne">Continue</button>
+                <button id="chooseOneBtn" class="button" style="display: none; " v-on:click="chooseOne">Continue</button>
             </div>
             <div id="surveyElement" class="columnSurvey">
                 <SurveyComponent />
