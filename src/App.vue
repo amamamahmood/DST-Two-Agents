@@ -53,8 +53,8 @@
                 <br />
 
             </div>
-            <div id ="pick_btn" class ="column4" style=" margin:auto;  text-align: center">
-                <button id="chooseOneBtn" class="button" style="display: none; " v-on:click="chooseOne">Continue</button>
+            <div id ="pick_btn" class ="column5" style=" justify-content:center; text-align: center">
+                <button id="chooseOneBtn" class="button" style="display: none; width:10vw " v-on:click="chooseOne">Continue</button>
             </div>
             <div id="surveyElement" class="columnSurvey">
                 <SurveyComponent />
@@ -1890,7 +1890,7 @@
                     
                     this.disable();
 
-                    if (counter < 1) {
+                    if (counter < 9) {
                         decide_agent_turn();
                         //agent_turn = 2;
                         //agent_turn_reverse = 1;
@@ -2325,6 +2325,15 @@
         align-items: center;
         text-align: center;
         padding-left: 10vw;
+    }
+    .column5 {
+        float: left;
+        width: 10vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        padding-left: 45vw;
     }
     /* Clear floats after the columns */
     .row:after {
