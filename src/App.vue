@@ -49,14 +49,16 @@
                 <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
                 <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
                 </h3>
-                <h2 id="introb" style="max-width:70vw; display:none" class="text">
-                </h2>
-
-
+                <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
+                <br />
+                <div style="place-content:center;place-items:center; align-items:center;align-content:center;text-align:center">
+                    <button id="chooseOneBtn" class="button" style="display:none;" v-on:click="chooseOne">Continue</button>
+                </div>
+                
 
 
             </div>
-            <div id="surveyElement" class="columnSurvey" >
+            <div id="surveyElement" class="columnSurvey">
                 <SurveyComponent />
             </div>
             <div id="surveyElement2" style="display:none">
@@ -73,10 +75,32 @@
                 </div>
                 <PostSurveyA2 id="postSurveyA2" class="columnSurvey2" />
             </div>
+            <div id="surveyElement5" style="display:none;" class="columnSurvey2">
+                <PostSurveyA2PreferredAgent id="PostSurveyA2-preferredAgent" />
+            </div>
             <div id="surveyElement3" style="display:none;" class="columnSurvey3">
                 <ThankYou id="thankyou" />
             </div>
-            <div id="avatar" class="column4">
+            <div id="timer-clock" class="timer" style="display:none;"> </div>
+            <div id="emergencyTask" class="column4" style="display:none">
+                <h2>Choose one of the kits</h2>
+
+                <div class="kit-right">
+                    <button id="101" v-on:click="kitChoosen($event)"><img src="survival_kit.png" style=" width: 10vw"> Pick</button>
+                    <h3 id="kit-right" style="text-align:center  "> Elizabeth's kit'</h3>
+                </div>
+
+                <div class="kit-left">
+                    <button id="102" v-on:click="kitChoosen($event)"><img src="survival_kit.png" style=" width: 10vw"> Pick</button>
+                    <h3 id="kit-left" style="text-align:center  "> Kate's kit'</h3>
+                </div>
+
+                <!--<input type="radio" id="radio-img-1" name="radio-btns-sprite">
+            <label for="radio-img-1" class="male">Male</label>
+        <input type="image" class="kit-left" src="survival_kit.png" />
+            <input type="radio" id="radio-img-2" name="radio-btns-sprite">
+            <label for="radio-img-2" class="female">Female</label>-->
+
             </div>
             <div id="centerColumn" class="column3">
                 <br />
@@ -148,6 +172,7 @@
     import SurveyComponent from "./components/SurveyComponent";
     import PostSurvey from './components/PostSurvey';
     import PostSurveyA2 from './components/PostSurveyA2';
+    import PostSurveyA2PreferredAgent from './components/PostSurvey-preferredAgent';
     import ThankYou from './components/ThankYou';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     //import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
@@ -158,9 +183,8 @@
     var user_initial_rankings;
     var avatar_rankings, avatar_left_rankings;
     class item_state {
-        constructor(updated = 0, matched = 0, rankings = "") {
-            this.updates = updated;
-            this.matched = matched;
+        constructor(item_placed_at = 99, rankings = "") {
+            this.item_placed_at = item_placed_at;
             this.rankings = rankings;
         }
     }
@@ -169,9 +193,7 @@
         items.push(new item_state());
     }
     //alert(items.length);
-    var total_updates = 0;
-    var total_matched = 0;
-    var actual_total_matched = 0;
+    
     var user_final_rankings;
     let gen;
     let counter = 0; // which item on its list will the agent talk about
@@ -203,7 +225,44 @@
     var agent1_script = [false, true, false, false, true, true, false, true, false]; // True for positive false for negative
     var goes_first = [1, 2, 1, 2, 1, 1, 2, 2, 1];
     //var agent2_script = [true, false, true, true, false, false, true, false, true];
-    var goes_first2 =    [2,     1,     2,      1,    2,    2,     1,   1,    2  ];
+    //var goes_first2 =    [2,     1,     2,      1,    2,    2,     1,   1,    2  ];
+    var agent_picked_in_emergency = "none";
+    const emergency_sound = new Audio();
+    emergency_sound.src = "emergency.mp3";
+    emergency_sound.volume = 0.5;
+    var time_picking_agent = 11;
+    //emergency_sound.appendChild("emergency.mp3");
+    //emergency_sound.appendChild("emergency.mp3");
+
+
+    // For timer!!!
+
+
+    const FULL_DASH_ARRAY = 283;
+    const WARNING_THRESHOLD = 5;
+    const ALERT_THRESHOLD = 2;
+
+    const COLOR_CODES = {
+        info: {
+            color: "green"
+        },
+        warning: {
+            color: "orange",
+            threshold: WARNING_THRESHOLD
+        },
+        alert: {
+            color: "red",
+            threshold: ALERT_THRESHOLD
+        }
+    };
+
+    const TIME_LIMIT = 10;
+    let timePassed = 0;
+    let timeLeft = TIME_LIMIT;
+    let timerInterval = null;
+    let remainingPathColor = COLOR_CODES.info.color;
+
+    // SCripts
 
     const script1 = ["Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "If you are stuck beyond day 3, you will need to find food and water. The book - Edible Animals of the Desert may be useful. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
@@ -957,7 +1016,7 @@
         var j = 0;
         var k = 0;
         goes_first[i] = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
-        for (i = 1; i < goes_first.length; i++) {
+        for (i = 1; i < goes_first.length - 1; i++) {
             if (agent1_script[i]) {
                 goes_first[i] = goes_first_true[j];
                 j++;
@@ -1093,37 +1152,88 @@
 
         }
         
-        /*if (avatarReady) {
-            setTimeout(function () {
-                setAction(actions[random_actions[1]]);
-                if (avatarReady) {
-                    setTimeout(function () {
-                        setAction(actions[random_actions[2]]);
-                        if (avatarReady) {
-                            setTimeout(function () {
-                                setAction(actions[random_actions[3]]);
-                                if (avatarReady) {
-                                    setTimeout(function () {
-                                        setAction(actions[random_actions[4]]);
-                                        if (avatarReady) {
-                                            setTimeout(function () {
-                                                setAction(actions[random_actions[5]]);
-                                            }, 5000);
-                                            if (avatarReady) {
-                                                setTimeout(function () {
-                                                    setAction(actions[random_actions[6]]);
-                                                }, 5000);
-                                            }
-                                        }
-                                    }, 5000);
-                                }
-                            }, 5000);
-                        }
-                    }, 5000);
-                }
-            }, 5000);
 
-        }*/
+    }
+
+
+    // for Timer
+
+   
+
+    function onTimesUp() {
+        clearInterval(timerInterval);
+        //alert(timesUp);
+        var temp = document.getElementById("emergencyTask");
+        temp.style.display = "none";
+        emergency_sound.pause();
+        temp = document.getElementById("timer-clock");
+        temp.style.display = "none";
+        temp = document.getElementById("avatardiv");
+        temp.style.display = "none";
+        temp = document.getElementById("avatardiv_left");
+        temp.style.display = "none";
+        temp = document.getElementById("surveyElement2");
+        temp.style.display = "inline-block";
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timePassed = timePassed += 1;
+            timeLeft = TIME_LIMIT - timePassed;
+            document.getElementById("base-timer-label").innerHTML = formatTime(
+                timeLeft
+            );
+            setCircleDasharray();
+            setRemainingPathColor(timeLeft);
+
+            if (timeLeft === 0) {
+                onTimesUp();
+            }
+        }, 1000);
+    }
+
+    function formatTime(time) {
+        const minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+
+        if (seconds < 10) {
+            seconds = `0${seconds}`;
+        }
+
+        return `${minutes}:${seconds}`;
+    }
+
+    function setRemainingPathColor(timeLeft) {
+        const { alert, warning, info } = COLOR_CODES;
+        if (timeLeft <= alert.threshold) {
+            document
+                .getElementById("base-timer-path-remaining")
+                .classList.remove(warning.color);
+            document
+                .getElementById("base-timer-path-remaining")
+                .classList.add(alert.color);
+        } else if (timeLeft <= warning.threshold) {
+            document
+                .getElementById("base-timer-path-remaining")
+                .classList.remove(info.color);
+            document
+                .getElementById("base-timer-path-remaining")
+                .classList.add(warning.color);
+        }
+    }
+
+    function calculateTimeFraction() {
+        const rawTimeFraction = timeLeft / TIME_LIMIT;
+        return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+    }
+
+    function setCircleDasharray() {
+        const circleDasharray = `${(
+            calculateTimeFraction() * FULL_DASH_ARRAY
+        ).toFixed(0)} 283`;
+        document
+            .getElementById("base-timer-path-remaining")
+            .setAttribute("stroke-dasharray", circleDasharray);
     }
 
 
@@ -1135,6 +1245,7 @@
             SurveyComponent,
             PostSurvey,
             PostSurveyA2,
+            PostSurveyA2PreferredAgent,
             ThankYou
             //modelFbx
         },
@@ -1396,13 +1507,7 @@
             },
             
 
-            actual_match: function () {
-                for (let i = 0; i < this.users.length; i++) {
-                    if (this.users[i].id == this.avatarList[i].id) {
-                        actual_total_matched += 1;
-                    }
-                }
-            },
+            
 
             disable() {
                 this.enabled = false;
@@ -1511,16 +1616,21 @@
             returnRankings: function (userAvatar = 'user') {
                 var ranking = [];
                 if (userAvatar == 'user') {
+                    for (let i = 0; i < this.userNewList.length; i++) {
+                        ranking.push(this.userNewList[i].id);
+                    }
+                }
+                else if (userAvatar == 'userInitial') {
                     for (let i = 0; i < this.users.length; i++) {
                         ranking.push(this.users[i].id);
                     }
                 }
-                else if (userAvatar == 'agent') {
+                else if (userAvatar == 'avatar') {
                     for (let i = 0; i < this.avatarList.length; i++) {
                         ranking.push(this.avatarList[i].id);
                     }
                 }
-                else if (userAvatar == 'agent_left') {
+                else if (userAvatar == 'avatar_left') {
                     for (let i = 0; i < this.avatarList_left.length; i++) {
                         ranking.push(this.avatarList_left[i].id);
                     }
@@ -1544,8 +1654,8 @@
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 inst.textContent = "Drag and drop the items to order the list";
-                sect = document.getElementById("avatar");
-                sect.style.display = "none";
+                //sect = document.getElementById("avatar");
+                //sect.style.display = "none";
                 sect = document.getElementById("begin");
                 sect.style.display = "inline-block";
                 sect.disabled = true;
@@ -1558,7 +1668,7 @@
 
             },
             doneInitialRanking: function (event) {
-                user_initial_rankings = this.returnRankings('user');
+                user_initial_rankings = this.returnRankings('userInitial');
                 //alert(user_initial_rankings);
                 //alert(avatar_rankings);
                 this.disable();
@@ -1600,6 +1710,8 @@
                 this.userNewList[set_index].id = this.users[counter].id;
                 this.userNewList[set_index].name = this.users[counter].name;
                 this.userNewList[set_index].avatar = this.users[counter].avatar;
+                items[counter].item_placed_at = set_index+1;
+                //alert(items[counter].item_placed_at);
                 //alert(this.userNewList[button_name - 1].id);
                 //alert(this.userNewList.name);
                 let sect;
@@ -1718,8 +1830,8 @@
             makeDraggable: function (event) {
                 avatarReady = false;
                 avatarReady_left = false;
-                items[counter].updates = 1;
-                total_updates += 1;
+                //items[counter].updates = 1;
+                //total_updates += 1;
                 //alert(total_updates);
                 //inst = document.getElementById("agent_speech");
                 //inst.style.display = "none";
@@ -1780,7 +1892,7 @@
                     
                     this.disable();
 
-                    if (counter < 9) {
+                    if (counter < 1) {
                         decide_agent_turn();
                         //agent_turn = 2;
                         //agent_turn_reverse = 1;
@@ -1870,20 +1982,138 @@
                 this.disable();
                 var inst = document.getElementById("drag_inst");
                 inst.textContent = "Thank you for taking the time to complete the study. Please proceed to post-study questionnaires";
-                this.actual_match();
+                //this.actual_match();
+                
+                document.body.style.paddingLeft = '0vw';
+                //var temp = document.getElementById("avatarRating");
+                //temp.style.display = "none";
+                //temp = document.getElementById("avatarRating2");
+                //temp.style.display = "none";
+                var temp = document.getElementById("centerColumn");
+                temp.style.display = "none";
+                temp = document.getElementById("userNewRanking");
+                temp.style.display = "none";
+                temp = document.getElementById("user_list");
+                temp.style.display = "none";
+               // temp = document.getElementById("avatar");
+                //temp.style.display = "none";
+                temp = document.getElementById("headingColumn");
+                temp.style.display = "block";
+                temp.style.paddingLeft = "25vw";
+                //temp = document.getElementById("avatardiv");
+                //temp.style.display = "none";
+                //temp = document.getElementById("avatardiv_left");
+                //temp.style.display = "none";
+
+                //adding time pressure task
+                temp = document.getElementById("heading");
+                temp.style.display = "block";
+                temp.style.maxWidth = "50vw";
+                temp.textContent = "Alert!!!";
+                temp.style.color = "red";
+                temp = document.getElementById("intro");
+                temp.style.display = "block";
+                temp.style.maxWidth = "50vw";
+                temp.textContent = "There has been an emergency. The airframe of the plane is about to fall over. You have less than a minute to escape the site of crash. Both the agents have selected 3 of the 9 items to make their survival kits for you. "
+                temp = document.getElementById("introb");
+                temp.style.display = "block";
+                temp.style.maxWidth = "50vw";
+                temp.textContent = "You do not have the time to look at the contents the survival kits. You have to pick ONE in 10 seconds. The timer will start as soon as you click Continue."
+                temp = document.getElementById("chooseOneBtn");
+                temp.style.display = "block";
+                
+                
+                
+                emergency_sound.play();
+
+                temp = document.getElementById("agent_img");
+                temp.src = agentName + ".png";
+                temp = document.getElementById("agent_name");
+                temp.textContent = agentName;
+                temp = document.getElementById("agent_img_a2");
+                temp.src = agentName2 + ".png";
+                temp = document.getElementById("agent_name_a2");
+                temp.textContent = agentName2;
+
+                
+
+            },
+            chooseOne: function (event) {
+
+                var temp = document.getElementById("emergencyTask");
+                temp.style.display = "block";
+                temp = document.getElementById("headingColumn");
+                temp.style.display = "none";
+                temp = document.getElementById("kit-left");
+                temp.textContent =  agentName2 + "'s kit";
+                temp = document.getElementById("kit-right");
+                temp.textContent =  agentName + "'s kit";
+                temp = document.getElementById("timer-clock");
+                temp.style.display = "block";
+                temp.innerHTML = `<div class="base-timer">
+                      <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g class="base-timer__circle">
+                          <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                          <path
+                            id="base-timer-path-remaining"
+                            stroke-dasharray="283"
+                            class="base-timer__path-remaining ${remainingPathColor}"
+                            d="
+                              M 50, 50
+                              m -45, 0
+                              a 45,45 0 1,0 90,0
+                              a 45,45 0 1,0 -90,0
+                            "
+                          ></path>
+                        </g>
+                      </svg>
+                      <span id="base-timer-label" class="base-timer__label">${formatTime(
+                                        timeLeft
+                                    )}</span>
+                    </div>
+                    `;
+                startTimer();
+                
+
+            },
+            kitChoosen: function (event) {
+                //alert(event.currentTarget.id);
+                if (event.currentTarget.id == "101") {
+                    agent_picked_in_emergency = agentName;
+                }
+                else {
+                    agent_picked_in_emergency = agentName2;
+                }
+                //alert(agent_picked_in_emergency);
+                time_picking_agent = timePassed;
+                var temp = document.getElementById("emergencyTask");
+                temp.style.display = "none";
+                emergency_sound.pause();
+                temp = document.getElementById("timer-clock");
+                temp.style.display = "none";
+                temp = document.getElementById("avatardiv");
+                temp.style.display = "none";
+                temp = document.getElementById("avatardiv_left");
+                temp.style.display = "none";
+                temp = document.getElementById("surveyElement2");
+                temp.style.display = "inline-block";
+                
+
                 var user_data = store.getters.getUserData;
                 var state = JSON.stringify(items);
                 //alert("user_data " + JSON.stringify(user_data));
                 var json_obj = {
                     user_initial_rankings: JSON.stringify(user_initial_rankings),
-                    avatar_rankings: JSON.stringify(avatar_rankings),
+                    agent1_rankings: JSON.stringify(avatar_rankings),
+                    agent2_rankings: JSON.stringify(avatar_rankings),
                     user_final_rankings: JSON.stringify(user_final_rankings),
-                    total_updates: total_updates,
-                    total_matched: total_matched,
-                    actual_total_matched: actual_total_matched,
                     state: state,
                     condition: condition,
-                    agent_index: index
+                    agent_index: index,
+                    goes_first: JSON.stringify(goes_first),
+                    agent_voice: agent_voice,
+                    agent_picked_in_emergency: agent_picked_in_emergency,
+                    time_picking_agent: time_picking_agent
                 };
                 //alert("json_obj " + JSON.stringify(json_obj));
                 //json_obj.putAll(JSON.parse(user_data));
@@ -1899,42 +2129,11 @@
                     data: store_data  //$form.serializeObject()
                 });*/
                 store.commit('storeUserData', store_data);
-                document.body.style.paddingLeft = '0vw';
-                //var temp = document.getElementById("avatarRating");
-                //temp.style.display = "none";
-                //temp = document.getElementById("avatarRating2");
-                //temp.style.display = "none";
-                var temp = document.getElementById("centerColumn");
-                temp.style.display = "none";
-                temp = document.getElementById("userNewRanking");
-                temp.style.display = "none";
-                temp = document.getElementById("user_list");
-                temp.style.display = "none";
-                temp = document.getElementById("avatar");
-                temp.style.display = "none";
-                temp = document.getElementById("headingColumn");
-                temp.style.display = "none";
-                temp = document.getElementById("avatardiv");
-                temp.style.display = "none";
-                temp = document.getElementById("avatardiv_left");
-                temp.style.display = "none";
 
-                //alert("Adding the form here. Some errors. Working on those!");
-                temp = document.getElementById("surveyElement2");
-                temp.style.display = "inline-block";
-                temp = document.getElementById("agent_img");
-                temp.src = agentName + ".png";
-                temp = document.getElementById("agent_name");
-                temp.textContent = agentName;
-                temp = document.getElementById("agent_img_a2");
-                temp.src = agentName + ".png";
-                temp = document.getElementById("agent_name_a2");
-                temp.textContent = agentName;
                 //temp = document.getElementById("postSurvey");
                 //temp.style.display = "block";
                 //var tag = document.createElement("PostSurvey");
                 //temp.appendChild(tag);
-
             }
 
         }
@@ -1981,7 +2180,7 @@
         width: 80vw;
         position: absolute;
         top: 2px;
-        left: 20vw;
+        left: 10vw;
         align-items: center;
         text-align: center;
         align-content: center;
@@ -2057,17 +2256,47 @@
         
     }
 
-    .arrowAvatar-left {
+    .timer {
+        background-color: white;
+        border: none;
         float: left;
         width: 10vw;
         height: 10vw;
         align-content: center;
         align-items: center;
         text-align: center;
-        position: absolute; 
+        position: absolute;
+        top: 20%;
+        left: 45vw;
+    }
+
+    .kit-left {
+        background-color:white;
+        border:none;
+        float: left;
+        width: 10vw;
+        height: 10vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
         top: 50%;
-        left: 30vw;
-        
+        left: 35vw;
+    }
+
+
+    .kit-right {
+        background-color: white;
+        border:none;
+        float: right;
+        width: 10vw;
+        height: 10vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        right: 35vw;
     }
 
     .column3 {
@@ -2226,6 +2455,97 @@
         top: 45%;
         right: -10%;
         transform: rotate(-60deg);
+    }
+
+    input[type=radio] {
+        display: none;
+    }
+
+        input[type=radio] + label.male {
+            display: inline-block;
+            cursor: pointer;
+            outline: 0;
+            width: 128px;
+            height: 128px;
+            background-image: url(https://psdtowp.net/images/resources/male.png);
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            text-indent: -99999px;
+        }
+
+        input[type=radio]:checked + label.male {
+            background-position: 0 -128px;
+        }
+
+        input[type=radio] + label.female {
+            display: inline-block;
+            cursor: pointer;
+            outline: 0;
+            width: 128px;
+            height: 128px;
+            background-image: url(https://psdtowp.net/images/resources/female.png);
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            text-indent: -99999px;
+        }
+
+        input[type=radio]:checked + label.female {
+            background-position: 0 bottom;
+        }
+
+    .base-timer {
+        
+        position: relative;
+        
+        width: 300px;
+        height: 300px;
+    }
+
+    .base-timer__svg {
+        transform: scaleX(-1);
+    }
+
+    .base-timer__circle {
+        fill: none;
+        stroke: none;
+    }
+
+    .base-timer__path-elapsed {
+        stroke-width: 7px;
+        stroke: grey;
+    }
+
+    .base-timer__path-remaining {
+        stroke-width: 7px;
+        stroke-linecap: round;
+        transform: rotate(90deg);
+        transform-origin: center;
+        transition: 1s linear all;
+        fill-rule: nonzero;
+        stroke: currentColor;
+    }
+
+        .base-timer__path-remaining.green {
+            color: rgb(65, 184, 131);
+        }
+
+        .base-timer__path-remaining.orange {
+            color: orange;
+        }
+
+        .base-timer__path-remaining.red {
+            color: red;
+        }
+
+    .base-timer__label {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
     }
 
 </style>

@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets"
+    "\\assets",
+    "\\components"
   ],
+  "SelectedNode": "\\components\\ThankYou.vue",
   "PreviewInSolutionExplorer": false
 }
