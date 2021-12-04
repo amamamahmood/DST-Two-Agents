@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="unselectable">
-        <div class="row">
+        <div >
 
             <div id="userNewRanking" class="column2" style=" display:none;">
                 <h3 class="smallerText">Your New Rankings</h3>
@@ -51,12 +51,10 @@
                 </h3>
                 <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
                 <br />
-                <div style="place-content:center;place-items:center; align-items:center;align-content:center;text-align:center">
-                    <button id="chooseOneBtn" class="button" style="display:none;" v-on:click="chooseOne">Continue</button>
-                </div>
-                
 
-
+            </div>
+            <div id ="pick_btn" class ="column4" style=" margin:auto;  text-align: center">
+                <button id="chooseOneBtn"  style="display: none; " v-on:click="chooseOne">Continue</button>
             </div>
             <div id="surveyElement" class="columnSurvey">
                 <SurveyComponent />
@@ -162,7 +160,7 @@
     </div>
 
 </template>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
     import { store } from './components/store';
@@ -179,7 +177,7 @@
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
     //import { degToRad } from 'three/src/math/MathUtils';
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
-    //var url = '';
+    var url = 'https://script.google.com/macros/s/AKfycbz3ZbzO8lZOt0wForWERwXwp-ruN0wv-b581FQqHnID9H29NsZAADp4eaT5YAJWyKgpsw/exec';
     var user_initial_rankings;
     var avatar_rankings, avatar_left_rankings;
     class item_state {
@@ -1985,10 +1983,6 @@
                 //this.actual_match();
                 
                 document.body.style.paddingLeft = '0vw';
-                //var temp = document.getElementById("avatarRating");
-                //temp.style.display = "none";
-                //temp = document.getElementById("avatarRating2");
-                //temp.style.display = "none";
                 var temp = document.getElementById("centerColumn");
                 temp.style.display = "none";
                 temp = document.getElementById("userNewRanking");
@@ -2044,6 +2038,8 @@
                 temp.style.display = "block";
                 temp = document.getElementById("headingColumn");
                 temp.style.display = "none";
+                temp = document.getElementById("chooseOneBtn");
+                temp.style.display = "none";
                 temp = document.getElementById("kit-left");
                 temp.textContent =  agentName2 + "'s kit";
                 temp = document.getElementById("kit-right");
@@ -2078,6 +2074,21 @@
             },
             kitChoosen: function (event) {
                 //alert(event.currentTarget.id);
+                
+                var temp = document.getElementById("surveyElement2");
+                temp.style.display = "inline-block";
+                temp = document.getElementById("avatardiv");
+                temp.style.display = "none";
+                temp = document.getElementById("avatardiv_left");
+                temp.style.display = "none";
+                setTimeout(function () {
+                    temp = document.getElementById("avatardiv");
+                    temp.style.display = "none";
+                    temp = document.getElementById("avatardiv_left");
+                    temp.style.display = "none";
+                }, 100);
+
+
                 if (event.currentTarget.id == "101") {
                     agent_picked_in_emergency = agentName;
                 }
@@ -2086,17 +2097,12 @@
                 }
                 //alert(agent_picked_in_emergency);
                 time_picking_agent = timePassed;
-                var temp = document.getElementById("emergencyTask");
+                temp = document.getElementById("emergencyTask");
                 temp.style.display = "none";
                 emergency_sound.pause();
                 temp = document.getElementById("timer-clock");
                 temp.style.display = "none";
-                temp = document.getElementById("avatardiv");
-                temp.style.display = "none";
-                temp = document.getElementById("avatardiv_left");
-                temp.style.display = "none";
-                temp = document.getElementById("surveyElement2");
-                temp.style.display = "inline-block";
+               
                 
 
                 var user_data = store.getters.getUserData;
@@ -2129,7 +2135,7 @@
                     data: store_data  //$form.serializeObject()
                 });*/
                 store.commit('storeUserData', store_data);
-
+                
                 //temp = document.getElementById("postSurvey");
                 //temp.style.display = "block";
                 //var tag = document.createElement("PostSurvey");

@@ -2,7 +2,7 @@
     <survey :survey="survey" />
 </template>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 
 
@@ -13,7 +13,7 @@
     //import "./index.css";
     //const { v4: uuidv4 } = require('uuid');
     //var url = 'https://script.google.com/macros/s/AKfycbzqKPezKCmCUGpP6-l_x5xez1dWqnXSrzyL9jOtHTxtEC5y73IUOzrrR0hdbsYjDW4/exec';
-    var url = '';
+    var url = 'https://script.google.com/macros/s/AKfycbz1GIJ2RXQfUnBp-G4mCS5Lb_INK5ris5wk2TFMStvBc67afyS_9iLF9ZhzTAWbXBMoAA/exec';
     Survey.StylesManager.applyTheme("modern");
 
     export default {

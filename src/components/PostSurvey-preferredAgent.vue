@@ -2,7 +2,7 @@
     <survey :survey="survey" />
 </template>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 
 
@@ -13,7 +13,7 @@
     //import "./index.css";
     //const { v4: uuidv4 } = require('uuid');
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
-    var url = "";
+    var url = 'https://script.google.com/macros/s/AKfycbz3ZbzO8lZOt0wForWERwXwp-ruN0wv-b581FQqHnID9H29NsZAADp4eaT5YAJWyKgpsw/exec';
     Survey.StylesManager.applyTheme("modern");
 
     export default {
@@ -34,14 +34,14 @@
                     ...user_data,
                     ...survey.data,
                 };
-                alert(JSON.stringify(store_data));
-               /*$.ajax({
+                //alert(JSON.stringify(store_data));
+               $.ajax({
                     url: url,
                     method: "GET",
                     dataType: "json",
                     data: store_data //$form.serializeObject()
-                });*/
-                //alert(jqxhr);
+                });
+                alert(jqxhr);
                 sect = document.getElementById("surveyElement3");
                 sect.style.display = "block";
                 
