@@ -2514,8 +2514,8 @@
         
         position: relative;
         
-        width: 300px;
-        height: 300px;
+        width: 10vw;
+        height: 10vw;
     }
 
     .base-timer__svg {
@@ -2556,8 +2556,8 @@
 
     .base-timer__label {
         position: absolute;
-        width: 300px;
-        height: 300px;
+        width: 10vw;
+        height: 10vw;
         top: 0;
         display: flex;
         align-items: center;
