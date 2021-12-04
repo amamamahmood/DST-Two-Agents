@@ -1890,7 +1890,7 @@
                     
                     this.disable();
 
-                    if (counter < 9) {
+                    if (counter < 1) {
                         decide_agent_turn();
                         //agent_turn = 2;
                         //agent_turn_reverse = 1;
@@ -2039,6 +2039,8 @@
                 temp = document.getElementById("headingColumn");
                 temp.style.display = "none";
                 temp = document.getElementById("chooseOneBtn");
+                temp.style.display = "none";
+                temp = document.getElementById("pick_btn");
                 temp.style.display = "none";
                 temp = document.getElementById("kit-left");
                 temp.textContent =  agentName2 + "'s kit";
