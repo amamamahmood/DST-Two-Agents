@@ -57,8 +57,8 @@
             <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
 
         </div>
-            <div id ="pick_btn" class ="column5" style=" justify-content:center; text-align: center">
-                <button id="chooseOneBtn" class="button" style="display: none; width:10vw " v-on:click="chooseOne">Continue</button>
+            <div id ="pick_btn" class ="column5" style=" display: none; justify-content: center; text-align: center">
+                <button id="chooseOneBtn" class="button" style=" width:10vw " v-on:click="chooseOne">Continue</button>
             </div>
             <div id="surveyElement" class="columnSurvey">
                 <SurveyComponent />
@@ -83,7 +83,8 @@
             <div id="surveyElement3" style="display:none;" class="columnSurvey3">
                 <ThankYou id="thankyou" />
             </div>
-            <div id="timer-clock" class="timer" style="display:none;"> </div>
+            <div id="timer-clock" class="timer" style="display:none;">
+            </div>
             <div id="emergencyTask" class="column4" style="display:none">
                 <h2>Choose one of the kits</h2>
 
@@ -2062,7 +2063,7 @@
                 temp.style.display = "block";
                 temp.style.maxWidth = "50vw";
                 temp.textContent = "You do not have the time to look at the contents the survival kits. You have to pick ONE in 10 seconds. The timer will start as soon as you click Continue."
-                temp = document.getElementById("chooseOneBtn");
+                temp = document.getElementById("pick_btn");
                 temp.style.display = "block";
                 
                 
@@ -2129,7 +2130,6 @@
             },
             kitChoosen: function (event) {
                 //alert(event.currentTarget.id);
-                
                 var temp = document.getElementById("surveyElement2");
                 temp.style.display = "inline-block";
                 temp = document.getElementById("avatardiv");
@@ -2394,6 +2394,8 @@
         align-items: center;
         text-align: center;
         padding-left: 45vw;
+        position:absolute;
+        top:25%
     }
     /* Clear floats after the columns */
     .row:after {
