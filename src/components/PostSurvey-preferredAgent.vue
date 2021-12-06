@@ -2,7 +2,7 @@
     <survey :survey="survey" />
 </template>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
 
 
@@ -10,6 +10,7 @@
     //import { store } from "./App.vue";
     import { store } from './store';
     import "survey-vue/modern.css";
+    import $ from 'jquery';
     //import "./index.css";
     //const { v4: uuidv4 } = require('uuid');
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
@@ -41,7 +42,7 @@
                     dataType: "json",
                     data: store_data //$form.serializeObject()
                 });
-                alert(jqxhr);
+                //alert(jqxhr);
                 sect = document.getElementById("surveyElement3");
                 sect.style.display = "block";
                 

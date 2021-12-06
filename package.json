@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.19.1",
+    "jquery": "^3.6.0",
     "survey-vue": "^1.8.78",
     "surveyjs": "^3.0.2",
     "three": "^0.133.1",

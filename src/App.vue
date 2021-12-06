@@ -160,7 +160,6 @@
     </div>
 
 </template>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
     import { store } from './components/store';
@@ -177,9 +176,10 @@
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
     //import { degToRad } from 'three/src/math/MathUtils';
     //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
-    var url = 'https://script.google.com/macros/s/AKfycbz3ZbzO8lZOt0wForWERwXwp-ruN0wv-b581FQqHnID9H29NsZAADp4eaT5YAJWyKgpsw/exec';
+    //var url = 'https://script.google.com/macros/s/AKfycbz3ZbzO8lZOt0wForWERwXwp-ruN0wv-b581FQqHnID9H29NsZAADp4eaT5YAJWyKgpsw/exec';
     var user_initial_rankings;
     var avatar_rankings, avatar_left_rankings;
+    //import $ from 'jquery';
     class item_state {
         constructor(item_placed_at = 99, rankings = "") {
             this.item_placed_at = item_placed_at;
@@ -660,7 +660,7 @@
                 actions.push(action);
             }
             //alert(random_actions);
-            random_actions = random_actions.filter(function (value, index, arr) {
+            random_actions = random_actions.filter(function (value) {
                 return (value != idle_action && value != wave_action && value != reject && value != reject2);
             });
             //alert(random_actions);
@@ -721,7 +721,7 @@
                 actions_left.push(action_left);
             }
             //alert(random_actions);
-            random_actions_left = random_actions_left.filter(function (value, index, arr) {
+            random_actions_left = random_actions_left.filter(function (value) {
                 return (value != idle_action_left && value != wave_action_left && value != reject_left && value != reject2_left);
             });
             //alert(random_actions);
@@ -1105,7 +1105,7 @@
             arrow.style.display = "block";
             arrow.style.backgroundColor = "#e6d8ad";
             point.className = "left-point";
-            var index_item = avatar_order_left.findIndex(x => x === counter);
+            var index_item2 = avatar_order_left.findIndex(x => x === counter);
             random_actionList(2);
             avatarReady_left = true;
             setAction(actions[idle_action]);
@@ -1113,9 +1113,9 @@
                 setAction(actions_left[wave_action_left]);
             }
             else {
-                var box = document.getElementById("3" + index_item.toString());
-                box.style.borderColor = "#bfb43a";
-                box.style.borderWidth = "0.3vw";
+                var box2 = document.getElementById("3" + index_item2.toString());
+                box2.style.borderColor = "#bfb43a";
+                box2.style.borderWidth = "0.3vw";
                 setAction(actions_left[random_actions_left[0]]);
             }
             setTimeout(function () {
@@ -1682,7 +1682,7 @@
                 //cont.style.display = "block";
                 //init();
                 document.getElementById("user_list").style.top = "2px";
-                var sect = document.getElementById("heading");
+                sect = document.getElementById("heading");
                 sect.style.display = "none";
                 var btn = document.getElementById("interact");
                 btn.disabled = true;
@@ -2032,7 +2032,7 @@
                 
 
             },
-            chooseOne: function (event) {
+            chooseOne: function () {
 
                 var temp = document.getElementById("emergencyTask");
                 temp.style.display = "block";
@@ -2113,7 +2113,7 @@
                 var json_obj = {
                     user_initial_rankings: JSON.stringify(user_initial_rankings),
                     agent1_rankings: JSON.stringify(avatar_rankings),
-                    agent2_rankings: JSON.stringify(avatar_rankings),
+                    agent2_rankings: JSON.stringify(avatar_left_rankings),
                     user_final_rankings: JSON.stringify(user_final_rankings),
                     state: state,
                     condition: condition,
