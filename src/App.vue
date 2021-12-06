@@ -1940,7 +1940,7 @@
                     
                     this.disable();
 
-                    if (counter < 1) {
+                    if (counter < 9) {
                         decide_agent_turn();
                         //agent_turn = 2;
                         //agent_turn_reverse = 1;
