@@ -1181,7 +1181,7 @@
         temp.style.display = "inline-block";
         var user_data = store.getters.getUserData;
         var state = JSON.stringify(items);
-        time_picking_agent = 11;
+        //time_picking_agent = 11;
         //alert("user_data " + JSON.stringify(user_data));
         var json_obj = {
             user_initial_rankings: JSON.stringify(user_initial_rankings),
@@ -1926,7 +1926,7 @@
                     
                     this.disable();
 
-                    if (counter < 9) {
+                    if (counter < 1) {
                         decide_agent_turn();
                         //agent_turn = 2;
                         //agent_turn_reverse = 1;
