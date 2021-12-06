@@ -1172,6 +1172,32 @@
         temp.style.display = "none";
         temp = document.getElementById("surveyElement2");
         temp.style.display = "inline-block";
+        var user_data = store.getters.getUserData;
+        var state = JSON.stringify(items);
+        time_picking_agent = 11;
+        //alert("user_data " + JSON.stringify(user_data));
+        var json_obj = {
+            user_initial_rankings: JSON.stringify(user_initial_rankings),
+            agent1_rankings: JSON.stringify(avatar_rankings),
+            agent2_rankings: JSON.stringify(avatar_left_rankings),
+            user_final_rankings: JSON.stringify(user_final_rankings),
+            state: state,
+            condition: condition,
+            agent_index: index,
+            goes_first: JSON.stringify(goes_first),
+            agent_voice: agent_voice,
+            agent_picked_in_emergency: agent_picked_in_emergency,
+            time_picking_agent: time_picking_agent
+        };
+        //alert("json_obj " + JSON.stringify(json_obj));
+        //json_obj.putAll(JSON.parse(user_data));
+        let store_data = {
+            ...user_data,
+            ...json_obj
+        };
+
+        store.commit('storeUserData', store_data);
+
     }
 
     function startTimer() {
@@ -2022,6 +2048,10 @@
                 
                 
                 emergency_sound.play();
+                emergency_sound.addEventListener('ended', function () {
+                    emergency_sound.play();
+
+                });
 
                 temp = document.getElementById("agent_img");
                 temp.src = agentName + ".png";
@@ -2132,19 +2162,10 @@
                     ...user_data,
                     ...json_obj
                 };
-                //alert("Write data " + JSON.stringify(store_data));
-                /*$.ajax({
-                    url: url,
-                    method: "GET",
-                    dataType: "json",
-                    data: store_data  //$form.serializeObject()
-                });*/
+               
                 store.commit('storeUserData', store_data);
                 
-                //temp = document.getElementById("postSurvey");
-                //temp.style.display = "block";
-                //var tag = document.createElement("PostSurvey");
-                //temp.appendChild(tag);
+                
             }
 
         }
