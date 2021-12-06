@@ -52,6 +52,8 @@
             <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
             <br />
             <br />
+            <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
+            <br />
             <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
 
         </div>
@@ -115,7 +117,7 @@
         <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>-->
                 <br />
                 <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
-                <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
+                
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done updating? Continue to next item</button>
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
