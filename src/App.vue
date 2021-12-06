@@ -45,14 +45,16 @@
     </div>-->
 
 
-            <div id="headingColumn" class="column3">
-                <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
-                <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
-                </h3>
-                <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
-                <br />
+        <div id="headingColumn" class="column3">
+            <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
+            <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
+            </h3>
+            <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
+            <br />
+            <br />
+            <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
 
-            </div>
+        </div>
             <div id ="pick_btn" class ="column5" style=" justify-content:center; text-align: center">
                 <button id="chooseOneBtn" class="button" style="display: none; width:10vw " v-on:click="chooseOne">Continue</button>
             </div>
@@ -117,7 +119,7 @@
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done updating? Continue to next item</button>
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
-                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
+                
                 <br />
 
             </div>
