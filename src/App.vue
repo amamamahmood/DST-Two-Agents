@@ -45,7 +45,7 @@
     </div>-->
 
 
-        <div id="headingColumn" class="column3">
+        <div id="headingColumn" class="column-heading">
             <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
             <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
             </h3>
@@ -1061,10 +1061,12 @@
        // var arrow1 = document.getElementById("arrow_right");
         //arrow1.style.display = "none";
         if (!intro) {
-        var box_item = document.getElementById("4" + user_initial_rankings[counter].toString());
+            var box_item = document.getElementById("4" + user_initial_rankings[counter].toString());
         //alert("4" + user_initial_rankings[counter].toString());
-        box_item.style.borderColor = "red";
-        box_item.style.borderWidth = "0.3vw";
+            box_item.style.borderColor = "red";
+            box_item.style.borderWidth = "0.3vw";
+            box_item.style.backgroundColor = "red";
+
         }
         var arrow = document.getElementById("arrow_left");
         arrow.style.display = "none";
@@ -1087,6 +1089,7 @@
                 var box = document.getElementById("3" + index_item.toString());
                 box.style.borderWidth = "0.3vw";
                 box.style.borderColor = "#4bc8a9";
+                box.style.backgroundColor = "#4bc8a9";
             }
             setTimeout(function () {
                 /*if (intro) {
@@ -1125,6 +1128,7 @@
                 var box2 = document.getElementById("3" + index_item2.toString());
                 box2.style.borderColor = "#bfb43a";
                 box2.style.borderWidth = "0.3vw";
+                box2.style.backgroundColor = "#bfb43a";
                 setAction(actions_left[random_actions_left[0]]);
             }
             setTimeout(function () {
@@ -1772,13 +1776,16 @@
                 var box = document.getElementById("3" + index_item.toString());
                 box.style.borderColor = "black";
                 box.style.borderWidth = "0.1vw";
+                box.style.backgroundColor = "#aaa";
                 index_item = avatar_order.findIndex(x => x === counter);
                 box = document.getElementById("3" + index_item.toString());
                 box.style.borderColor = "black";
                 box.style.borderWidth = "0.1vw";
+                box.style.backgroundColor = "#aaa";
                 box = document.getElementById("4" + user_initial_rankings[counter].toString());
                 box.style.borderColor = "black";
                 box.style.borderWidth = "0.1vw";
+                box.style.backgroundColor = "#aaa";
             },
             beginInteraction: function (event) {
 				var inst2 = document.getElementById("intro3");
@@ -2355,6 +2362,18 @@
         padding-left: 10vw;
         position:absolute;
         top: 35%;
+    }
+    .column-heading {
+        float: left;
+        width: 80vw;
+        height: 15vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        padding-left: 10vw;
+        position: absolute;
+        top: 0%;
     }
 
     .column4 {
