@@ -2353,6 +2353,8 @@
         align-items: center;
         text-align: center;
         padding-left: 10vw;
+        position:absolute;
+        top: 35%;
     }
 
     .column4 {
