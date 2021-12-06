@@ -204,7 +204,7 @@
     let actions = [];
     let actions_left =[];
     const clock = new THREE.Clock();
-    const clock_left = new THREE.Clock();
+    //const clock_left = new THREE.Clock();
     let activeAction, lastAction, activeAction_left, lastAction_left;
     let mixer, mixer_left;
     var condition = 0;
@@ -657,6 +657,8 @@
                 else if (name == 'question') { reject = i; }
                 else if (name == 'thinking') { reject2 = i; }
                 const action = mixer.clipAction(clip);
+                action.timeScale = 0.65;
+                action.weight = 0.6;
                 actions.push(action);
             }
             //alert(random_actions);
@@ -667,7 +669,7 @@
             //alert(JSON.stringify(actions));
             //avatarReady = true;
             //alert(actions[3].name);
-            actions[idle_action].timeScale = 0.8;
+            //actions[idle_action].timeScale = 0.8;
             actions[idle_action].play();
             activeAction = actions[idle_action];
             lastAction = actions[idle_action];
@@ -718,6 +720,8 @@
                 else if (name_left == 'question') { reject_left = i; }
                 else if (name_left == 'thinking') { reject2_left = i; }
                 const action_left = mixer_left.clipAction(clip_left);
+                action_left.timeScale = 0.7;
+                action_left.weight = 1;
                 actions_left.push(action_left);
             }
             //alert(random_actions);
@@ -728,7 +732,7 @@
             //alert(JSON.stringify(actions));
             //avatarReady_left = true;
             //alert(actions[3].name);
-            actions_left[idle_action_left].timeScale = 1;
+            //actions_left[idle_action_left].timeScale = 1;
             actions_left[idle_action_left].play();
             activeAction_left = actions_left[idle_action_left];
             lastAction_left = actions_left[idle_action_left];
@@ -947,11 +951,12 @@
         requestAnimationFrame(animate);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
+        if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
-        
+        renderer_left.render(scene_left, camera_left);
 
     }
-    function animate_left() {
+    /*function animate_left() {
 
         requestAnimationFrame(animate_left);
         var delta_left = clock_left.getDelta();
@@ -961,7 +966,7 @@
 
         //stats.update();
 
-    }
+    }*/
 	
 
     function setAction(toAction) {
@@ -971,11 +976,11 @@
             //lastAction.stop()
             lastAction.fadeOut(1);
             activeAction.reset();
-            activeAction.timeScale = 0.7;
-            activeAction.weight = 0.7;
+            //activeAction.timeScale = 0.7;
+           // activeAction.weight = 0.7;
             activeAction.fadeIn(1);
-            activeAction.timeScale = 0.7;
-            activeAction.weight = 0.7;
+            //activeAction.timeScale = 0.7;
+            //activeAction.weight = 0.7;
             activeAction.play();
         }
     }
@@ -987,11 +992,11 @@
             //lastAction.stop()
             lastAction_left.fadeOut(1);
             activeAction_left.reset();
-            activeAction_left.timeScale = 1;
-            activeAction_left.weight = 1;
+            //activeAction_left.timeScale = 1;
+            //activeAction_left.weight = 1;
             activeAction_left.fadeIn(1);
-            activeAction_left.timeScale = 1;
-            activeAction_left.weight = 1;
+            //activeAction_left.timeScale = 1;
+            //activeAction_left.weight = 1;
             activeAction_left.play();
         }
     }
@@ -1721,7 +1726,7 @@
                 setTimeout(function () {
 					inst2.textContent = "The agents are ready!!!";
                     animate();
-                    animate_left();
+                    //animate_left();
 					btn.style.display = "inline-block";
 					btn.disabled = false;
                 }, 100);
