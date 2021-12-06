@@ -1885,7 +1885,7 @@
                 //inst.style.display = "none";
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
-                inst.textContent = "Place " + this.users[counter].name + " in one of the place holders in the new list below";
+                inst.innerHTML = "Place " + this.users[counter].name + " in one of the place holders in the new list below. <br /> After placing the current item you can re-arrange your list before proceeding.";
                 event.target.style.display = "none";
                 //var btn = document.getElementById("noDrag");
                 //btn.style.display = "none";
@@ -2395,7 +2395,7 @@
         text-align: center;
         padding-left: 45vw;
         position:absolute;
-        top:25%
+        top:35%
     }
     /* Clear floats after the columns */
     .row:after {
