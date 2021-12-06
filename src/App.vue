@@ -1247,6 +1247,9 @@
             ThankYou
             //modelFbx
         },
+        metaInfo: {
+            title: 'Desert Survival Task'
+        },
 
 
 

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
+import VueMeta from 'vue-meta';
+Vue.use(VueMeta);
 //import Vuex from 'vuex';
 //import store from './components/store.js';
 //Vue.use(Vuex);
