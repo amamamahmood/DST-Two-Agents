@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="unselectable">
-        <div >
+        <div>
 
             <div id="userNewRanking" class="column2" style=" display:none;">
                 <h3 class="smallerText">Your New Rankings</h3>
@@ -19,7 +19,7 @@
                         <div>
                             <img :src="item.avatar" alt="" style="width: 4vw; height: 4vw; display: block; margin: auto;">
                             <p style="display: block; font-size: 1.5vmin;">{{item.name}} </p>
-                            <button :id=item.name2 :name="item.name3" style="width:5.7vw; font-size: 1.5vmin;display:none;align-content:center;align-items:center;text-align:center;" v-on:click="placeItem($event)">Place here</button>
+                            <button :id=item.name2 :name="item.name3" style="width: 5.7vw; font-size: 1.5vmin; display: none; align-content: center; align-items: center; text-align: center; cursor: pointer;" v-on:click="placeItem($event)">Place here</button>
                         </div>
                     </li>
 
@@ -45,19 +45,19 @@
     </div>-->
 
 
-        <div id="headingColumn" class="column-heading">
-            <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
-            <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
-            </h3>
-            <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
-            <br />
-            <br />
-            <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
-            <br />
-            <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
+            <div id="headingColumn" class="column-heading">
+                <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
+                <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
+                </h3>
+                <h2 id="introb" style="max-width:70vw; display:none" class="text"></h2>
+                <br />
+                <br />
+                <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
+                <br />
+                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
 
-        </div>
-            <div id ="pick_btn" class ="column5" style=" display: none; justify-content: center; text-align: center">
+            </div>
+            <div id="pick_btn" class="column5" style=" display: none; justify-content: center; text-align: center">
                 <button id="chooseOneBtn" class="button" style=" width:10vw " v-on:click="chooseOne">Continue</button>
             </div>
             <div id="surveyElement" class="columnSurvey">
@@ -77,24 +77,24 @@
                 </div>
                 <PostSurveyA2 id="postSurveyA2" class="columnSurvey2" />
             </div>
-            <div id="surveyElement5" style="display:none;" class="columnSurvey2">
-                <PostSurveyA2PreferredAgent id="PostSurveyA2-preferredAgent" />
-            </div>
+            <!--<div id="surveyElement5" style="display:none;" class="columnSurvey2">
+        <PostSurveyA2PreferredAgent id="PostSurveyA2-preferredAgent" />
+    </div>-->
             <div id="surveyElement3" style="display:none;" class="columnSurvey3">
                 <ThankYou id="thankyou" />
             </div>
             <div id="timer-clock" class="timer" style="display:none;">
             </div>
             <div id="emergencyTask" class="column4" style="display:none">
-                <h2>Choose one of the kits</h2>
+                <h2>Choose one of the emergency kits</h2>
 
                 <div class="kit-right">
-                    <button id="101" v-on:click="kitChoosen($event)"><img src="survival_kit.png" style=" width: 10vw"> Pick</button>
+                    <button id="101" v-on:click="kitChoosen($event)"><img src="survival_kit.png" style=" width: 10vw; cursor: pointer;"> Pick</button>
                     <h3 id="kit-right" style="text-align:center  "> Elizabeth's kit'</h3>
                 </div>
 
                 <div class="kit-left">
-                    <button id="102" v-on:click="kitChoosen($event)"><img src="survival_kit.png" style=" width: 10vw"> Pick</button>
+                    <button id="102" v-on:click="kitChoosen($event)"><img src="survival_kit.png" style=" width: 10vw; cursor: pointer;"> Pick</button>
                     <h3 id="kit-left" style="text-align:center  "> Kate's kit'</h3>
                 </div>
 
@@ -105,6 +105,18 @@
             <label for="radio-img-2" class="female">Female</label>-->
 
             </div>
+            <div id="agentSurvey" style="display: none; " class="column3">
+                <h1 class="LargerText" id="agentForm"> </h1>
+                <h3 class="smallerText" id="agentFormText"></h3>
+                <br />
+                <br />
+                <button id="proceedA1" class="button"  v-on:click="surveyAgent(1)"> Proceed to Questionnaire</button>
+                <br />
+                <button id="proceedA2" class="button" style="display:none; " v-on:click="surveyAgent(2)">Proceed to Questionnaire</button>
+
+            </div>
+           
+               
             <div id="centerColumn" style="display:none" class="column3">
                 <br />
                 <h3 class="smallerText" id="drag_inst" style="display:none; max-width:50vw;">The agent tries to convince the participant about next item</h3>
@@ -113,16 +125,16 @@
                 <br />
                 <h3 class="smallerText" id="intro3" style="display:none; max-width:50vw;  ">
                 </h3>
-                <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Rank this current item</button>
+                <button id="drag" class="button" style="display:none" v-on:click="makeDraggable">Rank this current item</button>
                 <!--&emsp;&emsp;&emsp;&emsp;
         <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>-->
                 <br />
-                <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
-                
+                <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking"> Done Ranking? Continue</button>
+
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done updating? Continue to next item</button>
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
-                
+
                 <br />
 
             </div>
@@ -167,6 +179,7 @@
 </template>
 
 <script>
+    // purple color shirt: 744B7E
     import { store } from './components/store';
     import draggable from "vuedraggable";
     import UserCard from "./components/UserCard";
@@ -174,7 +187,7 @@
     import SurveyComponent from "./components/SurveyComponent";
     import PostSurvey from './components/PostSurvey';
     import PostSurveyA2 from './components/PostSurveyA2';
-    import PostSurveyA2PreferredAgent from './components/PostSurvey-preferredAgent';
+    //import PostSurveyA2PreferredAgent from './components/PostSurvey-preferredAgent';
     import ThankYou from './components/ThankYou';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     //import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
@@ -230,9 +243,9 @@
     //var agent2_script = [true, false, true, true, false, false, true, false, true];
     //var goes_first2 =    [2,     1,     2,      1,    2,    2,     1,   1,    2  ];
     var agent_picked_in_emergency = "none";
-    const emergency_sound = new Audio();
-    emergency_sound.src = "emergency.mp3";
-    emergency_sound.volume = 0.5;
+    //const emergency_sound = new Audio();
+    //emergency_sound.src = "emergency.mp3";
+    //emergency_sound.volume = 0.5;
     var time_picking_agent = 11;
     //emergency_sound.appendChild("emergency.mp3");
     //emergency_sound.appendChild("emergency.mp3");
@@ -360,7 +373,7 @@
             case 0:
                 agentName = "Elizabeth";
                 agentName2 = "Kate";
-                fileLoad = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb";
+                fileLoad = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb"; 
                 fileLoad_left = "https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb";
                 gen = "f";
                 index2 = 1;
@@ -394,6 +407,7 @@
                 index2 = 2;
                 break;
         }
+        store.commit('storeAgentName2', agentName2);
         var container = document.createElement('div');
         //var avatar = document.getElementById('avatar');
         container.classList.add("columnAvatar");
@@ -1177,14 +1191,20 @@
         //alert(timesUp);
         var temp = document.getElementById("emergencyTask");
         temp.style.display = "none";
-        emergency_sound.pause();
+       // emergency_sound.pause();
         temp = document.getElementById("timer-clock");
         temp.style.display = "none";
-        temp = document.getElementById("avatardiv");
-        temp.style.display = "none";
+        //temp = document.getElementById("avatardiv");
+        //temp.style.display = "none";
         temp = document.getElementById("avatardiv_left");
         temp.style.display = "none";
-        temp = document.getElementById("surveyElement2");
+        temp = document.getElementById("agentSurvey");
+        temp.style.display = "block";
+        temp = document.getElementById("agentForm");
+        temp.textContent = "Post-Study Questionnaire for " + agentName;
+        temp = document.getElementById("agentFormText");
+        temp.textContent = "Please take some time to answer few questions about " + agentName + " on the next few pages";
+        temp = document.getElementById("proceedA1");
         temp.style.display = "inline-block";
         var user_data = store.getters.getUserData;
         var state = JSON.stringify(items);
@@ -1283,7 +1303,6 @@
             SurveyComponent,
             PostSurvey,
             PostSurveyA2,
-            PostSurveyA2PreferredAgent,
             ThankYou
             //modelFbx
         },
@@ -2058,21 +2077,21 @@
                 temp = document.getElementById("intro");
                 temp.style.display = "block";
                 temp.style.maxWidth = "50vw";
-                temp.textContent = "There has been an emergency. The airframe of the plane is about to fall over. You have less than a minute to escape the site of crash. Both the agents have selected 3 of the 9 items to make their survival kits for you. "
+                temp.textContent = "There has been an emergency. The malfunctioned engine is about to blast. You have less than a minute to escape the site of crash. Each agent has selected 3 of the 9 items to make a survival kit for you. "
                 temp = document.getElementById("introb");
                 temp.style.display = "block";
                 temp.style.maxWidth = "50vw";
-                temp.textContent = "You do not have the time to look at the contents the survival kits. You have to pick ONE in 10 seconds. The timer will start as soon as you click Continue."
+                temp.textContent = "You do not have the time to look at the contents the survival kits. You have to pick ONE of the 2 kits in 10 seconds. The timer will start as soon as you click Continue."
                 temp = document.getElementById("pick_btn");
                 temp.style.display = "block";
                 
                 
                 
-                emergency_sound.play();
+                /*emergency_sound.play();
                 emergency_sound.addEventListener('ended', function () {
                     emergency_sound.play();
 
-                });
+                });*/
 
                 temp = document.getElementById("agent_img");
                 temp.src = agentName + ".png";
@@ -2130,19 +2149,37 @@
             },
             kitChoosen: function (event) {
                 //alert(event.currentTarget.id);
-                var temp = document.getElementById("surveyElement2");
+
+                var temp = document.getElementById("agentSurvey");
+                temp.style.display = "block";
+                temp = document.getElementById("agentForm");
+                temp.textContent = "Post Study Questionnaire for " + agentName;
+                temp = document.getElementById("agentFormText");
+                temp.textContent = "Next, please take some time to rate your perceptions of " + agentName ;
+                temp = document.getElementById("proceedA1");
                 temp.style.display = "inline-block";
-                temp = document.getElementById("avatardiv");
-                temp.style.display = "none";
+                //temp = document.getElementById("avatardiv");
+                //temp.style.display = "none";
                 temp = document.getElementById("avatardiv_left");
                 temp.style.display = "none";
+
                 setTimeout(function () {
+                   
+                    temp = document.getElementById("avatardiv_left");
+                    temp.style.display = "none";
+                }, 200);
+
+                /*setTimeout(function () {
                     temp = document.getElementById("avatardiv");
                     temp.style.display = "none";
                     temp = document.getElementById("avatardiv_left");
                     temp.style.display = "none";
-                }, 100);
-
+                }, 100);*/
+                temp = document.getElementById("emergencyTask");
+                temp.style.display = "none";
+                //emergency_sound.pause();
+                temp = document.getElementById("timer-clock");
+                temp.style.display = "none";
 
                 if (event.currentTarget.id == "101") {
                     agent_picked_in_emergency = agentName;
@@ -2152,11 +2189,7 @@
                 }
                 //alert(agent_picked_in_emergency);
                 time_picking_agent = timePassed;
-                temp = document.getElementById("emergencyTask");
-                temp.style.display = "none";
-                emergency_sound.pause();
-                temp = document.getElementById("timer-clock");
-                temp.style.display = "none";
+                clearInterval(timerInterval);
                
                 
 
@@ -2186,6 +2219,32 @@
                 store.commit('storeUserData', store_data);
                 
                 
+            },
+            surveyAgent: function (num) {
+                var temp = document.getElementById("agentSurvey");
+                temp.style.display = "none";
+                //temp = document.getElementById("proceedA1");
+                temp = document.getElementById("avatardiv");
+                temp.style.display = "none";
+                temp = document.getElementById("avatardiv_left");
+                temp.style.display = "none";
+
+                setTimeout(function () {
+                    temp = document.getElementById("agentSurvey");
+                    temp.style.display = "none";
+                    temp = document.getElementById("avatardiv");
+                    temp.style.display = "none";
+                    temp = document.getElementById("avatardiv_left");
+                    temp.style.display = "none";
+                }, 200);
+                if (num == 1) {
+                    temp = document.getElementById("surveyElement2");
+                    temp.style.display = "inline-block";
+                }
+                else if (num == 2) {
+                    temp = document.getElementById("surveyElement4");
+                    temp.style.display = "inline-block";
+                }
             }
 
         }
@@ -2351,18 +2410,7 @@
         right: 35vw;
     }
 
-    .column3 {
-        float: left;
-        width: 80vw;
-        height: 15vw;
-        padding: 1px;
-        align-content: center;
-        align-items: center;
-        text-align: center;
-        padding-left: 10vw;
-        position:absolute;
-        top: 35%;
-    }
+    
     .column-heading {
         float: left;
         width: 80vw;
@@ -2375,7 +2423,18 @@
         position: absolute;
         top: 0%;
     }
-
+    .column3 {
+        float: left;
+        width: 80vw;
+        height: 15vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        padding-left: 10vw;
+        position: absolute;
+        top: 35%;
+    }
     .column4 {
         float: left;
         width: 80vw;
@@ -2385,6 +2444,7 @@
         align-items: center;
         text-align: center;
         padding-left: 10vw;
+        
     }
     .column5 {
         float: left;
@@ -2432,12 +2492,7 @@
         font-size: 2vmin;
     }
 
-    button {
-        align-content: center;
-        text-align: center;
-        font-family: Arial;
-        font-size: 20px;
-    }
+    
 
     .float-child-agent {
         width: 6vw;
@@ -2624,6 +2679,37 @@
         justify-content: center;
         font-size: 48px;
     }
+
+    .button {
+        display: inline-block;
+        padding:   10px 20px 30px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 9px #999;
+    }
+
+        .button:hover {
+            background-color: #3e8e41
+        }
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
 
 </style>
 

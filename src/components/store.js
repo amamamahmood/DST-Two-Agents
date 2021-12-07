@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         gender: 0,
+        agentName2: "",
         u_id: null,
         user_data : {}
         //post_survey: {},
@@ -14,6 +15,9 @@ export const store = new Vuex.Store({
     getters: {
         getGender: state => {
             return state.gender;
+        },
+        getAgentName2: state => {
+            return state.agentName2;
         },
         getUid: state => {
             return state.u_id;
@@ -28,6 +32,9 @@ export const store = new Vuex.Store({
     mutations: {
         storeGender(state, genderA) {
             state.gender = genderA;
+        },
+        storeAgentName2(state, name2) {
+            state.agentName2 = name2;
         },
         storeUid(state, uid) {
             state.u_id = uid;
