@@ -970,8 +970,9 @@
         requestAnimationFrame(animate);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
-        if (mixer_left) mixer_left.update(delta);
+        
         renderer.render(scene, camera);
+        if (mixer_left) mixer_left.update(delta);
         renderer_left.render(scene_left, camera_left);
 
     }
