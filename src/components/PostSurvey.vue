@@ -74,6 +74,7 @@
                 //temp.style.display = "none";
                 temp = document.getElementById("avatardiv_left");
                 temp.style.display = "block";
+                
                 //sect = document.getElementById("surveyElement4");
                 //sect.style.display = "block";
                 

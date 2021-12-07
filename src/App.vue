@@ -1037,8 +1037,8 @@
         //alert(acc_order + con_order);
         var j = 0;
         var k = 0;
-        goes_first[i] = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
-        for (i = 1; i < goes_first.length - 1; i++) {
+        goes_first[0] = Math.floor(Math.random() * (2 - 1 + 1)) + 1; //Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
+        for (i = 1; i < goes_first.length ; i++) {
             if (agent1_script[i]) {
                 goes_first[i] = goes_first_true[j];
                 j++;
