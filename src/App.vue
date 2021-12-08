@@ -1537,7 +1537,7 @@
                 init();
                 var sect = document.getElementById("intro");
                 sect.style.display = "inline-block";
-                sect.textContent = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 &#176 F that day, which means that at ground level it will be almost 130 &#176 F.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
+                sect.innerHTML = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 &#8457; that day, which means that at ground level it will be almost 130 &#8457;.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
                 sect = document.getElementById("introb");
                 sect.style.display = "inline-block";
                 sect.textContent = "Before the plane caught fire, your group was able to salvage 9 items in good condition.  Your task is to rank these items according to their importance to your survival, with 1 being the most important and 9 being the least important.";
@@ -2345,7 +2345,7 @@
         text-align: center;
         position: absolute;
         bottom: 10vw;
-        right: 7vw;
+        right: 3vw;
         background-color: #4bc8a9;
     }
     .columnKey-left {
@@ -2357,7 +2357,7 @@
         text-align: center;
         position: absolute;
         bottom: 10vw;
-        left: 7vw;
+        left: 3vw;
         background-color: #bfb43a;
     }
     .columnAvatar {
