@@ -115,8 +115,8 @@
                 <button id="proceedA2" class="button" style="display:none; " v-on:click="surveyAgent(2)">Proceed to Questionnaire</button>
 
             </div>
-           
-               
+           <div id="key" class="columnKey" style="display:none"> </div>
+           <div id="key-left" class="columnKey-left" style="display:none"> </div>  
             <div id="centerColumn" style="display:none" class="column3">
                 <br />
                 <h3 class="smallerText" id="drag_inst" style="display:none; max-width:50vw;">The agent tries to convince the participant about next item</h3>
@@ -1537,7 +1537,7 @@
                 init();
                 var sect = document.getElementById("intro");
                 sect.style.display = "inline-block";
-                sect.textContent = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 that day, which means that at ground level it will be almost 130.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
+                sect.textContent = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 &#176 F that day, which means that at ground level it will be almost 130 &#176 F.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
                 sect = document.getElementById("introb");
                 sect.style.display = "inline-block";
                 sect.textContent = "Before the plane caught fire, your group was able to salvage 9 items in good condition.  Your task is to rank these items according to their importance to your survival, with 1 being the most important and 9 being the least important.";
@@ -1823,7 +1823,8 @@
                 //agent_turn_reverse = 1;
                 
                 // actuate agent right and idle agent left
-                
+                document.getElementById("key").style.display = "block";
+                document.getElementById("key-left").style.display = "block";
                 var inst = document.getElementById("drag_inst");
                 //changing here
                 inst.style.display = "none";
@@ -2053,6 +2054,8 @@
                 //this.actual_match();
                 
                 document.body.style.paddingLeft = '0vw';
+                document.getElementById("key").style.display = "none";
+                document.getElementById("key-left").style.display = "none";
                 var temp = document.getElementById("centerColumn");
                 temp.style.display = "none";
                 temp = document.getElementById("userNewRanking");
@@ -2333,7 +2336,30 @@
         right: 0vw;
         font-size: 1vh;
     }
-
+    .columnKey {
+        float: right;
+        width: 4vw;
+        height: 2vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        bottom: 10vw;
+        right: 7vw;
+        background-color: #4bc8a9;
+    }
+    .columnKey-left {
+        float: left;
+        width: 4vw;
+        height: 2vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        bottom: 10vw;
+        left: 7vw;
+        background-color: #bfb43a;
+    }
     .columnAvatar {
         float: right;
         width: 25vw;
