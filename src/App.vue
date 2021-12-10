@@ -1074,6 +1074,7 @@
     function actuate_agent_talking(which_agent, intro = false) { // 1 right - 2 left
         avatarReady_left = false;
         avatarReady = false;
+
        // var arrow1 = document.getElementById("arrow_right");
         //arrow1.style.display = "none";
         if (!intro) {
@@ -1537,7 +1538,7 @@
                 init();
                 var sect = document.getElementById("intro");
                 sect.style.display = "inline-block";
-                sect.innerHTML = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 &#8457; that day, which means that at ground level it will be almost 130 &#8457;.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
+                sect.innerHTML = "It is approximately 10 a.m. in mid-August and your plane has just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame and one engine remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 &#8457; in the air that day, which means that at ground level it will be almost 130 &#8457;.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
                 sect = document.getElementById("introb");
                 sect.style.display = "inline-block";
                 sect.textContent = "Before the plane caught fire, your group was able to salvage 9 items in good condition.  Your task is to rank these items according to their importance to your survival, with 1 being the most important and 9 being the least important.";
@@ -1788,6 +1789,9 @@
                 //this.userNewList[button_name - 1].name2 = 99;
                 this.userNewList[set_index].name3 = 99;
                 var btn = document.getElementById("done_drag");
+                if (counter == 8) {
+                    btn.innerHTML = "Done updating? Continue";
+                }
                 btn.style.display = "inline-block";
                 this.enableNew();
                 var inst = document.getElementById("drag_inst");
@@ -1851,49 +1855,56 @@
                 sound.src = "intro" + "_" + index + "_" + agent_voice + ".mp3";
                 sound.play();
                 sound.addEventListener('ended', function () {
-                    actuate_agent_talking(agent_turn_reverse, true);
-                    const sound2 = new Audio();
-                    inst.textContent = say_left;
-                    sound2.src = "intro" +"_"+ index2 + "_" + agent_voice_left + ".mp3";
-                    sound2.play();
-                    sound2.addEventListener('ended', function () {
-                        actuate_agent_talking(agent_turn);
+                    setTimeout(function () {
+                        actuate_agent_talking(agent_turn_reverse, true);
+                        const sound2 = new Audio();
+                        inst.textContent = say_left;
+                        sound2.src = "intro" + "_" + index2 + "_" + agent_voice_left + ".mp3";
+                        sound2.play();
+                        sound2.addEventListener('ended', function () {
+                            setTimeout(function () {
+                                actuate_agent_talking(agent_turn);
 
-                        inst.textContent = continuer + say2;
-                        const greetingSpeech2a = new Audio();
-                        greetingSpeech2a.src = continuer_src;
-                        greetingSpeech2a.play();
-                        greetingSpeech2a.addEventListener('ended', function () {
-                        //inst.textContent = say2;
-                            const greetingSpeech2 = new Audio();
-                            greetingSpeech2.src = audio_src;
-                            greetingSpeech2.play();
-                            greetingSpeech2.addEventListener('ended', function () {
-                                // actuate agent left and idle agent right
-                                actuate_agent_talking(agent_turn_reverse);
-                                inst.textContent = continuer_left + say2_left;
-                                const greetingSpeech3a = new Audio();
-                                greetingSpeech3a.src = continuer_src_left;
-                                greetingSpeech3a.play();
-                                greetingSpeech3a.addEventListener('ended', function () {
-                                    const greetingSpeech3 = new Audio();
-                                    greetingSpeech3.src = audio_src_left;
-                                    greetingSpeech3.play();
-                                    greetingSpeech3.addEventListener('ended', function () {
-                                        var btn = document.getElementById("drag");
-                                        btn.style.display = "inline-block";
-                                        //avatarReady_left = false;
-                                        //alert("I am here");
-                                        //setAction_left(actions_left[idle_action_left]);
-                                        actuate_agent_talking(3);
+                                inst.textContent = continuer + say2;
+                                const greetingSpeech2a = new Audio();
+                                greetingSpeech2a.src = continuer_src;
+                                greetingSpeech2a.play();
+                                greetingSpeech2a.addEventListener('ended', function () {
+                                    //inst.textContent = say2;
+                                    const greetingSpeech2 = new Audio();
+                                    greetingSpeech2.src = audio_src;
+                                    greetingSpeech2.play();
+                                    greetingSpeech2.addEventListener('ended', function () {
+                                        // actuate agent left and idle agent right
+                                        actuate_agent_talking(agent_turn_reverse);
+                                        inst.textContent = continuer_left + say2_left;
+                                        const greetingSpeech3a = new Audio();
+                                        greetingSpeech3a.src = continuer_src_left;
+                                        greetingSpeech3a.play();
+                                        greetingSpeech3a.addEventListener('ended', function () {
+                                            const greetingSpeech3 = new Audio();
+                                            greetingSpeech3.src = audio_src_left;
+                                            greetingSpeech3.play();
+                                            greetingSpeech3.addEventListener('ended', function () {
+                                                var btn = document.getElementById("drag");
+                                                btn.style.display = "inline-block";
+                                                //avatarReady_left = false;
+                                                //alert("I am here");
+                                                //setAction_left(actions_left[idle_action_left]);
+                                                actuate_agent_talking(3);
+                                            });
+                                        });
                                     });
                                 });
-                            });
-                        });
 
+                            
+                            }, 1000);
+                            
                     });
+                       
+                    }, 1000);
+                    
                 });
-
 
             },
             makeDraggable: function (event) {
@@ -2081,7 +2092,7 @@
                 temp = document.getElementById("intro");
                 temp.style.display = "block";
                 temp.style.maxWidth = "50vw";
-                temp.textContent = "There has been an emergency. The malfunctioned engine is about to blast. You have less than a minute to escape the site of crash. Each agent has selected 3 of the 9 items to make a survival kit for you. "
+                temp.textContent = "There has been an emergency. The malfunctioned engine is about to blast. You have less than a minute to escape the site of crash. Each AI agent has selected 3 of the 9 items to make a survival kit for you. "
                 temp = document.getElementById("introb");
                 temp.style.display = "block";
                 temp.style.maxWidth = "50vw";
