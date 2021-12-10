@@ -226,7 +226,7 @@
     let activeAction, lastAction, activeAction_left, lastAction_left;
     let mixer, mixer_left;
     var condition = 0;
-    var index = 0, index2 = 1;
+    var index = 0, index2 = 0, index3 = 1;
     var random_actions_order = [0, 1, 2, 3, 4, 5];
     var idle_action = 2;
     var wave_action = 9;
@@ -376,17 +376,20 @@
                 fileLoad = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb"; 
                 fileLoad_left = "https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb";
                 gen = "f";
-                index2 = 1;
+
+                index2 = 0;
+                index3 = 1;
                 //selectedVoice = 1;
                 break;
             case 1:
-                agentName = "Kate";
-                agentName2 = "Elizabeth";
+                agentName = "Elizabeth";
+                agentName2 = "Kate";
                 fileLoad_left = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb";
                 fileLoad = "https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb";
                 //selectedVoice = 1;
                 gen = "f";
                 index2 = 0;
+                index3 = 1;
                 break;
             case 2:
                 agentName = "Lewis";
@@ -395,16 +398,18 @@
                 fileLoad_left = "https://dl.dropbox.com/s/5g71bagaw8v5vv3/shanon_multiple.glb";
                 //selectedVoice = 0;
                 gen = "m";
-                index2 = 3;
+                index2 = 2;
+                index3 = 3;
                 break;
             case 3:
-                agentName = "Brian";
-                agentName2 = "Lewis";
+                agentName = "Lewis";
+                agentName2 = "Brian";
                 fileLoad_left = "https://dl.dropbox.com/s/wd3n7o6egjikqts/david_multiple.glb";
                 fileLoad = "https://dl.dropbox.com/s/5g71bagaw8v5vv3/shanon_multiple.glb";
                 //selectedVoice = 0;
                 gen = "m";
                 index2 = 2;
+                index3 = 3;
                 break;
         }
         store.commit('storeAgentName2', agentName2);
@@ -970,7 +975,6 @@
         requestAnimationFrame(animate);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
-        
         renderer.render(scene, camera);
         if (mixer_left) mixer_left.update(delta);
         renderer_left.render(scene_left, camera_left);
@@ -1074,6 +1078,8 @@
     function actuate_agent_talking(which_agent, intro = false) { // 1 right - 2 left
         avatarReady_left = false;
         avatarReady = false;
+        
+        
 
        // var arrow1 = document.getElementById("arrow_right");
         //arrow1.style.display = "none";
@@ -1089,6 +1095,7 @@
         arrow.style.display = "none";
         var point = document.getElementById("arrow_point");
         if (which_agent == 1) {
+            setAction_left(actions_left[idle_action_left]);
             var index_item = avatar_order.findIndex(x => x === counter);
             //alert(index_item);
             arrow.style.display = "block";
@@ -1096,7 +1103,7 @@
             point.className = "right-point";
             random_actionList(1);
             avatarReady = true;
-            setAction_left(actions_left[idle_action_left]);
+            
             if (intro) {
                 setAction(actions[wave_action]);
             }
@@ -1109,12 +1116,6 @@
                 box.style.backgroundColor = "#4bc8a9";
             }
             setTimeout(function () {
-                /*if (intro) {
-                    var box = document.getElementById("3" + index_item.toString());
-                    box.style.borderWidth = "0.3vw";
-                    box.style.borderColor = "#4bc8a9";
-                }*/
-                
                 if (avatarReady) { setAction(actions[random_actions[1]]); }
                 setTimeout(function () {
                     if (avatarReady) { setAction(actions[random_actions[2]]); }
@@ -1131,13 +1132,13 @@
             }, 5000);
         }
         else if (which_agent == 2) {
+            setAction(actions[idle_action]);
             arrow.style.display = "block";
             arrow.style.backgroundColor = "#e6d8ad";
             point.className = "left-point";
             var index_item2 = avatar_order_left.findIndex(x => x === counter);
             random_actionList(2);
             avatarReady_left = true;
-            setAction(actions[idle_action]);
             if (intro) {
                 setAction(actions_left[wave_action_left]);
             }
@@ -1149,16 +1150,7 @@
                 setAction(actions_left[random_actions_left[0]]);
             }
             setTimeout(function () {
-                
-                
-                if (avatarReady_left) {
-                    /*if (intro) {
-                        var box = document.getElementById("3" + index_item.toString());
-                        box.style.borderColor = "#bfb43a";
-                        box.style.borderWidth = "0.3vw";
-                    }*/
-                    setAction(actions_left[random_actions_left[1]]);
-                }
+                if (avatarReady_left) {setAction(actions_left[random_actions_left[1]]);}
                 setTimeout(function () {
                     if (avatarReady_left) { setAction(actions_left[random_actions_left[2]]); }
                     setTimeout(function () {
@@ -1852,14 +1844,25 @@
                 actuate_agent_talking(agent_turn, true);
 
                 const sound = new Audio();
-                sound.src = "intro" + "_" + index + "_" + agent_voice + ".mp3";
+                if (goes_first[0] == 1) {
+                    sound.src = "intro" + "_" + index2 + "_" + agent_voice + ".mp3";
+                }
+                else {
+                    sound.src = "intro" + "_" + index3 + "_" + agent_voice_left + ".mp3";
+                }
+                
                 sound.play();
                 sound.addEventListener('ended', function () {
                     setTimeout(function () {
                         actuate_agent_talking(agent_turn_reverse, true);
                         const sound2 = new Audio();
                         inst.textContent = say_left;
-                        sound2.src = "intro" + "_" + index2 + "_" + agent_voice_left + ".mp3";
+                        if (goes_first[0] == 1) {
+                            sound2.src = "intro" + "_" + index3 + "_" + agent_voice_left + ".mp3";
+                        }
+                        else {
+                            sound2.src = "intro" + "_" + index2 + "_" + agent_voice + ".mp3";
+                        }
                         sound2.play();
                         sound2.addEventListener('ended', function () {
                             setTimeout(function () {
