@@ -681,7 +681,7 @@
                 else if (name == 'question') { reject = i; }
                 else if (name == 'thinking') { reject2 = i; }
                 const action = mixer.clipAction(clip);
-                action.timeScale = 0.65;
+                action.timeScale = 0.7;
                 action.weight = 0.6;
                 actions.push(action);
             }
@@ -745,7 +745,7 @@
                 else if (name_left == 'thinking') { reject2_left = i; }
                 const action_left = mixer_left.clipAction(clip_left);
                 action_left.timeScale = 0.7;
-                action_left.weight = 1;
+                action_left.weight = 0.6;
                 actions_left.push(action_left);
             }
             //alert(random_actions);
@@ -1140,25 +1140,25 @@
             random_actionList(2);
             avatarReady_left = true;
             if (intro) {
-                setAction(actions_left[wave_action_left]);
+                setAction_left(actions_left[wave_action_left]);
             }
             else {
                 var box2 = document.getElementById("3" + index_item2.toString());
                 box2.style.borderColor = "#bfb43a";
                 box2.style.borderWidth = "0.3vw";
                 box2.style.backgroundColor = "#bfb43a";
-                setAction(actions_left[random_actions_left[0]]);
+                setAction_left(actions_left[random_actions_left[0]]);
             }
             setTimeout(function () {
-                if (avatarReady_left) {setAction(actions_left[random_actions_left[1]]);}
+                if (avatarReady_left) {setAction_left(actions_left[random_actions_left[1]]);}
                 setTimeout(function () {
-                    if (avatarReady_left) { setAction(actions_left[random_actions_left[2]]); }
+                    if (avatarReady_left) { setAction_left(actions_left[random_actions_left[2]]); }
                     setTimeout(function () {
-                        if (avatarReady_left) { setAction(actions_left[random_actions_left[3]]); }
+                        if (avatarReady_left) { setAction_left(actions_left[random_actions_left[3]]); }
                         setTimeout(function () {
-                            if (avatarReady_left) { setAction(actions_left[random_actions_left[4]]); }
+                            if (avatarReady_left) { setAction_left(actions_left[random_actions_left[4]]); }
                             setTimeout(function () {
-                                if (avatarReady_left) { setAction(actions_left[random_actions_left[5]]); }
+                                if (avatarReady_left) { setAction_left(actions_left[random_actions_left[5]]); }
                             }, 5000);
                         }, 5000);
                     }, 5000);
