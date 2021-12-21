@@ -373,6 +373,7 @@
             case 0:
                 agentName = "Elizabeth";
                 agentName2 = "Kate";
+
                 fileLoad = "https://dl.dropbox.com/s/xsl6ugphov60mn8/elizabeth_multiple.glb"; 
                 fileLoad_left = "https://dl.dropbox.com/s/knusjnqe1rg7j5k/jody_multiple.glb";
                 gen = "f";
@@ -2110,15 +2111,28 @@
                     emergency_sound.play();
 
                 });*/
-
-                temp = document.getElementById("agent_img");
-                temp.src = agentName + ".png";
                 temp = document.getElementById("agent_name");
                 temp.textContent = agentName;
-                temp = document.getElementById("agent_img_a2");
-                temp.src = agentName2 + ".png";
                 temp = document.getElementById("agent_name_a2");
                 temp.textContent = agentName2;
+                if (index == 0 || index == 2) {
+                    temp = document.getElementById("agent_img");
+                    temp.src = agentName + ".png";
+                    
+                    temp = document.getElementById("agent_img_a2");
+                    temp.src = agentName2 + ".png";
+                    
+                }
+                else if (index == 1 || index == 3) {
+                        temp = document.getElementById("agent_img");
+                        temp.src = agentName2 + ".png";
+                        
+                        temp = document.getElementById("agent_img_a2");
+                        temp.src = agentName + ".png";
+                       
+                    
+                }
+                
 
                 
 
