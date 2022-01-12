@@ -330,7 +330,8 @@
 
     function init() {
         var value1, value2;
-        condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        //condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        condition = 2;
         //alert(condition);
        // condition = 2;
         //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
